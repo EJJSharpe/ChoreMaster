@@ -1,0 +1,12 @@
+{
+  "name": "react-native-firebase-spike",
+  "displayName": "react-native-firebase-spike",
+  "expo": {
+    "name": "react-native-firebase-spike",
+    "slug": "react-native-firebase-spike",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
