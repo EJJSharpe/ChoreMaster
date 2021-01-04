@@ -28,7 +28,7 @@ export default function LoginScreen({ navigation }) {
                             return;
                         }
                         const user = firestoreDocument.data()
-                        navigation.navigate('Home', { user })
+                        navigation.navigate('CreateJoin', { user })
                     })
                     .catch(error => {
                         alert(error)
