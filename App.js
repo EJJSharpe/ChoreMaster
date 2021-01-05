@@ -5,12 +5,16 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { LoginScreen, CreateJoinScreen, RegistrationScreen, CreateGroupScreen } from './src/screens'
 import { decode, encode } from 'base-64'
 import { firebase } from './src/firebase/config'
+import * as API from './src/firebase/firebaseAPI'
+
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 
 const Stack = createStackNavigator();
 
+
 export default function App() {
+  API.createHouse("test");
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
