@@ -4,3 +4,4 @@ export { default as RegistrationScreen } from './RegistrationScreen/Registration
 export { default as CreateGroupScreen } from './CreateGroupScreen/CreateGroupScreen'
 export { default as JoinGroupScreen } from './JoinGroupScreen/JoinGroupScreen'
 export { default as AddTasksScreen } from './AddTasksScreen/AddTasksScreen'
+export { default as AddPointsScreen } from './AddPointsScreen/AddPointsScreen'
