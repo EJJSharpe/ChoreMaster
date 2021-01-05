@@ -14,7 +14,6 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-  API.createHouse("test");
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
