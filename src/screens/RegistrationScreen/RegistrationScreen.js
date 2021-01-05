@@ -29,6 +29,9 @@ export default function RegistrationScreen({ navigation }) {
                     id: uid,
                     email,
                     fullName,
+                    avatar: null,
+                    houseId: null,
+                    points: 0
                 };
                 const usersRef = firebase.firestore().collection('users')
                 usersRef
