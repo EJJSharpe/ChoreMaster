@@ -28,7 +28,11 @@ export default function LoginScreen({ navigation }) {
                             return;
                         }
                         const user = firestoreDocument.data()
-                        navigation.navigate('CreateJoin', { user })
+                        console.log(user)
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'CreateJoin' }]
+                        })
                     })
                     .catch(error => {
                         alert(error)
