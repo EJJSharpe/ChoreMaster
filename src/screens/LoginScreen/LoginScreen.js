@@ -28,11 +28,19 @@ export default function LoginScreen({ navigation }) {
                             return;
                         }
                         const user = firestoreDocument.data()
-                        console.log(user)
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'CreateJoin' }]
-                        })
+
+                        if (user.houseId !== null) {
+                            console.log('hello')
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'CreateJoin', params: { user } }],
+                            })
+                        } else {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'Home', params: { user } }]
+                            })
+                        }
                     })
                     .catch(error => {
                         alert(error)

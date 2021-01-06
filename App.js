@@ -14,7 +14,6 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-  console.log(API.getHouseData("H1"));
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
