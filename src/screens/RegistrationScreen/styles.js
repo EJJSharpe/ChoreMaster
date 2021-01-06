@@ -17,7 +17,7 @@ export default StyleSheet.create({
     },
     input: {
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         overflow: 'hidden',
         backgroundColor: 'white',
         marginTop: 10,
@@ -32,7 +32,7 @@ export default StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         alignItems: "center",
         justifyContent: 'center'
     },

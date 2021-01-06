@@ -6,9 +6,8 @@ import Modal from 'react-native-modal';
 export default function AddPointsScreen({ navigation, route }) {
 
     const [tasksList, setTasksList] = useState(route.params.tasksList)
-    const [totalPoints, setTotalPoints] = useState(tasksList.length * 2)
-    const [fixedPoints, setFixedPoints] = useState(totalPoints)
     const [isModalVisible, setModalVisible] = useState(false)
+    const [pointsLeft, setPointsLeft] = useState(tasksList.length * 2)
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
@@ -20,11 +19,21 @@ export default function AddPointsScreen({ navigation, route }) {
 
     const onPointsChange = (index, text) => {
         const newTasks = [...tasksList]
-        if (text === '') {
-            console.log(newTasks[index].points)
-            newTasks[index].points === 0
-        } else newTasks[index].points === parseInt(text)
+        newTasks[index].points = text;
         setTasksList(newTasks)
+    }
+
+    const onPointsBlur = () => {
+        let pointsUsed = 0;
+        const totalPoints = tasksList.length * 2;
+        tasksList.map(task => {
+            if (task.points !== '') {
+                pointsUsed += parseInt(task.points);
+            } else {
+                pointsUsed += 0
+            }
+        })
+        setPointsLeft(totalPoints - pointsUsed)
     }
 
     return (
@@ -35,12 +44,16 @@ export default function AddPointsScreen({ navigation, route }) {
                     <Button title="OK" onPress={toggleModal} />
                 </View>
             </Modal>
-            <Text>Points Remaining: {totalPoints}</Text>
+            <Text>Points Remaining: {pointsLeft}</Text>
             {tasksList.map(({ task, points }, index) => {
                 return (
                     <View key={index} style={styles.taskContainer}>
                         <Text style={styles.task}>{task}</Text>
-                        <TextInput keyboardType='number-pad' style={styles.numInput} value={points} onChangeText={(text) => { onPointsChange(index, text) }}></TextInput>
+                        <TextInput placeholder='0' keyboardType='number-pad'
+                            style={styles.numInput}
+                            value={points}
+                            onBlur={() => { onPointsBlur() }}
+                            onChangeText={(text) => { onPointsChange(index, text) }}></TextInput>
                     </View>
                 )
             })}

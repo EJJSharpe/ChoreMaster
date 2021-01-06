@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     input: {
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         overflow: 'hidden',
         backgroundColor: 'white',
         marginLeft: 30,
@@ -16,7 +16,7 @@ export default StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         alignItems: "center",
         justifyContent: 'center'
     },
@@ -26,7 +26,8 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     task: {
-        borderRadius: 5,
+        borderRadius: 25,
+        overflow: 'hidden',
         backgroundColor: 'white',
         marginLeft: 30,
         marginRight: 30,
@@ -38,7 +39,7 @@ export default StyleSheet.create({
     },
     modalView: {
         backgroundColor: 'yellow',
-        borderRadius: 5
+        borderRadius: 25
     },
     modalText: {
         fontWeight: 'bold',

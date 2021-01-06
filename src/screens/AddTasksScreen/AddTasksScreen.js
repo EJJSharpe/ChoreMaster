@@ -33,10 +33,10 @@ export default function AddTasksScreen({ navigation }) {
                     <Button title="OK" onPress={toggleModal} />
                 </View>
             </Modal>
-            {tasksList.map(({ task }) => {
+            {tasksList.map(({ task }, index) => {
                 return (
                     <View>
-                        <Text key={tasksList.index} style={styles.task}>{task}</Text>
+                        <Text key={index} style={styles.task}>{task}</Text>
                     </View>
                 )
             })}

@@ -1,24 +1,15 @@
 import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
-    input: {
-        height: 48,
-        borderRadius: 5,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginLeft: 30,
-        marginRight: 30,
-        paddingLeft: 16,
-        marginTop: 10
-    },
     button: {
         backgroundColor: '#788eec',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: 25
     },
     buttonTitle: {
         color: 'white',
@@ -38,11 +29,12 @@ export default StyleSheet.create({
         marginTop: 20,
         paddingTop: 15,
         paddingBottom: 15,
-        paddingLeft: 10,
+        paddingLeft: 20,
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 20,
+        borderRadius: 25,
+        overflow: 'hidden'
     },
     numInput: {
         flex: 1,
@@ -50,13 +42,14 @@ export default StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 20,
+        borderRadius: 25,
         fontWeight: 'bold',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        textAlign: 'center'
     },
     modalView: {
         backgroundColor: 'yellow',
-        borderRadius: 5
+        borderRadius: 25
     },
     modalText: {
         fontWeight: 'bold',
