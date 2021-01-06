@@ -9,11 +9,12 @@ export const createHouse = async (name, userId) => {
         tasksAssigned: false,
         name: name
     }
-    //todo add check for exist
+    //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
     console.log(name + " house created");
     //add creator, as in logged in user
     addUserToHouse(name, userId);
+    return name;
 }
 
 export const addUserToHouse = (house, userId) => {
@@ -31,6 +32,7 @@ export const createTask = (house, taskName, points) => {
     }
     firebase.firestore().collection('houses').doc(house).collection("tasks")
         .set(newTask);
+
 }
 
 export const assignTask = (house, taskId, userId) => {
@@ -77,6 +79,13 @@ export const getHouseTasks = async (house) => {
     return tasksArr;
 }
 
+export const getHouseFields = async (house) => {
+    const fieldsRef = await firebase.firestore().collection('houses').doc(house);
+    const doc = await fieldsRef.get();
+    const data = await doc.data()
+    return data;
+}
+
 export const getUserTasks = async (house, userId) => {
     const tasksRef = firebase.firestore().collection('houses').doc(house).collection("tasks");
     const doc = await tasksRef.where('userId', '==', userId).get();
@@ -91,4 +100,23 @@ export const getHouseUsers = async (house) => {
     const usersArr = [];
     doc.forEach(doc => usersArr.push(doc.data()))
     return usersArr;
+};
+
+export const getHouseData = async (house) => {
+    const usersInHouse = await getHouseUsers(house);
+
+    const tasks = await getHouseTasks(house);
+
+    const { lastStart, tasksAssigned } = await getHouseFields(house);
+
+    const data = {
+        house,
+        usersInHouse,
+        tasks,
+        tasksAssigned,
+        lastStart
+    }
+    return data;
 }
+
+// todo send array of tasks
