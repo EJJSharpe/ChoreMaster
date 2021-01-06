@@ -4,7 +4,7 @@ import "@firebase/auth";
 import "@firebase/firestore";
 
 export function registration(fullName, email, password) {
-  firebase
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
@@ -19,62 +19,72 @@ export function registration(fullName, email, password) {
         points: 0,
       };
       const usersRef = firebase.firestore().collection("users");
-      usersRef
+      return usersRef
         .doc(currentUserId)
         .set(data)
-        .then(() => {
-          return { user: data };
-        })
-
         .catch((error) => {
           alert("There is something wrong!!!!", error.message);
         });
     })
     .then(() => {
       var user = firebase.auth().currentUser;
-      user
+      return user
         .sendEmailVerification()
-        .then()
         .catch((error) => alert("There is something wrong!!!!", error.message));
+    })
+
+    .then(() => {
+      const currentUser = firebase.auth().currentUser;
+      const currentUserId = currentUser.uid;
+      const usersRef = firebase.firestore().collection("users");
+      return usersRef
+        .doc(currentUserId)
+        .get()
+        .then((firestoreDocument) => {
+          return { user: firestoreDocument.data() };
+        });
+    })
+    .catch((error) => {
+      return { error };
     });
 }
 
-export function singIn(email, password) {
-  firebase
+export function signIn(email, password) {
+  return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
       const currentUser = firebase.auth().currentUser;
       const currentUserId = currentUser.uid;
-
       if (currentUser.emailVerified) {
         const usersRef = firebase.firestore().collection("users");
-        usersRef
+        return usersRef
           .doc(currentUserId)
           .get()
           .then((firestoreDocument) => {
             if (!firestoreDocument.exists) {
               alert("User does not exist anymore.");
             }
-
             const user = firestoreDocument.data();
-            return [{ user }];
+            return { user };
           })
           .catch((error) => {
             alert("There is something wrong!!!!", error.message);
           });
-        console.log(usersRef, "user");
       } else {
-        alert("please verified your email");
-        // console.log(currentUser.emailVerified);
-        return currentUser.emailVerified;
+        if (currentUser) {
+          return currentUser.emailVerified;
+        }
       }
+    })
+    .catch((error) => {
+      return { error };
     });
 }
 
 export function singInGoogle() {
   let base_provider = new firebase.auth.GoogleAuthProvider();
-  firebase
+  return firebase
     .auth()
     .signInWithPopup(base_provider)
     .then((response) => {
@@ -87,7 +97,7 @@ export function singInGoogle() {
         points: 0,
       };
       const usersRef = firebase.firestore().collection("users");
-      usersRef
+      return usersRef
         .doc(response.user.uid)
         .set(data)
         .then(() => {

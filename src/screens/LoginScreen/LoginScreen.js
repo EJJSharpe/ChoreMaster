@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import { singIn, singInGoogle } from "../../firebase/API/auth_methods";
+import { signIn, singInGoogle } from "../../firebase/API/auth_methods";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -13,13 +13,34 @@ export default function LoginScreen({ navigation }) {
   };
 
   const onLoginPress = () => {
-    const result = () => {
-      singIn(email, password);
-    };
-    console.log(result);
+    if (!email) {
+      alert("Email field is required.");
+    } else if (!password) {
+      alert("Password field is required.");
+    } else {
+      const loggedInUSer = signIn(email, password);
+      loggedInUSer.then((response) => {
+        if (response.error) {
+          alert(response.error.message);
+        } else {
+          if (response) {
+            navigation.navigate("Home", response);
+          } else {
+            alert("please verified your email");
+          }
+        }
+      });
+    }
   };
+
   const onLoginGoogle = () => {
-    navigation.navigate("Home", singInGoogle());
+    const loggedInUSer = singInGoogle();
+
+    loggedInUSer.then((user) => {
+      if (user) {
+        navigation.navigate("Home", user);
+      }
+    });
   };
   return (
     <View style={styles.container}>

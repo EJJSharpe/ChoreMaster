@@ -27,7 +27,14 @@ export default function RegistrationScreen({ navigation }) {
     } else if (password !== confirmPassword) {
       alert("Password does not match!");
     } else {
-      navigation.navigate("Home", registration(fullName, email, password));
+      const LoggedInUser = registration(fullName, email, password);
+      LoggedInUser.then((response) => {
+        if (response.error) {
+          alert(response.error.message);
+        } else {
+          navigation.navigate("Home", response);
+        }
+      });
     }
   };
 
