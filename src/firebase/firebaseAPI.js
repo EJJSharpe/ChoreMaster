@@ -80,7 +80,7 @@ export const getHouseFields = async (house) => {
     const fieldsRef = await firebase.firestore().collection('houses').doc(house);
     const doc = await fieldsRef.get();
     const data = await doc.data()
-    test.testSpeak();
+
     return data;
 }
 
