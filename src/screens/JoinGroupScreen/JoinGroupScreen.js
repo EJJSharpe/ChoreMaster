@@ -9,7 +9,6 @@ export default function JoinGroupScreen({ navigation }) {
     const onJoinGroupSubmit = () => {
         // SHOULD JOIN THE CURRENT USER TO THE GROUP WITH THE GROUP CODE SUPPLIED
         // SHOULD REDIRECT TO NEXT PAGE
-        navigation.navigate('AddTasks')
     }
 
     return (

@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import styles from './styles'
 
 
-export default function CreateJoinScreen({ navigation }) {
+export default function CreateJoinScreen({ navigation, route }) {
     const onCreateGroupPress = () => {
         navigation.navigate('CreateGroup')
     }
