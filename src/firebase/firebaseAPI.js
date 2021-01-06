@@ -1,7 +1,4 @@
-import {
-    firebase
-} from './config.js'
-
+import { firebase } from './config'
 
 export const createHouse = async (name, userId) => {
     const newHouse = {
@@ -83,6 +80,7 @@ export const getHouseFields = async (house) => {
     const fieldsRef = await firebase.firestore().collection('houses').doc(house);
     const doc = await fieldsRef.get();
     const data = await doc.data()
+    test.testSpeak();
     return data;
 }
 

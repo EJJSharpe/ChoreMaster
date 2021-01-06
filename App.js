@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { AddPointsScreen,LoginScreen, CreateJoinScreen, RegistrationScreen, CreateGroupScreen, JoinGroupScreen, AddTasksScreen } from './src/screens/'
+import { AddPointsScreen, LoginScreen, CreateJoinScreen, RegistrationScreen, CreateGroupScreen, JoinGroupScreen, AddTasksScreen } from './src/screens/'
 import { decode, encode } from 'base-64'
 import { firebase } from './src/firebase/config'
 import * as API from './src/firebase/firebaseAPI'
@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-  console.log(API.getHouseData("H1"));
+  console.log(API.getHouseFields("H1"));
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
