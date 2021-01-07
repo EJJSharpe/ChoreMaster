@@ -22,6 +22,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-checkbox-lite": "^1.0.2",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-modal": "^11.6.1",
@@ -30,8 +31,8 @@
     "react-native-screens": "~2.15.0",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "~0.13.12",
-    "request": "^2.88.2",
-    "react-navigation": "^4.4.3"
+    "react-navigation": "^4.4.3",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

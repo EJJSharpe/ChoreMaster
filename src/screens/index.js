@@ -5,3 +5,5 @@ export { default as CreateGroupScreen } from './CreateGroupScreen/CreateGroupScr
 export { default as JoinGroupScreen } from './JoinGroupScreen/JoinGroupScreen'
 export { default as AddTasksScreen } from './AddTasksScreen/AddTasksScreen'
 export { default as AddPointsScreen } from './AddPointsScreen/AddPointsScreen'
+
+export { default as HomeScreen } from './HomeScreen/HomeScreen'
