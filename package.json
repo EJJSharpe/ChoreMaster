@@ -16,7 +16,8 @@
     "expo-splash-screen": "~0.8.1",
     "expo-status-bar": "~1.0.3",
     "expo-updates": "~0.4.1",
-    "firebase": "7.9.0",
+    "firebase": "^7.9.0",
+    "firebase-admin": "^9.4.2",
     "grpc": "^1.24.4",
     "node-pre-gyp": "^0.17.0",
     "react": "16.13.1",
@@ -30,8 +31,9 @@
     "react-native-screens": "~2.15.0",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.3",
     "request": "^2.88.2",
-    "react-navigation": "^4.4.3"
+    "ts-mock-firebase": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
