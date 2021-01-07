@@ -2,14 +2,13 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     input: {
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         overflow: 'hidden',
         backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16
+        paddingLeft: 16,
+        marginTop: 10
     },
     button: {
         backgroundColor: '#788eec',
@@ -17,7 +16,7 @@ export default StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
         alignItems: "center",
         justifyContent: 'center'
     },
@@ -27,20 +26,26 @@ export default StyleSheet.create({
         fontWeight: "bold"
     },
     task: {
-        height: 48,
-        borderRadius: 5,
+        borderRadius: 25,
+        overflow: 'hidden',
         backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
         paddingLeft: 16,
-
+        marginTop: 10,
+        paddingTop: 16,
+        paddingBottom: 16,
+        fontWeight: 'bold'
     },
-    taskText: {
-        color: 'black',
-        fontSize: 16,
-        fontWeight: "bold",
-        justifyContent: 'center'
+    modalView: {
+        backgroundColor: 'yellow',
+        borderRadius: 25
+    },
+    modalText: {
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 10
+
     }
 })
