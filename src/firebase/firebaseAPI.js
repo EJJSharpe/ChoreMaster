@@ -88,6 +88,14 @@ export const addWildcardToUser = async (wildCardId, userId) => {
     return wildCard;
 }
 
+export const getAllWildcards = async () => {
+    const wildcardsRef = await firebase.firestore().collection('wildCards');
+    const doc = await wildcardsRef.get();
+    const wildCardArr = [];
+    doc.forEach(doc => wildCardArr.push(doc.data()))
+    return wildCardArr;
+}
+
 export const setAssignTime = async (house) => {
     //set house lastStart date to now
     const currTime = new Date();
