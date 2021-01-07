@@ -6,8 +6,21 @@ import Modal from 'react-native-modal';
 export default function GameScreen() {
 
     const [userTasks, setUserTasks] = useState([{ task: "clean toilet", points: 3 }, { task: 'hello', points: 2 }, { task: "bins", points: 1 }])
-const [wildCards, setWildCards] =useState([{name:'shuffle', used: false},{name:'skip', used: false},{ name:'swap',used: false}])
+    const [wildCards, setWildCards] = useState([{ name: 'shuffle', used: false }, { name: 'skip', used: false }, { name: 'swap', used: false }])
+    const [isUserTurn, setIsUserTurn] = useState(false)
 
+    const onWildCardPress = (name, used, index) => {
+        const newWildCards = [...wildCards]
+        newWildCards[index].used = !used;
+        setWildCards(newWildCards)
+    }
+    const toggleTurn = () => {
+    setIsUserTurn(!isUserTurn)
+    }
+
+const turnText = isUserTurn ? "your turn": "wait your turn";
+
+console.log(isUserTurn)
     return (
         <ScrollView>
             <Text style={styles.heading}> Your allocated Tasks</Text>
@@ -21,15 +34,16 @@ const [wildCards, setWildCards] =useState([{name:'shuffle', used: false},{name:'
             })}
 
             <Text style={styles.heading}>WildCards Available:</Text>
-            {wildCards.map(({name},index)=>{
+            {wildCards.map(({ name, used }, index) => {
                 return (
                     <View key={index} style={styles.cardContainer}>
-                    <TouchableOpacity style={styles.card}><Text>{name}</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.card} onPress={() => { onWildCardPress(name, used, index) }}><Text>{name}</Text></TouchableOpacity>
                     </View>
                 )
             })}
 
-            <TouchableOpacity style={styles.button}><Text>Pass</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button} ><Text>Pass</Text></TouchableOpacity>
+            <TouchableOpacity onPress={toggleTurn}><Text style={styles.turnText}>{turnText}</Text></TouchableOpacity>
         </ScrollView>
     )
 

@@ -50,20 +50,21 @@ export default StyleSheet.create({
  heading: {
 fontWeight: 'bold',
 fontSize: 25,
+marginLeft: 70,
  },
  cardContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'center'
 },
 card: {
-    flex:1,
+    
     borderRadius: 25,
     overflow: 'hidden',
     backgroundColor: 'grey',
-    marginLeft: 50,
-    marginRight: 50,
+    marginLeft: 30,
+    marginRight: 30,
     marginTop: 20,
     marginBottom: 20,
     paddingLeft: 15,
@@ -73,5 +74,19 @@ card: {
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
+},
+turnText:{
+    
+    borderStyle: 'solid',
+    borderWidth: 5,
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 20,
+    marginBottom: 20,
+    paddingLeft: 100,
+    paddingRight: 15,
+    paddingBottom: 20,
+    paddingTop: 20,
+
 }
 })
