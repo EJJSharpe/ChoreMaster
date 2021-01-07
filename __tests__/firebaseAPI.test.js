@@ -154,7 +154,19 @@ describe('Api Functions', () => {
             })
         })
 
+        test("getAllWildcards", async () => {
+            mocked.firestore().mocker.loadCollection('wildCards', {
+                wildCard1: {
+                    name: 'testTask1'
+                }
+            })
 
+            const res = await API.getAllWildcards();
+
+            expect(res).toStrictEqual([{
+                name: 'testTask1'
+            }])
+        })
     })
 
     describe("SET - adding new users, tasks, houses", () => {
