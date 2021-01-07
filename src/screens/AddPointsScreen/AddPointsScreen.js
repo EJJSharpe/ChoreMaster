@@ -12,7 +12,9 @@ export default function AddPointsScreen({ navigation, route }) {
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
     }
-
+ const onSubmit =() =>{
+     navigation.navigate('GameScreen')
+ }
     useEffect(() => {
         toggleModal()
     }, [])
