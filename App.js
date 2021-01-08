@@ -2,7 +2,9 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { AddPointsScreen, LoginScreen, CreateJoinScreen, RegistrationScreen, CreateGroupScreen, JoinGroupScreen, AddTasksScreen, HomeScreen, GameScreen} from './src/screens/'
+
+import { AddPointsScreen, LoginScreen, CreateJoinScreen, RegistrationScreen, CreateGroupScreen, JoinGroupScreen, AddTasksScreen, HomeScreen, GameScreen, LobbyScreen } from './src/screens/'
+
 import { decode, encode } from 'base-64'
 import { firebase } from './src/firebase/config'
 import * as API from './src/firebase/firebaseAPI'
@@ -59,6 +61,8 @@ export default function App() {
         <Stack.Screen name="AddPoints" component={AddPointsScreen} />
         <Stack.Screen name="GameScreen" component={GameScreen}></Stack.Screen>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name='Game' component={GameScreen} />
+        <Stack.Screen name="Lobby" component={LobbyScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

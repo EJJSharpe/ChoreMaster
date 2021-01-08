@@ -2,13 +2,19 @@ import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, TextInput } from 'react-native'
 import styles from './styles'
 
-export default function JoinGroupScreen({ navigation }) {
+export default function JoinGroupScreen({ navigation, route }) {
 
     const [groupCode, setGroupCode] = useState('')
 
     const onJoinGroupSubmit = () => {
-        // SHOULD JOIN THE CURRENT USER TO THE GROUP WITH THE GROUP CODE SUPPLIED
-        // SHOULD REDIRECT TO NEXT PAGE
+        const { user } = route.params;
+        api.addUserToHouse(groupCode, user.id)
+            .then(userId => {
+                api.getHouseFields(groupCode).then(houseData => {
+                    navigate.navigate('Lobby', { user, houseData })
+                })
+            })
+
     }
 
     return (

@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, TextInput } from 'react-native'
 import styles from './styles'
+import * as api from '../../firebase/firebaseAPI'
+import { useRef } from 'react'
 
-export default function CreateGroupScreen({ navigation }) {
+export default function CreateGroupScreen({ navigation, route }) {
 
     const [groupName, setGroupName] = useState('')
 
     const onCreateGroupSubmit = () => {
-        // INSERT FUNCTIONALITY TO CREATE A NEW GROUP HERE AND ADD THE CURRENT USER TO IT
-        // ALSO NEEDS TO DISPLAY A CODE OR SOME SORT OF LINK THAT CAN BE GIVEN TO OTHER USERS TO JOIN
-        navigation.navigate('AddTasks', { groupName })
+        const { user } = route.params
+        api.createHouse(groupName, user.id)
+            .then(houseData => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Lobby", params: { user, houseData } }],
+                })
+            })
     }
 
     return (

@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 
 export default function GameScreen() {
 
+
     const [userTasks, setUserTasks] = useState([{ task: "clean toilet", points: 3 }, { task: 'hello', points: 2 }, { task: "bins", points: 1 }])
     const [wildCards, setWildCards] = useState([{ name: 'shuffle', used: false }, { name: 'skip', used: false }, { name: 'swap', used: false }])
     const [isUserTurn, setIsUserTurn] = useState(false)
@@ -45,6 +46,4 @@ export default function GameScreen() {
             <TouchableOpacity onPress={toggleTurn}><Text style={styles.turnText}>{turnText}</Text></TouchableOpacity>
         </ScrollView>
     )
-
-
 }
