@@ -27,9 +27,10 @@ export const createUser = async (userId) => {
     return newUser;
 }
 
-export const addUserToHouse = (house, userId) => {
+export const addUserToHouse = (house, userId, fullName) => {
     // find user by userId, edit houseId
     firebase.firestore().collection('users').doc(userId).update({ houseId: house });
+    firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     return userId
 }
 
@@ -101,6 +102,11 @@ export const setAssignTime = async (house) => {
     const currTime = new Date();
     await firebase.firestore().collection('houses').doc(house).update({ lastStart: currTime })
     return currTime;
+}
+
+export const setTasksAssignedBool = async (house, bool) => {
+    await firebase.firestore().collection('houses').doc(house).update({ tasksAssigned: bool })
+    return bool;
 }
 
 export const getHouseTasks = async (house) => {
