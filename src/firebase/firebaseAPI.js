@@ -27,9 +27,10 @@ export const createUser = async (userId) => {
     return newUser;
 }
 
-export const addUserToHouse = (house, userId) => {
+export const addUserToHouse = (house, userId, fullName) => {
     // find user by userId, edit houseId
     firebase.firestore().collection('users').doc(userId).update({ houseId: house });
+    firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     return userId
 }
 
