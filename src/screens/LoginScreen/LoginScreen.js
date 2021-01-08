@@ -1,66 +1,69 @@
-import React, { useState } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import styles from './styles';
-import { firebase } from '../../firebase/config'
+import React, { useState } from "react";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from "./styles";
+import { signIn, singInGoogle } from "../../firebase/API/auth_methods";
 
 export default function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
-    }
+        navigation.navigate("Registration");
+    };
 
     const onLoginPress = () => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .get()
-                    .then(firestoreDocument => {
-                        if (!firestoreDocument.exists) {
-                            alert("User does not exist anymore.")
-                            return;
-                        }
-                        const user = firestoreDocument.data()
-
+        if (!email) {
+            alert("Email field is required.");
+        } else if (!password) {
+            alert("Password field is required.");
+        } else {
+            const loggedInUser = signIn(email, password);
+            loggedInUser.then((user) => {
+                if (user.error) {
+                    alert(user.error.message);
+                } else {
+                    if (user) {
                         if (user.houseId !== null) {
-                            console.log('hello')
                             navigation.reset({
                                 index: 0,
-                                routes: [{ name: 'CreateJoin', params: { user } }],
-                            })
+                                routes: [{ name: "CreateJoin", params: { user } }],
+                            });
                         } else {
+                            // request the house data here
+                            // if the gameTimer === 0, navigate to game screen
+                            // otherwise execute code below navigating to homescreen
                             navigation.reset({
                                 index: 0,
-                                routes: [{ name: 'Home', params: { user } }]
-                            })
+                                routes: [{ name: "Home", params: { user } }],
+                            });
                         }
-                    })
-                    .catch(error => {
-                        alert(error)
-                    });
-            })
-            .catch(error => {
-                alert(error)
-            })
-    }
+                    } else {
+                        alert("please verify your email");
+                    }
+                }
+            });
+        }
+    };
 
+    const onLoginGoogle = () => {
+        const loggedInUser = singInGoogle();
 
-
+        loggedInUser.then((user) => {
+            if (user) {
+                navigation.navigate("Home", user);
+            }
+        });
+    };
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
-                keyboardShouldPersistTaps="always">
+                style={{ flex: 1, width: "100%" }}
+                keyboardShouldPersistTaps="always"
+            >
                 <TextInput
                     style={styles.input}
-                    placeholder='E-mail'
+                    placeholder="E-mail"
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
                     value={email}
@@ -71,22 +74,30 @@ export default function LoginScreen({ navigation }) {
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
                     secureTextEntry
-                    placeholder='Password'
+                    placeholder="Password"
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => onLoginPress()}>
+                <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonTitle} onPress={() => onLoginGoogle()}>
+                        Log in with google
+          </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { navigation.navigate('Home') }}><Text>Home shortcut</Text></TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                    <Text style={styles.footerText}>
+                        Don't have an account?{" "}
+                        <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+                            Sign up
+            </Text>
+                    </Text>
                 </View>
-
             </KeyboardAwareScrollView>
         </View>
-    )
+    );
 }

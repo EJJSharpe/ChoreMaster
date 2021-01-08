@@ -51,7 +51,8 @@ export default function AddPointsScreen({ navigation, route }) {
                 return (
                     <View key={index} style={styles.taskContainer}>
                         <Text style={styles.task}>{task}</Text>
-                        <TextInput placeholder='0' keyboardType='number-pad'
+                        <TextInput placeholder='0' 
+                            keyboardType='number-pad'
                             style={styles.numInput}
                             value={points}
                             onBlur={() => { onPointsBlur() }}
