@@ -12,7 +12,6 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     task: {
-        backgroundColor: 'yellow',
         flex: 5,
         backgroundColor: 'white',
         marginLeft: 30,

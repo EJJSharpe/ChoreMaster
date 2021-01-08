@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, TextInput } from 'react-native'
 import styles from './styles'
+import * as api from '../../firebase/firebaseAPI'
 
 export default function JoinGroupScreen({ navigation, route }) {
 
@@ -8,13 +9,12 @@ export default function JoinGroupScreen({ navigation, route }) {
 
     const onJoinGroupSubmit = () => {
         const { user } = route.params;
-        api.addUserToHouse(groupCode, user.id)
+        api.addUserToHouse(groupCode, user.fullName)
             .then(userId => {
                 api.getHouseFields(groupCode).then(houseData => {
                     navigate.navigate('Lobby', { user, houseData })
                 })
             })
-
     }
 
     return (
