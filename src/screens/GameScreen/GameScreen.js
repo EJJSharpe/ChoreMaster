@@ -15,12 +15,11 @@ export default function GameScreen() {
         setWildCards(newWildCards)
     }
     const toggleTurn = () => {
-    setIsUserTurn(!isUserTurn)
+        setIsUserTurn(!isUserTurn)
     }
 
-const turnText = isUserTurn ? "your turn": "wait your turn";
-
-console.log(isUserTurn)
+    const turnText = isUserTurn ? "your turn" : "wait your turn";
+  
     return (
         <ScrollView>
             <Text style={styles.heading}> Your allocated Tasks</Text>
