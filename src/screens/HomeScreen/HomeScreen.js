@@ -12,17 +12,6 @@ export default function HomeScreen({ navigation, route }) {
     useEffect(() => {
         const { user, houseData } = route.params;
         console.log(route.params)
-
-        // if (houseData.tasksAssigned === false) {
-        //     navigation.reset({
-        //         index: 0,
-        //         route: [{ name: 'Home', params: { user, houseData } }]
-        //     })
-        // } else {
-        //     api.getUserTasks(houseData.name, user.id).then(tasks => {
-        //         setUserTasks(tasks)
-        //     })
-        // }
     }, [])
 
     function toggleCheckBox(index, points) {
