@@ -3,6 +3,8 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import { signIn, singInGoogle } from "../../firebase/API/auth_methods";
+import * as api from '../../firebase/firebaseAPI'
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -24,18 +26,15 @@ export default function LoginScreen({ navigation }) {
                     alert(user.error.message);
                 } else {
                     if (user) {
-                        if (user.houseId !== null) {
+                        if (user.user.houseId !== null) {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: "Lobby", params: { user } }],
+                            });
+                        } else {
                             navigation.reset({
                                 index: 0,
                                 routes: [{ name: "CreateJoin", params: { user } }],
-                            });
-                        } else {
-                            // request the house data here
-                            // if the gameTimer === 0, navigate to game screen
-                            // otherwise execute code below navigating to homescreen
-                            navigation.reset({
-                                index: 0,
-                                routes: [{ name: "Home", params: { user } }],
                             });
                         }
                     } else {

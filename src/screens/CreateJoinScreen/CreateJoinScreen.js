@@ -5,11 +5,13 @@ import styles from './styles'
 
 export default function CreateJoinScreen({ navigation, route }) {
     const onCreateGroupPress = () => {
-        navigation.navigate('CreateGroup')
+        const { user } = route.params;
+        navigation.navigate('CreateGroup', user)
     }
 
     const onJoinGroupPress = () => {
-        navigation.navigate('JoinGroup')
+        const { user } = route.params
+        navigation.navigate('JoinGroup', user)
     }
 
 
