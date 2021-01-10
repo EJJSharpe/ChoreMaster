@@ -5,20 +5,22 @@ export default StyleSheet.create({
         borderRadius: 25,
         overflow: 'hidden',
         backgroundColor: 'white',
+        marginTop: 30,
+        marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16,
-        marginTop: 10
+        paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#033B86',
         marginLeft: 30,
         marginRight: 30,
-        marginTop: 20,
+        marginTop: 10,
         height: 48,
         borderRadius: 25,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     buttonTitle: {
         color: 'white',
@@ -32,20 +34,31 @@ export default StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         paddingLeft: 16,
-        marginTop: 10,
-        paddingTop: 16,
-        paddingBottom: 16,
-        fontWeight: 'bold'
+        marginTop: 12,
+        paddingTop: 15,
+        paddingBottom: 10,
+        fontWeight: 'bold',
+        color: '#033B86',
+        fontSize: 16
     },
     modalView: {
-        backgroundColor: 'yellow',
-        borderRadius: 25
+        backgroundColor: '#FFD006',
+        borderRadius: 25,
+        alignSelf: 'center',
+        width: 290
     },
     modalText: {
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 10
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        fontSize: 20,
+        textAlign: 'center'
 
+    },
+    instructionsText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        marginTop: 20
     }
 })

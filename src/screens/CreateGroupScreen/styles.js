@@ -7,21 +7,22 @@ export default StyleSheet.create({
         borderRadius: 25,
         overflow: 'hidden',
         backgroundColor: 'white',
-        marginTop: 10,
+        marginTop: 30,
         marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#033B86',
         marginLeft: 30,
         marginRight: 30,
-        marginTop: 20,
+        marginTop: 10,
         height: 48,
         borderRadius: 25,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     buttonTitle: {
         color: 'white',

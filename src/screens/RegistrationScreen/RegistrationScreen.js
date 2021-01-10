@@ -47,8 +47,9 @@ export default function RegistrationScreen({ navigation }) {
                 style={{ flex: 1, width: "100%" }}
                 keyboardShouldPersistTaps="always"
             >
+                <Text style={styles.header}>Sign Up!</Text>
                 <TextInput
-                    style={styles.input}
+                    style={styles.inputTop}
                     placeholder="Full Name"
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setFullName(text)}

@@ -10,13 +10,11 @@ export default function CreateGroupScreen({ navigation, route }) {
 
     const onCreateGroupSubmit = () => {
         const { user } = route.params
+
         api.createHouse(groupName, user.id)
-            .then(houseData => {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: "Lobby", params: { user, houseData } }],
-                })
-            })
+
+        navigation.navigate('Lobby', { user, houseData })
+
     }
 
     return (
