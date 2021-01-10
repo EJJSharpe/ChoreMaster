@@ -1,13 +1,20 @@
 import { firebase } from './config'
 
+export const setHost = async (userId) => {
+    await firebase.firestore().collection('users').doc(userId).update({ host: true })
+}
+
 export const createHouse = async (name, userId) => {
     const newHouse = {
         lastStart: "",
         tasksAssigned: false,
-        name: name
+        name: name,
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
+
+    //set the users host value to be true
+    setHost(userId)
 
     //add creator, as in logged in user
     addUserToHouse(name, userId);
@@ -21,7 +28,8 @@ export const createUser = async (userId) => {
         fullName: "",
         houseId: "",
         id: userId,
-        points: 0
+        points: 0,
+        host: false
     }
     await firebase.firestore().collection('users').doc(userId).set(newUser);
     return newUser;

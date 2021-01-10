@@ -8,11 +8,13 @@ import * as api from '../../firebase/firebaseAPI'
 
 export default function HomeScreen({ navigation, route }) {
     const [userTasks, setUserTasks] = useState([{ name: 'wash dishes', points: 2, completed: false }, { task: 'have fun', points: 2, completed: false }, { task: 'wash dishes', points: 2, completed: false }])
+    // const user = { name: 'elliot', id: 'PmtEISirf7eo5QuRqvi74twPp7V2' };
+    // useEffect(() => {
+    //     // const { user, houseData } = route.params;
+    //     // console.log(route.params)
 
-    useEffect(() => {
-        const { user, houseData } = route.params;
-        console.log(route.params)
-    }, [])
+
+    // }, [])
 
     function toggleCheckBox(index, points) {
         const userTasksCopy = [...userTasks]
@@ -31,6 +33,10 @@ export default function HomeScreen({ navigation, route }) {
 
     const buyWildcard = () => {
 
+    }
+
+    const showUsersWildcards = () => {
+        navigation.navigate('UserWildcards')
     }
 
     return (
@@ -56,10 +62,10 @@ export default function HomeScreen({ navigation, route }) {
                 }
             </ScrollView>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button1}><Text style={styles.buttonTitle} onPress={() => { buyWildcard() }}>Buy Random Wildcard</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.button2}><Text style={styles.buttonTitle}>Your Wildcards</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button1} onPress={buyWildcard}><Text style={styles.buttonTitle}>Buy Random Wildcard</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button2} onPress={showUsersWildcards}><Text style={styles.buttonTitle}>Your Wildcards</Text></TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.scoreboard}><Text style={styles.buttonTitle}>Scoreboard</Text></TouchableOpacity>
-        </View>
+        </View >
     )
 }   

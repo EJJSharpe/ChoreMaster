@@ -4,7 +4,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import styles from "./styles";
 import { signIn, singInGoogle } from "../../firebase/API/auth_methods";
 import * as api from '../../firebase/firebaseAPI'
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState("");
@@ -55,48 +54,49 @@ export default function LoginScreen({ navigation }) {
         });
     };
     return (
-        <View style={styles.container}>
-            <KeyboardAwareScrollView
-                style={{ flex: 1, width: "100%" }}
-                keyboardShouldPersistTaps="always"
-            >
-                <TextInput
-                    style={styles.input}
-                    placeholder="E-mail"
-                    placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setEmail(text)}
-                    value={email}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholderTextColor="#aaaaaa"
-                    secureTextEntry
-                    placeholder="Password"
-                    onChangeText={(text) => setPassword(text)}
-                    value={password}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                />
-                <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-                    <Text style={styles.buttonTitle}>Log in</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+        <KeyboardAwareScrollView
+            style={styles.container}
+            keyboardShouldPersistTaps="always"
+        >
+            <Image
+                style={styles.logoImage}
+                source={require('../../images/ChoreMasterLogo.png')}
+            />
+            <TextInput
+                style={styles.firstInput}
+                placeholder="E-mail"
+                placeholderTextColor="#aaaaaa"
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+            />
+            <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                secureTextEntry
+                placeholder="Password"
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+            />
+            <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
+                <Text style={styles.buttonTitle}>Log in</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonTitle} onPress={() => onLoginGoogle()}>
                         Log in with google
           </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => { navigation.navigate('Home') }}><Text>Home shortcut</Text></TouchableOpacity>
-                <View style={styles.footerView}>
-                    <Text style={styles.footerText}>
-                        Don't have an account?{" "}
-                        <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-                            Sign up
+                </TouchableOpacity> */}
+            <View style={styles.footerView}>
+                <Text style={styles.footerText}>
+                    Don't have an account?{" "}
+                    <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+                        Sign up
             </Text>
-                    </Text>
-                </View>
-            </KeyboardAwareScrollView>
-        </View>
+                </Text>
+            </View>
+        </KeyboardAwareScrollView>
     );
 }

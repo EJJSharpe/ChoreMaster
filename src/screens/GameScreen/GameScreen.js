@@ -20,7 +20,7 @@ export default function GameScreen() {
     }
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
-  
+
     return (
         <ScrollView>
             <Text style={styles.heading}> Your allocated Tasks</Text>

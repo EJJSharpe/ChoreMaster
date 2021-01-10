@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#033B86',
         marginLeft: 30,
         marginRight: 30,
-        marginTop: 20,
+        marginTop: 10,
         height: 48,
         borderRadius: 25,
         alignItems: "center",
         justifyContent: 'center',
-        borderRadius: 25
+
     },
     buttonTitle: {
         color: 'white',
@@ -48,14 +48,23 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     modalView: {
-        backgroundColor: 'yellow',
-        borderRadius: 25
+        backgroundColor: '#FFD006',
+        borderRadius: 25,
+        alignSelf: 'center',
+        width: 290
     },
     modalText: {
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 10
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        fontSize: 20,
+        textAlign: 'center'
 
+    },
+    instructionsText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        marginTop: 20
     }
 })
