@@ -9,7 +9,8 @@ export const createHouse = async (name, userId, usersFullName) => {
         lastStart: "",
         tasksAssigned: false,
         name: name,
-        users: []
+        users: [],
+        houseStage: 1 //1 for lobby, 2 for host setting tasks, 3 for ready
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
