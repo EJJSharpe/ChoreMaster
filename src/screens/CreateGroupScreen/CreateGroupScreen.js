@@ -12,7 +12,7 @@ export default function CreateGroupScreen({ navigation, route }) {
         const { user } = route.params
 
         api.createHouse(groupName, user.id, user.fullName)
-
+        user.host = true;
         navigation.navigate('Lobby', { user, groupName })
 
     }

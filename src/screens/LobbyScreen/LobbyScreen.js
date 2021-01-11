@@ -17,7 +17,6 @@ export default function LobbyScreen({ navigation, route }) {
 
     useEffect(() => {
 
-
         api.getHouseData(groupName)
             .then(houseData => {
                 console.log(houseData)
@@ -54,17 +53,15 @@ export default function LobbyScreen({ navigation, route }) {
                 <Text style={styles.houseName}>{houseName}</Text>
                 <View style={styles.usersContainer}>
                     <Text style={styles.introText}>Users in your group:</Text>
-                    {houseUsers.map(houseUser => {
-                        console.log(houseUser)
+                    {houseUsers.map((houseUser, index) => {
                         return (
-                            <View>
-
+                            <View key={index}>
                                 <Text style={styles.user}>{"👤    " + houseUser}</Text>
                             </View>
                         )
                     })}
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { houseName }) }}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { groupName, user }) }}>
                     <Text style={styles.buttonText}>Ok</Text>
                 </TouchableOpacity>
             </View>
