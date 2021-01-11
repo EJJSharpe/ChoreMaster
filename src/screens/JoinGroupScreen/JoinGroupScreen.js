@@ -9,7 +9,8 @@ export default function JoinGroupScreen({ navigation, route }) {
 
     const onJoinGroupSubmit = () => {
         const { user } = route.params;
-        api.addUserToHouse(groupCode, user.fullName)
+
+        api.addUserToHouse(groupCode, user.id, user.fullName)
             .then(userId => {
                 navigate.navigate('Lobby', { user, houseData })
             })
