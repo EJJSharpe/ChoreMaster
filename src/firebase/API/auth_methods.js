@@ -106,3 +106,14 @@ export function singInGoogle() {
         .catch((error) => alert("There is something wrong!!!!", error.message));
     });
 }
+export function signOutUser() {
+  return firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+}
