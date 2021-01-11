@@ -1,13 +1,20 @@
 import { firebase } from './config'
 
+export const setHost = async (userId) => {
+    await firebase.firestore().collection('users').doc(userId).update({ host: true })
+}
+
 export const createHouse = async (name, userId) => {
     const newHouse = {
         lastStart: "",
         tasksAssigned: false,
-        name: name
+        name: name,
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
+
+    //set the users host value to be true
+    setHost(userId)
 
     //add creator, as in logged in user
     addUserToHouse(name, userId);
@@ -135,10 +142,11 @@ export const getUserFields = async (userId) => {
 }
 
 export const getUserWildcards = async (userId) => {
-    const wildcardsRef = await firebase.firestore().collection('users').doc(userId).collection("wildCards");
+    const wildcardsRef = await firebase.firestore().collection('users').doc(userId)
+    //removed .collection('wildcards') from the end of this one
     const doc = await wildcardsRef.get();
-    const wildcardsArr = [];
-    doc.forEach(doc => wildcardsArr.push(doc.data()))
+    const wildcardsArr = doc.data().wildcards
+    // doc.forEach(doc => wildcardsArr.push(doc.data()))
 
     return wildcardsArr;
 }

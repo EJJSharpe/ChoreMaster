@@ -3,19 +3,24 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#ff841f',
+    },
+    firstInput: {
+        height: 48,
+        borderRadius: 25,
+        overflow: 'hidden',
+        backgroundColor: 'white',
         marginTop: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    title: {
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingLeft: 16,
+        borderColor: '#FFD006',
+        borderLeftWidth: 2,
+        borderRightWidth: 2,
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
 
-    },
-    logo: {
-        flex: 1,
-        height: 120,
-        width: 90,
-        alignSelf: "center",
-        margin: 30
     },
     input: {
         height: 48,
@@ -26,17 +31,24 @@ export default StyleSheet.create({
         marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16
+        paddingLeft: 16,
+        borderColor: '#FFD006',
+        borderLeftWidth: 2,
+        borderRightWidth: 2,
+        borderTopWidth: 2,
+        borderBottomWidth: 2
+
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#033B86',
         marginLeft: 30,
         marginRight: 30,
-        marginTop: 20,
+        marginTop: 10,
         height: 48,
         borderRadius: 25,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     buttonTitle: {
         color: 'white',
@@ -50,11 +62,20 @@ export default StyleSheet.create({
     },
     footerText: {
         fontSize: 16,
-        color: '#2e2e2d'
+        color: 'white'
     },
     footerLink: {
-        color: "#788eec",
+        color: '#FFD006',
         fontWeight: "bold",
         fontSize: 16
+    },
+    logoImage: {
+        marginTop: 50,
+        marginBottom: 100,
+        width: 250,
+        height: 160,
+        resizeMode: 'contain',
+        marginBottom: 0,
+        alignSelf: 'center'
     }
 })

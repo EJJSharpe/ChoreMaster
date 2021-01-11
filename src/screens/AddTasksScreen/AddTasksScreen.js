@@ -26,13 +26,15 @@ export default function AddTasksScreen({ navigation }) {
 
 
     return (
-        <ScrollView keyboardShouldPersistTaps='handled'>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>In your group think of chores that are shared between you and add them the list. We recommend 2 per person but a few less or more is fine!</Text>
+                    <Text style={styles.instructionsText}>Instructions</Text>
+                    <Text style={styles.modalText}>In your group think of some chores that are shared between you and add them to the list.  We recommend 2 tasks per person but a few less or more is fine!</Text>
                     <Button title="OK" onPress={toggleModal} />
                 </View>
             </Modal>
+            <Text style={styles.header}>Add some chores!</Text>
             {tasksList.map(({ task }, index) => {
                 return (
                     <View>

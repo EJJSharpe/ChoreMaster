@@ -12,9 +12,9 @@ export default function AddPointsScreen({ navigation, route }) {
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
     }
- const onSubmit =() =>{
-     navigation.navigate('GameScreen')
- }
+    const onSubmit = () => {
+        navigation.navigate('GameScreen')
+    }
     useEffect(() => {
         toggleModal()
     }, [])
@@ -39,19 +39,20 @@ export default function AddPointsScreen({ navigation, route }) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Allocate the points given to each task. Harder tasks should be given a high value and easier tasks should be given a low value</Text>
+                    <Text style={styles.instructionsText}>Instructions</Text>
+                    <Text style={styles.modalText}>Allocate the points given between the chores, giving each chore a maximum of 3 points. Make sure to give the hardest tasks the most point and the easiest tasks the least! </Text>
                     <Button title="OK" onPress={toggleModal} />
                 </View>
             </Modal>
-            <Text>Points Remaining: {pointsLeft}</Text>
+            <Text style={styles.pointsRemaining}>Points Remaining: {pointsLeft}</Text>
             {tasksList.map(({ task, points }, index) => {
                 return (
                     <View key={index} style={styles.taskContainer}>
                         <Text style={styles.task}>{task}</Text>
-                        <TextInput placeholder='0' 
+                        <TextInput placeholder='0'
                             keyboardType='number-pad'
                             style={styles.numInput}
                             value={points}
