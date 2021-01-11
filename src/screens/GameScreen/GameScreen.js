@@ -19,6 +19,8 @@ export default function GameScreen() {
         setIsUserTurn(!isUserTurn)
     }
 
+
+
     const turnText = isUserTurn ? "your turn" : "wait your turn";
 
     return (

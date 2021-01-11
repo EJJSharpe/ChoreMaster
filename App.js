@@ -59,7 +59,7 @@ export default function App({ navigation }) {
             <RootStack.Screen
               name={"MainStack"}
               component={MainStackNavigator}
-              initialParams={{ setUser: setUser, user: user }}
+              initialParams={{ setUser, user }}
             />
           )}
       </RootStack.Navigator>
