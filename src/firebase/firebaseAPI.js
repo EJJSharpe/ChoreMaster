@@ -1,3 +1,4 @@
+import { apisAreAvailable } from 'expo'
 import { firebase } from './config'
 
 export const setHost = async (userId) => {
@@ -9,7 +10,8 @@ export const createHouse = async (name, userId, usersFullName) => {
         lastStart: "",
         tasksAssigned: false,
         name: name,
-        users: []
+        users: [],
+        houseStage: 1 //1 for lobby, 2 for host setting tasks, 3 for ready
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
@@ -185,6 +187,40 @@ export const getHouseData = async (house) => {
     return data;
 }
 
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+export const createMultipleTasks = async (house, taskArr) => {
+    for (let task of taskArr) {
+        createTask(house, task.name, task.points)
+    }
+    return true;
+}
+
+export const shareOutTasks = async (house) => {
+    const users = await getHouseUsers(house);
+    const tasks = await getHouseTasks(house);
+
+    for (let i = 0; i < tasks.length; i++) {
+        // find out how to get taskIds
+        const task = tasks[i]
+        const user = users[i % users.length]
+        api.assignTask(house, TASKID, user.id);
+    }
+}
+
+// export const assignTask = async (house, taskId, userId) => {
+//     // find task doc and edit userId
+//     await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
+//         .update({ userId });
+//     return taskId;
+// }
+
+export const shuffleWildcard = async () => {
+    //shuffle all players tasks
+}
+
+export const swapWildcard = async () => {
+    //swap a task with another player
+}
+
+export const skipTurnWildcard = async () => {
+    // skip your turn
 }
