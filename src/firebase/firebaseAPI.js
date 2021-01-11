@@ -197,24 +197,20 @@ export const createMultipleTasks = async (house, taskArr) => {
 export const shareOutTasks = async (house) => {
     const users = await getHouseUsers(house);
     const tasks = await getHouseTasks(house);
-
+    shuffleArray(users);
+    shuffleArray(tasks);
     for (let i = 0; i < tasks.length; i++) {
-        // find out how to get taskIds
+        // iterates through tasks, giving to users in a loop
         const task = tasks[i]
         const user = users[i % users.length]
-        api.assignTask(house, TASKID, user.id);
+        api.assignTask(house, task.name, user.id);
     }
 }
 
-// export const assignTask = async (house, taskId, userId) => {
-//     // find task doc and edit userId
-//     await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
-//         .update({ userId });
-//     return taskId;
-// }
 
 export const shuffleWildcard = async () => {
-    //shuffle all players tasks
+    //shuffle all players tasks (redeal basically)
+    shareOutTasks()
 }
 
 export const swapWildcard = async () => {
@@ -223,4 +219,11 @@ export const swapWildcard = async () => {
 
 export const skipTurnWildcard = async () => {
     // skip your turn
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
