@@ -1,67 +1,54 @@
-import 'react-native-gesture-handler';
-import React, { useEffect, useState } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from './src/screens/styles'
+import "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Image, View } from "react-native";
+import { decode, encode } from "base-64";
+import { firebase } from "./src/firebase/config";
+import { AuthStackNavigator } from "./src/navigators/AuthStackNavigator";
+import { MainStackNavigator } from "./src/navigators/MainStackNavigator";
 
-import { AddPointsScreen, LoginScreen, CreateJoinScreen, RegistrationScreen, CreateGroupScreen, JoinGroupScreen, AddTasksScreen, HomeScreen, GameScreen, LobbyScreen, UserWildcards } from './src/screens/'
+if (!global.btoa) {
+  global.btoa = encode;
+}
+if (!global.atob) {
+  global.atob = decode;
+}
 
-import { decode, encode } from 'base-64'
-import { firebase } from './src/firebase/config'
-import * as API from './src/firebase/firebaseAPI'
+const RootStack = createStackNavigator();
 
-if (!global.btoa) { global.btoa = encode }
-if (!global.atob) { global.atob = decode }
-
-const Stack = createStackNavigator();
-
-
-export default function App() {
-
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
+export default function App({ navigation }) {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
-    firebase.auth().onAuthStateChanged(user => {
+    const usersRef = firebase.firestore().collection("users");
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         usersRef
           .doc(user.uid)
           .get()
           .then((document) => {
-            const userData = document.data()
-            setLoading(false)
-            setUser(userData)
+            const userData = document.data();
+            setLoading(false);
+            setUser(userData);
           })
           .catch((error) => {
-            setLoading(false)
+            setLoading(null);
           });
       } else {
-        setLoading(false)
+        setLoading(false);
       }
     });
   }, []);
 
-  const LogoTitle = () => {
-    return (
-      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-        <Image
-          style={{ height: 55, width: 100, alignSelf: 'center', resizeMode: 'contain' }}
-          source={require('./src/images/ChoreMasterLogo.png')}
-        />
-      </View>
-    );
-  }
-
   if (loading) {
-    return (
-      <></>
-    )
+    return <></>;
   }
 
   return (
     <NavigationContainer>
+<<<<<<< HEAD
       <Stack.Navigator initialRouteName="Login"
         screenOptions={{
           headerStyle: {
@@ -88,5 +75,23 @@ export default function App() {
         <Stack.Screen name="Lobby" component={LobbyScreen} />
       </Stack.Navigator>
     </NavigationContainer >
+=======
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        {user === null ? (
+          <RootStack.Screen
+            name={"AuthStack"}
+            component={AuthStackNavigator}
+            screenOptions={{}}
+          />
+        ) : (
+          <RootStack.Screen
+            name={"MainStack"}
+            component={MainStackNavigator}
+            initialParams={{ setUser: setUser, user: user }}
+          />
+        )}
+      </RootStack.Navigator>
+    </NavigationContainer>
+>>>>>>> a4170c3e7d42b5bbbd542a75ba38d72a7a1fc014
   );
 }
