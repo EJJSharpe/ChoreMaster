@@ -21,20 +21,21 @@ export const createUser = async (userId) => {
         fullName: "",
         houseId: "",
         id: userId,
-        points: 0
+        points: 0,
+        host: false
     }
     await firebase.firestore().collection('users').doc(userId).set(newUser);
     return newUser;
 }
 
-export const addUserToHouse = (house, userId, fullName) => {
+export const addUserToHouse = async (house, userId, fullName) => {
     // find user by userId, edit houseId
-    firebase.firestore().collection('users').doc(userId).update({ houseId: house });
-    firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
+    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: true });
+    await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     return userId
 }
 
-export const createTask = (house, taskName, points) => {
+export const createTask = async (house, taskName, points) => {
     // create new doc in collection "tasks" in house, with completed, name, points, userId
     const newTask = {
         name: taskName,
@@ -42,14 +43,14 @@ export const createTask = (house, taskName, points) => {
         completed: false,
         userId: ""
     }
-    firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskName)
+    await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskName)
         .set(newTask);
     return newTask;
 }
 
-export const assignTask = (house, taskId, userId) => {
+export const assignTask = async (house, taskId, userId) => {
     // find task doc and edit userId
-    firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
+    await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
         .update({ userId });
     return taskId;
 }
@@ -72,9 +73,9 @@ export const completeTask = async (house, taskId) => {
     return taskData;
 }
 
-export const resetTask = (house, taskId) => {
+export const resetTask = async (house, taskId) => {
     // find task, set completed to false, remove userId
-    firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
+    await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
         .update({ completed: false, userId: "" });
     return taskId;
 }
