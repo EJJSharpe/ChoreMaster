@@ -11,12 +11,14 @@ export default function LobbyScreen({ navigation, route }) {
 
     const [houseUsers, setHouseUsers] = useState([])
     const [houseName, setHouseName] = useState('')
-    const { user } = route.params.user;
+    const { user, groupName } = route.params;
 
 
 
     useEffect(() => {
-        api.getHouseData(user.houseId)
+
+
+        api.getHouseData(groupName)
             .then(houseData => {
                 console.log(houseData)
                 if (houseData.tasksAssigned) {
@@ -33,7 +35,7 @@ export default function LobbyScreen({ navigation, route }) {
                 console.log(houseName)
                 const tasksObserver = houseDoc.onSnapshot(doc => {
                     const { users } = doc.data()
-                    console.log(users)
+                    console.log(doc.data())
                     setHouseUsers(users);
                 }, err => {
                     console.log(`Encountered error: ${err}`);

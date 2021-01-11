@@ -32,11 +32,11 @@ const LogoTitle = () => {
 
 const MainStack = createStackNavigator();
 
-export function MainStackNavigator(props) {
+export function MainStackNavigator({ route }) {
   const onLoginOut = () => {
     const loggedInUser = signOutUser();
     loggedInUser.then(() => {
-      props.route.params.setUser(null);
+      route.params.setUser(null);
     });
   };
 
@@ -59,7 +59,7 @@ export function MainStackNavigator(props) {
       <MainStack.Screen
         name="CreateJoin"
         component={CreateJoinScreen}
-        initialParams={{ user: props.route.params.user }}
+        initialParams={{ user: route.params }}
       />
 
       <MainStack.Screen name="Home" component={HomeScreen} />
