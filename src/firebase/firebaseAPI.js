@@ -213,12 +213,26 @@ export const shuffleWildcard = async () => {
     shareOutTasks()
 }
 
-export const swapWildcard = async () => {
+export const swapWildcard = async (house, taskId, userId) => {
     //swap a task with another player
+    const users = await getHouseUsers(house);
+    const otherUsers = users.filter(user => user.id !== userId);
+
+    // selects victim at random, and one of their tasks randomly
+    const victim = otherUsers[Math.floor(Math.random() * otherUsers.length)];
+    const victimTasks = await getUserTasks(house, victim.id);
+    const targetTask = victimTasks[Math.floor(Math.random() * victimTasks.length)];
+
+    //assigns target task to self, and user task to victim
+    await assignTask(house, targetTask.name, userId)
+    await assignTask(house, taskId, victim.id)
+
+    return targetTask;
 }
 
 export const skipTurnWildcard = async () => {
     // skip your turn
+    return;
 }
 
 function shuffleArray(array) {
