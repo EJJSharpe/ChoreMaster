@@ -14,7 +14,7 @@ export default function LobbyScreen({ navigation, route }) {
     const { user, groupName } = route.params;
 
 
-
+    //LISTENER FOR USERS JOINING GROUP
     useEffect(() => {
 
         api.getHouseData(groupName)
@@ -34,7 +34,6 @@ export default function LobbyScreen({ navigation, route }) {
                 console.log(houseName)
                 const tasksObserver = houseDoc.onSnapshot(doc => {
                     const { users } = doc.data()
-                    console.log(doc.data())
                     setHouseUsers(users);
                 }, err => {
                     console.log(`Encountered error: ${err}`);
@@ -43,6 +42,29 @@ export default function LobbyScreen({ navigation, route }) {
                 return tasksObserver;
             })
     }, [])
+
+
+
+    // NON HOST USER LISTENING FOR HOUSESTAGE TO CHANGE
+    useEffect(() => {
+        if (!user.host) {
+            const doc = firebase.firestore().collection('houses').doc(groupName);
+
+            const gameStageObserver = doc.onSnapshot(docSnapshot => {
+                const { houseStage } = docSnapshot.data()
+                if (houseStage === 'game') {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: "Game", params: { user, groupName } }],
+                    });
+                }
+            }, err => {
+                console.log(`Encountered error: ${err}`);
+            });
+
+            return gameStageObserver;
+        }
+    })
 
 
 
