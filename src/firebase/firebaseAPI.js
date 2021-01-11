@@ -187,6 +187,13 @@ export const getHouseData = async (house) => {
     return data;
 }
 
+export const createMultipleTasks = async (house, taskArr) => {
+    for (let task of taskArr) {
+        createTask(house, task.name, task.points)
+    }
+    return true;
+}
+
 export const shareOutTasks = async (house) => {
     const users = await getHouseUsers(house);
     const tasks = await getHouseTasks(house);
