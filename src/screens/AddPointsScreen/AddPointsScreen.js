@@ -39,7 +39,7 @@ export default function AddPointsScreen({ navigation, route }) {
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalView}>
                     <Text style={styles.instructionsText}>Instructions</Text>
@@ -47,7 +47,7 @@ export default function AddPointsScreen({ navigation, route }) {
                     <Button title="OK" onPress={toggleModal} />
                 </View>
             </Modal>
-            <Text>Points Remaining: {pointsLeft}</Text>
+            <Text style={styles.pointsRemaining}>Points Remaining: {pointsLeft}</Text>
             {tasksList.map(({ task, points }, index) => {
                 return (
                     <View key={index} style={styles.taskContainer}>

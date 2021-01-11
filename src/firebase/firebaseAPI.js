@@ -142,10 +142,11 @@ export const getUserFields = async (userId) => {
 }
 
 export const getUserWildcards = async (userId) => {
-    const wildcardsRef = await firebase.firestore().collection('users').doc(userId).collection("wildCards");
+    const wildcardsRef = await firebase.firestore().collection('users').doc(userId)
+    //removed .collection('wildcards') from the end of this one
     const doc = await wildcardsRef.get();
-    const wildcardsArr = [];
-    doc.forEach(doc => wildcardsArr.push(doc.data()))
+    const wildcardsArr = doc.data().wildcards
+    // doc.forEach(doc => wildcardsArr.push(doc.data()))
 
     return wildcardsArr;
 }
