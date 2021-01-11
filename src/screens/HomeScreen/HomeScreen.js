@@ -9,29 +9,27 @@ import * as api from '../../firebase/firebaseAPI'
 export default function HomeScreen({ navigation, route }) {
     const [userTasks, setUserTasks] = useState([{ name: 'wash dishes', points: 2, completed: false }, { task: 'have fun', points: 2, completed: false }, { task: 'wash dishes', points: 2, completed: false }])
 
-    // const { user, houseData } = route.params;
-    const user =
-    {
-        email: 'ejjsharpe@gmail.com',
-        name: 'Elliot Sharpe',
-        host: true,
-        houseId: 'Hello',
-        id: 'PmtEISirf7eo5QuRqvi74twPp7V2',
-        points: 0,
-        wildcards: ['skip', 'shuffle'],
-    }
 
-    const testUserTasks = [{ name: 'task 1', points: 2, completed: false }, { name: 'task 2', points: 3, completed: false }, { name: 'task3', points: 2, completed: false }]
+    // MAKE SURE ANY USER DATA COMES FROM ROUTE PARAMS
+    const { user } = route.params;
+    // const user =
+    // {
+    //     email: 'ejjsharpe@gmail.com',
+    //     name: 'Elliot Sharpe',
+    //     host: true,
+    //     houseId: 'Hello',
+    //     id: 'PmtEISirf7eo5QuRqvi74twPp7V2',
+    //     points: 0,
+    //     wildcards: ['skip', 'shuffle'],
+    // }
+
     useEffect(() => {
         // do a request for the users tasks
         // possibly format them into the correct structure
         // setState with those tasks
-
-
-        setUserTasks(testUserTasks)
-
-
-
+        api.getUserTasks(user.houseId, user.id).then((currentUsersTasks) => {
+            setUserTasks(currentUsersTasks)
+        })
     }, [])
 
     function completeTask(index) {

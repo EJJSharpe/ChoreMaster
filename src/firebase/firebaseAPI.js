@@ -5,11 +5,13 @@ export const setHost = async (userId) => {
     await firebase.firestore().collection('users').doc(userId).update({ host: true })
 }
 
-export const createHouse = async (name, userId) => {
+export const createHouse = async (name, userId, usersFullName) => {
     const newHouse = {
         lastStart: "",
         tasksAssigned: false,
         name: name,
+        users: [],
+        houseStage: 1 //1 for lobby, 2 for host setting tasks, 3 for ready
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
@@ -18,7 +20,7 @@ export const createHouse = async (name, userId) => {
     setHost(userId)
 
     //add creator, as in logged in user
-    addUserToHouse(name, userId);
+    addUserToHouse(name, userId, usersFullName);
     return newHouse;
 }
 

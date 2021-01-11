@@ -6,6 +6,7 @@ import styles from './styles'
 export default function CreateJoinScreen({ navigation, route }) {
     const onCreateGroupPress = () => {
         const { user } = route.params;
+        console.log(user)
         navigation.navigate('CreateGroup', user)
     }
 
