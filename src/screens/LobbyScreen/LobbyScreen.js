@@ -64,7 +64,7 @@ export default function LobbyScreen({ navigation, route }) {
                         )
                     })}
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { houseName }) }}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { houseName, user }) }}>
                     <Text style={styles.buttonText}>Ok</Text>
                 </TouchableOpacity>
             </View>

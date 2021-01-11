@@ -8,12 +8,13 @@ export default function AddPointsScreen({ navigation, route }) {
     const [tasksList, setTasksList] = useState(route.params.tasksList)
     const [isModalVisible, setModalVisible] = useState(false)
     const [pointsLeft, setPointsLeft] = useState(tasksList.length * 2)
+    const { user, groupName } = route.params;
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
     }
     const onSubmit = () => {
-        navigation.navigate('GameScreen')
+        navigation.navigate('GameScreen', { user, groupName })
     }
     useEffect(() => {
         toggleModal()

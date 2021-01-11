@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles'
 import { Text, View, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native'
 import Modal from 'react-native-modal';
+import * as API from '../../firebase/firebaseAPI'
+import { apisAreAvailable } from 'expo';
 
 export default function GameScreen() {
 
@@ -9,11 +11,18 @@ export default function GameScreen() {
     const [userTasks, setUserTasks] = useState([{ task: "clean toilet", points: 3 }, { task: 'hello', points: 2 }, { task: "bins", points: 1 }])
     const [wildCards, setWildCards] = useState([{ name: 'shuffle', used: false }, { name: 'skip', used: false }, { name: 'swap', used: false }])
     const [isUserTurn, setIsUserTurn] = useState(false)
+    const { user, groupName } = route.params;
 
     const onWildCardPress = (name, used, index) => {
         const newWildCards = [...wildCards]
         newWildCards[index].used = !used;
+
+        //remove from state array and api
+        newWildCards.splice(index, 1);
+        API.removeWildcardFromUser(name, user.id)
         setWildCards(newWildCards)
+
+        // end turn
     }
     const toggleTurn = () => {
         setIsUserTurn(!isUserTurn)
