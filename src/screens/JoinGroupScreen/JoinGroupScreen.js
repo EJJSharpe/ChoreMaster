@@ -5,14 +5,15 @@ import * as api from '../../firebase/firebaseAPI'
 
 export default function JoinGroupScreen({ navigation, route }) {
 
-    const [groupCode, setGroupCode] = useState('')
+    const [groupName, setGroupName] = useState('')
 
     const onJoinGroupSubmit = () => {
         const { user } = route.params;
+        user.host = false;
 
-        api.addUserToHouse(groupCode, user.id, user.fullName)
+        api.addUserToHouse(groupName, user.id, user.fullName)
             .then(userId => {
-                navigate.navigate('Lobby', { user, houseData })
+                navigation.navigate('Lobby', { user, groupName })
             })
     }
 
@@ -20,8 +21,8 @@ export default function JoinGroupScreen({ navigation, route }) {
         <View>
             <TextInput style={styles.input}
                 placeholder='Enter code from host to join group'
-                onChangeText={(text) => setGroupCode(text)}
-                value={groupCode} />
+                onChangeText={(text) => setGroupName(text)}
+                value={groupName} />
             <TouchableOpacity style={styles.button} onPress={() => { onJoinGroupSubmit() }}><Text style={styles.buttonTitle}>Join</Text></TouchableOpacity>
         </View>
     )
