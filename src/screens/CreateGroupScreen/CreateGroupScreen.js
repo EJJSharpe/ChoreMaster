@@ -11,9 +11,9 @@ export default function CreateGroupScreen({ navigation, route }) {
     const onCreateGroupSubmit = () => {
         const { user } = route.params
 
-        api.createHouse(groupName, user.id)
+        api.createHouse(groupName, user.id, user.fullName)
 
-        navigation.navigate('Lobby', { user, houseData })
+        navigation.navigate('Lobby', { user, groupName })
 
     }
 
