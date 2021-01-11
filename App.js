@@ -48,6 +48,34 @@ export default function App({ navigation }) {
 
   return (
     <NavigationContainer>
+<<<<<<< HEAD
+      <Stack.Navigator initialRouteName="Login"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#ff841f',
+            elevation: 0,
+            shadowColor: 'transparent'
+          },
+          headerTitle: props => <LogoTitle {...props} />
+        }}
+      >
+        <Stack.Screen name="CreateJoin" >
+          {props => <CreateJoinScreen {...props} extraData={user} />}
+        </Stack.Screen>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="UserWildcards" component={UserWildcards} />
+        <Stack.Screen name="Login" options={{ headerTitle: '' }} component={LoginScreen} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} />
+        <Stack.Screen name="CreateGroup" component={CreateGroupScreen} />
+        <Stack.Screen name="JoinGroup" component={JoinGroupScreen} />
+        <Stack.Screen name="AddTasks" component={AddTasksScreen} />
+        <Stack.Screen name="AddPoints" component={AddPointsScreen} />
+        <Stack.Screen name="GameScreen" component={GameScreen}></Stack.Screen>
+        <Stack.Screen name='Game' component={GameScreen} />
+        <Stack.Screen name="Lobby" component={LobbyScreen} />
+      </Stack.Navigator>
+    </NavigationContainer >
+=======
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         {user === null ? (
           <RootStack.Screen
@@ -64,5 +92,6 @@ export default function App({ navigation }) {
         )}
       </RootStack.Navigator>
     </NavigationContainer>
+>>>>>>> a4170c3e7d42b5bbbd542a75ba38d72a7a1fc014
   );
 }

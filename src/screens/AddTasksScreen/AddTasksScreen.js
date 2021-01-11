@@ -26,7 +26,7 @@ export default function AddTasksScreen({ navigation }) {
 
 
     return (
-        <ScrollView keyboardShouldPersistTaps='handled'>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalView}>
                     <Text style={styles.instructionsText}>Instructions</Text>
@@ -34,6 +34,7 @@ export default function AddTasksScreen({ navigation }) {
                     <Button title="OK" onPress={toggleModal} />
                 </View>
             </Modal>
+            <Text style={styles.header}>Add some chores!</Text>
             {tasksList.map(({ task }, index) => {
                 return (
                     <View>

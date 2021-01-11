@@ -4,17 +4,17 @@ export default StyleSheet.create({
 
     lobbyContainer: {
         backgroundColor: 'white',
-        flex: 1
+        flex: 1,
+        borderRadius: 20,
     },
     usersContainer: {
         backgroundColor: 'white',
         height: 400,
         marginLeft: 30,
         marginRight: 30,
-        borderRadius: 10,
-        borderBottomWidth: 3,
-        borderTopWidth: 3,
-        borderColor: '#FFD006'
+        borderBottomWidth: 4,
+        borderTopWidth: 4,
+        borderColor: '#ff841f'
     },
 
     user: {
@@ -32,7 +32,7 @@ export default StyleSheet.create({
         borderRadius: 25,
         overflow: 'hidden',
         borderColor: '#033B86',
-        backgroundColor: '#033B86'
+        backgroundColor: '#033B86',
     },
     topIntroText: {
         textAlign: 'center',
@@ -71,18 +71,19 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     button: {
-        backgroundColor: '#033B86',
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 40,
+        marginRight: 40,
         marginTop: 20,
-        paddingTop: 15,
-        paddingBottom: 15,
+        paddingTop: 10,
+        paddingBottom: 10,
         paddingLeft: 20,
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 25,
-        backgroundColor: 'orange'
+        backgroundColor: '#ff841f',
+        borderWidth: 2,
+        borderColor: '#FFD006',
     },
     buttonText: {
         color: 'white',

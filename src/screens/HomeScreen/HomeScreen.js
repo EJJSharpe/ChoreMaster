@@ -8,20 +8,43 @@ import * as api from '../../firebase/firebaseAPI'
 
 export default function HomeScreen({ navigation, route }) {
     const [userTasks, setUserTasks] = useState([{ name: 'wash dishes', points: 2, completed: false }, { task: 'have fun', points: 2, completed: false }, { task: 'wash dishes', points: 2, completed: false }])
-    // const user = { name: 'elliot', id: 'PmtEISirf7eo5QuRqvi74twPp7V2' };
-    // useEffect(() => {
-    //     // const { user, houseData } = route.params;
-    //     // console.log(route.params)
 
-
-    // }, [])
-
-    function toggleCheckBox(index, points) {
-        const userTasksCopy = [...userTasks]
-        userTasksCopy[index].completed = !userTasksCopy[index].completed
-        // IF USERS TASK IS COMPLETED, NEED TO ADD THE ADD POINTS TO THE USERS POINTS ATTRIBUTE
-        setUserTasks(userTasksCopy)
+    // const { user, houseData } = route.params;
+    const user =
+    {
+        email: 'ejjsharpe@gmail.com',
+        name: 'Elliot Sharpe',
+        host: true,
+        houseId: 'Hello',
+        id: 'PmtEISirf7eo5QuRqvi74twPp7V2',
+        points: 0,
+        wildcards: ['skip', 'shuffle'],
     }
+
+    const testUserTasks = [{ name: 'task 1', points: 2, completed: false }, { name: 'task 2', points: 3, completed: false }, { name: 'task3', points: 2, completed: false }]
+    useEffect(() => {
+        // do a request for the users tasks
+        // possibly format them into the correct structure
+        // setState with those tasks
+
+
+        setUserTasks(testUserTasks)
+
+
+
+    }, [])
+
+    function completeTask(index) {
+        const userTasksCopy = [...userTasks]
+        if (!userTasksCopy[index].completed) {
+            userTasksCopy[index].completed = true
+            console.log(userTasksCopy[index])
+            setUserTasks(userTasksCopy)
+        }
+
+        // NEEDS TO COMMUNICATE WITH THE SERVER AND MARK THAT TASK AS DONE AND INCREASE USERS POINTS
+    }
+
 
     const calculatePoints = () => {
         let totalPoints = 0;
@@ -32,15 +55,21 @@ export default function HomeScreen({ navigation, route }) {
     }
 
     const buyWildcard = () => {
+        // makes random number between 0 and 3, can be increased
+        const randomNumber = Math.floor(Math.random() * 5)
+        const wildcardsArray = ['shuffle', 'skip', 'swap', 'double']
+        const wildCardToAdd = wildCardsArray[randomNumber]
 
+        // NEED A FUNCTION HERE TO ADD THIS TO USERS WILDCARDS ARRAY
     }
 
     const showUsersWildcards = () => {
-        navigation.navigate('UserWildcards')
+        navigation.navigate('UserWildcards', { user })
     }
 
     return (
-        <View>
+
+        <View style={styles.container}>
             <Text style={styles.title}>You've earned {calculatePoints()} points this week! </Text>
             <ScrollView style={styles.tasksSectionContainer}>
                 {
@@ -49,12 +78,7 @@ export default function HomeScreen({ navigation, route }) {
                             <View key={index} style={styles.taskContainer}>
                                 <Text style={styles.task}>{name}</Text>
                                 <Text style={styles.pointsValue}>{points}</Text>
-                                <CheckBox text={''} isChecked={completed}
-                                    onPress={() => { toggleCheckBox(index, points) }}
-                                    checkBoxColor={'red'}
-                                    style={styles.checkbox}
-                                    // make it so task cannot be unchecked
-                                    checkBoxSize={40} />
+                                <TouchableOpacity style={completed ? styles.checked : styles.unchecked} onPress={() => { completeTask(index) }}></TouchableOpacity>
 
                             </View>
                         )
