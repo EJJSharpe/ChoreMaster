@@ -1,92 +1,91 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "center",
+        backgroundColor: "#F5FCFF",
+        alignSelf: "stretch",
+    },
+
+    title: {
+        fontSize: 38,
+        fontWeight: "800",
+        alignSelf: "center",
+    },
 
     task: {
-        borderRadius: 25,
-        overflow: 'hidden',
-        backgroundColor: 'grey',
-        marginLeft: 30,
-        marginRight: 20,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginTop: 20,
-        paddingTop: 8,
-        paddingBottom: 10,
-        fontWeight: 'bold'
+        paddingHorizontal: 40,
+        fontWeight: "bold",
+        fontSize: 16,
     },
     points: {
-        flex: 1,
-        backgroundColor: 'gray',
-        marginRight: 20,
-        marginLeft: 150,
-        marginTop: 20,
-        height: 20,
-        borderRadius: 25,
-        paddingTop: 1,
-        paddingBottom: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
-        fontWeight: 'bold',
-        justifyContent: 'center',
-        textAlign: 'center'
+        paddingHorizontal: 40,
     },
     taskContainer: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
+        overflow: "hidden",
+        borderRadius: 25,
+        marginVertical: 5,
+        marginHorizontal: 20,
+
+        backgroundColor: "#ff841f",
+    },
+
+    buttonContainer: {
+        flex: 1,
+        flexDirection: "column",
+        alignContent: "center",
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: "#788eec",
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
         borderRadius: 25,
         alignItems: "center",
-        justifyContent: 'center',
-        borderRadius: 25
+        justifyContent: "center",
+        borderRadius: 25,
     },
- heading: {
-fontWeight: 'bold',
-fontSize: 25,
-marginLeft: 70,
- },
- cardContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-},
-card: {
-    
-    borderRadius: 25,
-    overflow: 'hidden',
-    backgroundColor: 'grey',
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
-    marginBottom: 20,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 50,
-    paddingTop: 10,
-    fontWeight: 'bold',
-    alignItems: 'center',
-    justifyContent: 'center',
-},
-turnText:{
-    
-    borderStyle: 'solid',
-    borderWidth: 5,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 20,
-    marginBottom: 20,
-    paddingLeft: 100,
-    paddingRight: 15,
-    paddingBottom: 20,
-    paddingTop: 20,
-
-}
-})
+    heading: {
+        fontWeight: "bold",
+        fontSize: 20,
+        marginLeft: 75,
+        marginTop: 14,
+    },
+    cardContainer: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    card: {
+        borderRadius: 25,
+        overflow: "hidden",
+        backgroundColor: "grey",
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        marginBottom: 20,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 50,
+        paddingTop: 10,
+        fontWeight: "bold",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    turnText: {
+        borderStyle: "solid",
+        borderWidth: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 20,
+        marginBottom: 20,
+        paddingLeft: 100,
+        paddingRight: 15,
+        paddingBottom: 20,
+        paddingTop: 20,
+    },
