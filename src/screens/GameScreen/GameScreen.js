@@ -19,6 +19,12 @@ export default function GameScreen({ route }) {
     const [wildCards, setWildCards] = useState([]);
     const { user, groupName } = route.params;
     useEffect(() => {
+        // api request for house doc, users array, store as variable
+        // on snapshot for the finished array
+        // when finished.length === userArray.length + 1
+        // set houseStage to be home
+
+
         firebase
             .firestore()
             .collection("houses")
@@ -40,8 +46,8 @@ export default function GameScreen({ route }) {
     const [isUserTurn, setIsUserTurn] = useState(false);
 
 
-    const toggleTurn = () => {
-        setIsUserTurn(!isUserTurn);
+    const pressDone = () => {
+        // add users name to finished array
     };
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
@@ -84,11 +90,8 @@ export default function GameScreen({ route }) {
                 </View>
             </ScrollView>
 
-            <TouchableOpacity style={styles.button}>
-                <Text>Pass</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={toggleTurn}>
-                <Text style={styles.turnText}>{turnText}</Text>
+                <Text style={styles.turnText}>Done</Text>
             </TouchableOpacity>
         </View >
     );
