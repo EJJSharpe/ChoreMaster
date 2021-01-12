@@ -1,6 +1,8 @@
 import { apisAreAvailable } from 'expo'
 import { firebase } from './config'
 
+const wildCards = ["shuffle", "swap", "skip"];
+
 export const setHost = async (userId) => {
     await firebase.firestore().collection('users').doc(userId).update({ host: true })
 }
@@ -16,11 +18,12 @@ export const createHouse = async (name, userId, usersFullName) => {
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
 
+    //add creator, as in logged in user
+    addUserToHouse(name, userId, usersFullName);
+
     //set the users host value to be true
     setHost(userId)
 
-    //add creator, as in logged in user
-    addUserToHouse(name, userId, usersFullName);
     return newHouse;
 }
 
@@ -40,7 +43,7 @@ export const createUser = async (userId) => {
 
 export const addUserToHouse = async (house, userId, fullName) => {
     // find user by userId, edit houseId
-    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: true });
+    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: false });
     await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     return userId
 }
@@ -203,7 +206,19 @@ export const shareOutTasks = async (house) => {
         // iterates through tasks, giving to users in a loop
         const task = tasks[i]
         const user = users[i % users.length]
-        api.assignTask(house, task.name, user.id);
+        assignTask(house, task.name, user.id);
+    }
+}
+
+export const shareOutWildcards = async (house) => {
+    const users = await getHouseUsers(house);
+    shuffleArray(wildCards);
+    for (let i = 0; i < users.length; i++) {
+        // iterates through wildCards, giving to users in a loop
+        for (let j = 0; j < 3; j++) {
+            const randWildCard = wildCards[Math.floor(Math.random() * wildCards.length)];
+            addWildcardToUser(randWildCard, users[i].id);
+        }
     }
 }
 
