@@ -15,12 +15,15 @@ export default function AddPointsScreen({ navigation, route }) {
         setModalVisible(!isModalVisible)
     }
     const onSubmit = () => {
-        // uploads tasks to database
+        // uploads tasks to database, shares out tasks and wildcards
         API.createMultipleTasks(groupName, tasksList);
+        API.shareOutWildcards(groupName);
+        API.shareOutTasks(groupName);
 
         console.log(tasksList)
-        navigation.navigate('Game', { user, groupName, tasksList })
+        navigation.navigate('Game', { user, groupName })
     }
+
     useEffect(() => {
         toggleModal()
     }, [])

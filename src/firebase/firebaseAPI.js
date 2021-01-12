@@ -35,7 +35,8 @@ export const createUser = async (userId) => {
         houseId: "",
         id: userId,
         points: 0,
-        host: false
+        host: false,
+        wildCards: []
     }
     await firebase.firestore().collection('users').doc(userId).set(newUser);
     return newUser;
@@ -93,14 +94,20 @@ export const resetTask = async (house, taskId) => {
     return taskId;
 }
 
-export const addWildcardToUser = async (wildCardId, userId) => {
+export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
-    const wildCardRef = await firebase.firestore().collection('wildCards').doc(wildCardId);
-    const doc = await wildCardRef.get();
-    const wildCard = doc.data();
-    wildCard.used = false;
-    firebase.firestore().collection('users').doc(userId).collection('wildCards').doc(wildCardId).set(wildCard);
-    return wildCard;
+    firebase.firestore().collection('users').doc(userId).collection('wildCards').doc(wildCardId).update({ wildCards: firebase.firestore.FieldValue.arrayUnion(wildCardStr) })
+    return wildcardStr;
+}
+
+export const removeWildcardFromUser = async (wildcardStr, userId) => {
+    // remove wildcard to "wildcards" collection on user doc
+    const user = await getUserFields(userId);
+    const wildcardsArr = user.wildCards;
+    wildcardsArr.splice(wildcardsArr.indexOf(wildcardStr), 1);
+    firebase.firestore().collection('users').doc(userId).collection('wildCards').doc(wildCardId).update({ wildCards: wildcardsArr })
+
+    return wildcardsArr;
 }
 
 export const getAllWildcards = async () => {
@@ -223,9 +230,9 @@ export const shareOutWildcards = async (house) => {
 }
 
 
-export const shuffleWildcard = async () => {
+export const shuffleWildcard = async (house) => {
     //shuffle all players tasks (redeal basically)
-    shareOutTasks()
+    shareOutTasks(house)
 }
 
 export const swapWildcard = async (house, taskId, userId) => {
