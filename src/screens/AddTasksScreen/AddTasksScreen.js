@@ -3,7 +3,7 @@ import styles from './styles.js'
 import { Text, SafeAreaView, TouchableOpacity, TextInput, List, Button, View, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 
-export default function AddTasksScreen({ navigation }) {
+export default function AddTasksScreen({ navigation, route }) {
     const [taskInput, setTaskInput] = useState('')
     const [tasksList, setTasksList] = useState([])
     const [isModalVisible, setModalVisible] = useState(false)
