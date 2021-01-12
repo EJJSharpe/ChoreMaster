@@ -89,3 +89,4 @@ export default StyleSheet.create({
         paddingBottom: 20,
         paddingTop: 20,
     },
+})
