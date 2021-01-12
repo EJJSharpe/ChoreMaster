@@ -28,7 +28,7 @@ export default function LoadingScreen({ navigation, route }) {
                 } else {
                     navigation.reset({
                         index: 0,
-                        routes: [{ name: "Lobby", params: { user } }],
+                        routes: [{ name: "Lobby", params: { user, groupName: user.houseId } }],
                     });
                 }
             })
