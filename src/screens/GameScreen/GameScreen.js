@@ -3,20 +3,16 @@ import styles from './styles'
 import { Text, View, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native'
 import Modal from 'react-native-modal';
 import * as API from '../../firebase/firebaseAPI'
+import modal from 'react-native-modal'
 
 export default function GameScreen() {
-
-
     const [userTasks, setUserTasks] = useState([{ task: "clean toilet", points: 3 }, { task: 'hello', points: 2 }, { task: "bins", points: 1 }])
     const [wildCards, setWildCards] = useState([{ name: 'shuffle', used: false }, { name: 'skip', used: false }, { name: 'swap', used: false }])
     const [isUserTurn, setIsUserTurn] = useState(false)
-    const { user, groupName, tasksList } = route.params;
+    const { user, groupName } = route.params;
 
     const onWildCardPress = (name, used, index) => {
         // call wildcard function
-        // if swap, rerender tasks as selectable
-
-
         const newWildCards = [...wildCards]
         newWildCards[index].used = !used;
 
@@ -25,8 +21,10 @@ export default function GameScreen() {
         API.removeWildcardFromUser(name, user.id)
         setWildCards(newWildCards)
 
-        // end turn
+        // end turn???
+
     }
+
 
     const toggleTurn = () => {
         setIsUserTurn(!isUserTurn)
@@ -40,8 +38,8 @@ export default function GameScreen() {
             {userTasks.map(({ task, points }, index) => {
                 return (
                     <View key={index} style={styles.taskContainer}>
-                        <Text style={styles.task}>{task}</Text>
-                        <Text style={styles.points}>{points}</Text>
+                        <TouchableOpacity style={styles.task} onPress={() => { onTaskSelect(task), groupName, user.id }}>{task}</TouchableOpacity>
+                        <TouchableOpacity style={styles.points}>{points}</TouchableOpacity>
                     </View>
                 )
             })}
