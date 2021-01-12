@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.js'
 import { Text, View, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native'
 import Modal from 'react-native-modal';
+import * as API from '../../firebase/firebaseAPI'
 
 export default function AddPointsScreen({ navigation, route }) {
 
@@ -10,15 +11,15 @@ export default function AddPointsScreen({ navigation, route }) {
     const [pointsLeft, setPointsLeft] = useState(tasksList.length * 2)
     const { user, groupName } = route.params;
 
-    const { user, groupName } = route.params;
-
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
     }
     const onSubmit = () => {
-        // FUNCTION TO ADD TASKS WITH POINTS VALUES TO DATABASE
+        // uploads tasks to database
+        API.createMultipleTasks(groupName, tasksList);
+
         console.log(tasksList)
-        navigation.navigate('Game', { user, groupName })
+        navigation.navigate('Game', { user, groupName, tasksList })
     }
     useEffect(() => {
         toggleModal()
