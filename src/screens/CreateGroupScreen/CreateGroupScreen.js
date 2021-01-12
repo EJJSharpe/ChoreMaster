@@ -7,10 +7,10 @@ import { useRef } from 'react'
 export default function CreateGroupScreen({ navigation, route }) {
 
     const [groupName, setGroupName] = useState('')
-
+    const { user } = route.params
     const onCreateGroupSubmit = () => {
-        const { user } = route.params
-        console.log(route.params)
+
+
 
         api.createHouse(groupName, user.id, user.fullName)
         user.host = true;

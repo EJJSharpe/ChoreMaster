@@ -19,6 +19,12 @@ export default function GameScreen({ route }) {
     const [wildCards, setWildCards] = useState([]);
     const { user, groupName } = route.params;
     useEffect(() => {
+        // api request for house doc, users array, store as variable
+        // on snapshot for the finished array
+        // when finished.length === userArray.length + 1
+        // set houseStage to be home
+
+
         firebase
             .firestore()
             .collection("houses")
@@ -40,8 +46,8 @@ export default function GameScreen({ route }) {
     const [isUserTurn, setIsUserTurn] = useState(false);
 
 
-    const toggleTurn = () => {
-        setIsUserTurn(!isUserTurn);
+    const pressDone = () => {
+        // add users name to finished array
     };
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
@@ -58,10 +64,11 @@ export default function GameScreen({ route }) {
 
 
             <Text style={styles.heading}> Your Tasks</Text>
-            <View style={styles.taskSectionContainer}>
+            <ScrollView style={styles.taskSectionContainer}>
 
                 {
                     userTasks.map(({ name, points }, index) => {
+                        console.log(index, '<tasks')
                         return (
                             <View style={styles.taskContainer}>
                                 <Text style={styles.task}>{name}</Text>
@@ -70,7 +77,7 @@ export default function GameScreen({ route }) {
                         );
                     })
                 }
-            </View>
+            </ScrollView>
 
             <Text style={styles.heading}>WildCards Available:</Text>
             <ScrollView style={styles.outerCardsContainer}>
@@ -78,16 +85,13 @@ export default function GameScreen({ route }) {
                     {wildCards.map((wildcard, index) => {
                         if (wildcard === 'shuffle') return <Shuffle key={index} index={index} groupName={groupName} userId={user.id} />
                         if (wildcard === 'swap') return <Swap key={index} index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'skip') return <Skip key={index} index={index} />
+                        if (wildcard === 'skip') return <Skip index={index} userId={user.id} />
                     })}
                 </View>
             </ScrollView>
 
-            <TouchableOpacity style={styles.button}>
-                <Text>Pass</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={toggleTurn}>
-                <Text style={styles.turnText}>{turnText}</Text>
+                <Text style={styles.turnText}>Done</Text>
             </TouchableOpacity>
         </View >
     );

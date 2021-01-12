@@ -42,6 +42,11 @@ export const createUser = async (userId) => {
     return newUser;
 }
 
+export const setHouseStage = async (houseId, newState) => {
+    await firebase.firestore().collection('houses').doc(houseId).update({ houseStage: newState })
+}
+
+
 export const addUserToHouse = async (house, userId, fullName, host) => {
     // find user by userId, edit houseId
     await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: false });
