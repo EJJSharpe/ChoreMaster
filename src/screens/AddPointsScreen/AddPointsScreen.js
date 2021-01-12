@@ -19,6 +19,7 @@ export default function AddPointsScreen({ navigation, route }) {
         API.createMultipleTasks(groupName, tasksList);
         API.shareOutWildcards(groupName);
         API.shareOutTasks(groupName);
+        API.setHouseStage(groupName, 'game')
 
         console.log(tasksList)
         navigation.navigate('Game', { user, groupName })
