@@ -12,21 +12,8 @@ export default function HomeScreen({ navigation, route }) {
 
     // MAKE SURE ANY USER DATA COMES FROM ROUTE PARAMS
     const { user } = route.params;
-    // const user =
-    // {
-    //     email: 'ejjsharpe@gmail.com',
-    //     name: 'Elliot Sharpe',
-    //     host: true,
-    //     houseId: 'Hello',
-    //     id: 'PmtEISirf7eo5QuRqvi74twPp7V2',
-    //     points: 0,
-    //     wildcards: ['skip', 'shuffle'],
-    // }
 
     useEffect(() => {
-        // do a request for the users tasks
-        // possibly format them into the correct structure
-        // setState with those tasks
         api.getUserTasks(user.houseId, user.id).then((currentUsersTasks) => {
             setUserTasks(currentUsersTasks)
         })
