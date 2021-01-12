@@ -12,14 +12,14 @@ export const createHouse = async (name, userId, usersFullName) => {
         lastStart: "",
         tasksAssigned: false,
         name: name,
-        users: [],
-        houseStage: 1 //1 for lobby, 2 for host setting tasks, 3 for ready
+        users: [usersFullName],
+        houseStage: "lobby"
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
 
     //add creator, as in logged in user
-    addUserToHouse(name, userId, usersFullName);
+    addUserToHouse(name, userId, usersFullName, true);
 
     //set the users host value to be true
     setHost(userId)
@@ -36,16 +36,18 @@ export const createUser = async (userId) => {
         id: userId,
         points: 0,
         host: false,
-        wildCards: []
+        wildCards: ["None"]
     }
     await firebase.firestore().collection('users').doc(userId).set(newUser);
     return newUser;
 }
 
-export const addUserToHouse = async (house, userId, fullName) => {
+export const addUserToHouse = async (house, userId, fullName, host) => {
     // find user by userId, edit houseId
     await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: false });
-    await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
+    if (!host) {
+        await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
+    }
     return userId
 }
 
@@ -96,7 +98,7 @@ export const resetTask = async (house, taskId) => {
 
 export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
-    firebase.firestore().collection('users').doc(userId).collection('wildCards').doc(wildCardId).update({ wildCards: firebase.firestore.FieldValue.arrayUnion(wildCardStr) })
+    firebase.firestore().collection('users').doc(userId).update({ wildCards: firebase.firestore.FieldValue.arrayUnion(wildCardStr) })
     return wildcardStr;
 }
 
@@ -105,7 +107,7 @@ export const removeWildcardFromUser = async (wildcardStr, userId) => {
     const user = await getUserFields(userId);
     const wildcardsArr = user.wildCards;
     wildcardsArr.splice(wildcardsArr.indexOf(wildcardStr), 1);
-    firebase.firestore().collection('users').doc(userId).collection('wildCards').doc(wildCardId).update({ wildCards: wildcardsArr })
+    firebase.firestore().collection('users').doc(userId).update({ wildCards: wildcardsArr })
 
     return wildcardsArr;
 }
