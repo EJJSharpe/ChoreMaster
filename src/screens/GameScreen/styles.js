@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    container: {
+    pageContainer: {
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        backgroundColor: "#F5FCFF",
-        alignSelf: "stretch",
+        backgroundColor: '#ff841f'
+    },
+
+    headingContainer: {
+        backgroundColor: 'white'
     },
 
     title: {
@@ -14,23 +15,54 @@ export default StyleSheet.create({
         fontWeight: "800",
         alignSelf: "center",
     },
+    taskSectionContainer: {
+        height: 200,
+        backgroundColor: '#033B86',
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: '#FFD006',
+    },
 
-    task: {
-        paddingHorizontal: 40,
-        fontWeight: "bold",
-        fontSize: 16,
-    },
-    points: {
-        paddingHorizontal: 40,
-    },
     taskContainer: {
         flex: 1,
-        overflow: "hidden",
-        borderRadius: 25,
-        marginVertical: 5,
-        marginHorizontal: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 
-        backgroundColor: "#ff841f",
+    task: {
+        borderWidth: 2,
+        borderColor: '#FFD006',
+        flex: 5,
+        backgroundColor: 'white',
+        marginLeft: 15,
+        marginRight: 10,
+        marginTop: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        fontWeight: 'bold',
+        alignItems: 'center',
+        borderRadius: 20,
+        overflow: 'hidden',
+    },
+    points: {
+        borderWidth: 2,
+        borderColor: '#FFD006',
+        flex: 1,
+        backgroundColor: 'white',
+        marginRight: 10,
+        marginTop: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 4,
+        paddingRight: 4,
+        borderRadius: 20,
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        textAlign: 'center',
+        overflow: 'hidden',
     },
 
     buttonContainer: {
@@ -49,33 +81,19 @@ export default StyleSheet.create({
         justifyContent: "center",
         borderRadius: 25,
     },
-    heading: {
-        fontWeight: "bold",
-        fontSize: 20,
-        marginLeft: 75,
-        marginTop: 14,
-    },
-    cardContainer: {
+    outerCardsContainer: {
         flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
+        marginLeft: 10,
+        marginRight: 10,
+        borderWidth: 2,
+        borderColor: '#FFD006',
+        borderRadius: 25
+
     },
-    card: {
-        borderRadius: 25,
-        overflow: "hidden",
-        backgroundColor: "grey",
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 20,
-        marginBottom: 20,
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingBottom: 50,
-        paddingTop: 10,
-        fontWeight: "bold",
-        alignItems: "center",
-        justifyContent: "center",
+    cardsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     turnText: {
         borderStyle: "solid",
