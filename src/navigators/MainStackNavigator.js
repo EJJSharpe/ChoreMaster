@@ -36,11 +36,13 @@ const LogoTitle = () => {
 const MainStack = createStackNavigator();
 
 export function MainStackNavigator({ route }) {
+  const { user, setUser } = route.params;
   const onLoginOut = () => {
     signOutUser();
+    setUser(null)
   };
 
-  const { user } = route.params;
+
 
 
   return (
