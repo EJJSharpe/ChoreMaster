@@ -10,6 +10,7 @@ export default function CreateGroupScreen({ navigation, route }) {
 
     const onCreateGroupSubmit = () => {
         const { user } = route.params
+        console.log(user)
 
         api.createHouse(groupName, user.id, user.fullName)
         user.host = true;
