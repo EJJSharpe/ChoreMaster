@@ -1,7 +1,7 @@
 import { apisAreAvailable } from 'expo'
 import { firebase } from './config'
 
-const wildCards = ["shuffle", "swap", "skip"];
+const wildcards = ["shuffle", "swap", "skip"];
 
 export const setHost = async (userId) => {
     await firebase.firestore().collection('users').doc(userId).update({ host: true })
@@ -36,7 +36,7 @@ export const createUser = async (userId) => {
         id: userId,
         points: 0,
         host: false,
-        wildCards: ["None"]
+        wildcards: ["None"]
     }
     await firebase.firestore().collection('users').doc(userId).set(newUser);
     return newUser;
@@ -98,7 +98,7 @@ export const resetTask = async (house, taskId) => {
 
 export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
-    firebase.firestore().collection('users').doc(userId).update({ wildCards: firebase.firestore.FieldValue.arrayUnion(wildCardStr) })
+    firebase.firestore().collection('users').doc(userId).update({ wildcards: firebase.firestore.FieldValue.arrayUnion(wildCardStr) })
     return wildcardStr;
 }
 
@@ -107,18 +107,18 @@ export const removeWildcardFromUser = async (wildcardStr, userId) => {
     const user = await getUserFields(userId);
     const wildcardsArr = user.wildCards;
     wildcardsArr.splice(wildcardsArr.indexOf(wildcardStr), 1);
-    firebase.firestore().collection('users').doc(userId).update({ wildCards: wildcardsArr })
+    firebase.firestore().collection('users').doc(userId).update({ wildcards: wildcardsArr })
 
     return wildcardsArr;
 }
 
-export const getAllWildcards = async () => {
-    const wildcardsRef = await firebase.firestore().collection('wildCards');
-    const doc = await wildcardsRef.get();
-    const wildCardArr = [];
-    doc.forEach(doc => wildCardArr.push(doc.data()))
-    return wildCardArr;
-}
+// export const getAllWildcards = async () => {
+//     const wildcardsRef = await firebase.firestore().collection('wildCards');
+//     const doc = await wildcardsRef.get();
+//     const wildCardArr = [];
+//     doc.forEach(doc => wildCardArr.push(doc.data()))
+//     return wildCardArr;
+// }
 
 export const setAssignTime = async (house) => {
     //set house lastStart date to now
@@ -221,11 +221,11 @@ export const shareOutTasks = async (house) => {
 
 export const shareOutWildcards = async (house) => {
     const users = await getHouseUsers(house);
-    shuffleArray(wildCards);
+    shuffleArray(wildcards);
     for (let i = 0; i < users.length; i++) {
         // iterates through wildCards, giving to users in a loop
         for (let j = 0; j < 3; j++) {
-            const randWildCard = wildCards[Math.floor(Math.random() * wildCards.length)];
+            const randWildCard = wildcards[Math.floor(Math.random() * wildcards.length)];
             addWildcardToUser(randWildCard, users[i].id);
         }
     }
