@@ -1,6 +1,8 @@
 import { apisAreAvailable } from 'expo'
 import { firebase } from './config'
 
+const wildCards = ["shuffle", "swap", "skip"];
+
 export const setHost = async (userId) => {
     await firebase.firestore().collection('users').doc(userId).update({ host: true })
 }
@@ -205,6 +207,18 @@ export const shareOutTasks = async (house) => {
         const task = tasks[i]
         const user = users[i % users.length]
         assignTask(house, task.name, user.id);
+    }
+}
+
+export const shareOutWildcards = async (house) => {
+    const users = await getHouseUsers(house);
+    shuffleArray(wildCards);
+    for (let i = 0; i < users.length; i++) {
+        // iterates through wildCards, giving to users in a loop
+        for (let j = 0; j < 3; j++) {
+            const randWildCard = wildCards[Math.floor(Math.random() * wildCards.length)];
+            addWildcardToUser(randWildCard, users[i].id);
+        }
     }
 }
 
