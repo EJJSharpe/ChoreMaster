@@ -1,15 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles'
-import { Text, View, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native'
-import Modal from 'react-native-modal';
-import * as API from '../../firebase/firebaseAPI'
-import modal from 'react-native-modal'
+import React, { useState, useEffect } from "react";
+import styles from "./styles";
+import * as api from "../../firebase/firebaseAPI";
+import { firebase } from "../../firebase/config";
+import {
+    Text,
+    View,
+    TouchableOpacity,
+    TextInput,
+    ScrollView,
+    Button,
+} from "react-native";
 
-export default function GameScreen() {
-    const [userTasks, setUserTasks] = useState([{ task: "clean toilet", points: 3 }, { task: 'hello', points: 2 }, { task: "bins", points: 1 }])
-    const [wildCards, setWildCards] = useState([{ name: 'shuffle', used: false }, { name: 'skip', used: false }, { name: 'swap', used: false }])
-    const [isUserTurn, setIsUserTurn] = useState(false)
-    const { user, groupName } = route.params;
+export default function GameScreen({ route }) {
+    console.log(route.params.user);
+
+    const [userTasks, setUserTasks] = useState([]);
+    const [wildCards, setWildCards] = useState([]);
+
+    useEffect(() => {
+        const { user } = route.params;
+        firebase
+            .firestore()
+            .collection("houses")
+            .doc(user.houseId)
+            .collection("tasks")
+            .where("userId", "==", user.id)
+            .onSnapshot((snapshot) =>
+                setUserTasks(snapshot.docs.map((doc) => doc.data()))
+            );
+        firebase
+            .firestore()
+            .collection("users")
+            .doc(user.id)
+            .onSnapshot(
+                (snapshot) => setWildCards(snapshot.data().wildcards)
+                // setWildCards(snapshot.docs.map((doc) => doc.data()))
+            );
+    }, []);
+    console.log(wildCards.wildcards, "wildCards");
+    const [isUserTurn, setIsUserTurn] = useState(false);
 
     const onWildCardPress = (name, used, index) => {
         // call wildcard function
@@ -18,7 +47,7 @@ export default function GameScreen() {
 
         //remove from state array and api
         newWildCards.splice(index, 1);
-        API.removeWildcardFromUser(name, user.id)
+        api.removeWildcardFromUser(name, user.id)
         setWildCards(newWildCards)
 
         // end turn???
@@ -27,34 +56,44 @@ export default function GameScreen() {
 
 
     const toggleTurn = () => {
-        setIsUserTurn(!isUserTurn)
-    }
+        setIsUserTurn(!isUserTurn);
+    };
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
 
     return (
         <ScrollView>
+            <Text style={styles.title}>
+                Game <Text style={{ fontWeight: "300", color: "#ff841f" }}>Zone </Text>
+            </Text>
             <Text style={styles.heading}> Your allocated Tasks</Text>
-            {userTasks.map(({ task, points }, index) => {
+            {userTasks.map(({ name, points }, index) => {
                 return (
                     <View key={index} style={styles.taskContainer}>
-                        <TouchableOpacity style={styles.task} onPress={() => { onTaskSelect(task), groupName, user.id }}>{task}</TouchableOpacity>
-                        <TouchableOpacity style={styles.points}>{points}</TouchableOpacity>
+                        <View style={styles.taskContainer}>
+                            <Text style={styles.task}>{name}</Text>
+                            <Text style={styles.points}>Points: {points}</Text>
+                        </View>
                     </View>
-                )
+                );
             })}
-
             <Text style={styles.heading}>WildCards Available:</Text>
-            {wildCards.map(({ name, used }, index) => {
+            {wildCards.map((wildcard) => {
                 return (
-                    <View key={index} style={styles.cardContainer}>
-                        <TouchableOpacity style={styles.card} onPress={() => { onWildCardPress(name, used, index) }}><Text>{name}</Text></TouchableOpacity>
+                    <View key={wildcard} style={styles.taskContainer}>
+                        <View style={styles.taskContainer}>
+                            <Text style={styles.task}>{wildcard}</Text>
+                        </View>
                     </View>
-                )
+                );
             })}
 
-            <TouchableOpacity style={styles.button} ><Text>Pass</Text></TouchableOpacity>
-            <TouchableOpacity onPress={toggleTurn}><Text style={styles.turnText}>{turnText}</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+                <Text>Pass</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={toggleTurn}>
+                <Text style={styles.turnText}>{turnText}</Text>
+            </TouchableOpacity>
         </ScrollView>
-    )
+    );
 }
