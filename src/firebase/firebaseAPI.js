@@ -53,6 +53,7 @@ export const addUserToHouse = async (house, userId, fullName, host) => {
 
 export const createTask = async (house, taskName, points) => {
     // create new doc in collection "tasks" in house, with completed, name, points, userId
+    console.log(house, taskName, points)
     const newTask = {
         name: taskName,
         points: points,
@@ -98,7 +99,7 @@ export const resetTask = async (house, taskId) => {
 
 export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
-    firebase.firestore().collection('users').doc(userId).update({ wildcards: firebase.firestore.FieldValue.arrayUnion(wildCardStr) })
+    firebase.firestore().collection('users').doc(userId).update({ wildcards: firebase.firestore.FieldValue.arrayUnion(wildcardStr) })
     return wildcardStr;
 }
 
@@ -201,7 +202,7 @@ export const getHouseData = async (house) => {
 
 export const createMultipleTasks = async (house, taskArr) => {
     for (let task of taskArr) {
-        createTask(house, task.name, task.points)
+        createTask(house, task.task, task.points)
     }
     return true;
 }

@@ -76,9 +76,9 @@ export default function GameScreen({ route }) {
             <ScrollView style={styles.outerCardsContainer}>
                 <View style={styles.cardsContainer}>
                     {wildCards.map((wildcard, index) => {
-                        if (wildcard === 'shuffle') return <Shuffle index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'swap') return <Swap index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'skip') return <Skip index={index} />
+                        if (wildcard === 'shuffle') return <Shuffle key={index} index={index} groupName={groupName} userId={user.id} />
+                        if (wildcard === 'swap') return <Swap key={index} index={index} groupName={groupName} userId={user.id} />
+                        if (wildcard === 'skip') return <Skip key={index} index={index} />
                     })}
                 </View>
             </ScrollView>
