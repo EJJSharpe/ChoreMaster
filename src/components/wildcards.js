@@ -6,7 +6,6 @@ import styles from '../screens/AddPointsScreen/styles'
 
 export const Shuffle = () => {
     const [shuffleModal, setShuffleModal] = useState(false)
-    const [skipModal, setSkipModal] = useState(false)
 
     const onShuffleModalPress = () => {
         setShuffleModal(!shuffleModal)
@@ -17,7 +16,7 @@ export const Shuffle = () => {
             <Modal isVisible={shuffleModal}>
                 <View style={styles.modalView}>
                     <Text style={styles.instructionsText}>Instructions</Text>
-                    <Text style={styles.modalText}>The Shuffle card takes one of each players chores and redistributes them between players </Text>
+                    <Text style={styles.modalText}>The Shuffle card takes all of the tasks and redistributes them amongst players. </Text>
                     <Button onPress={onShuffleModalPress} title="OK" />
                 </View>
             </Modal>

@@ -14,9 +14,8 @@ export default function LobbyScreen({ navigation, route }) {
     const { user, groupName } = route.params;
 
 
-
+    //LISTENER FOR USERS JOINING GROUP
     useEffect(() => {
-
 
         api.getHouseData(groupName)
             .then(houseData => {
@@ -35,7 +34,6 @@ export default function LobbyScreen({ navigation, route }) {
                 console.log(houseName)
                 const tasksObserver = houseDoc.onSnapshot(doc => {
                     const { users } = doc.data()
-                    console.log(doc.data())
                     setHouseUsers(users);
                 }, err => {
                     console.log(`Encountered error: ${err}`);
@@ -47,6 +45,29 @@ export default function LobbyScreen({ navigation, route }) {
 
 
 
+    // NON HOST USER LISTENING FOR HOUSESTAGE TO CHANGE
+    useEffect(() => {
+        if (!user.host) {
+            const doc = firebase.firestore().collection('houses').doc(groupName);
+
+            const gameStageObserver = doc.onSnapshot(docSnapshot => {
+                const { houseStage } = docSnapshot.data()
+                if (houseStage === 'game') {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: "Game", params: { user, groupName } }],
+                    });
+                }
+            }, err => {
+                console.log(`Encountered error: ${err}`);
+            });
+
+            return gameStageObserver;
+        }
+    })
+
+
+
     if (user.host) {
         return (
             <View style={styles.lobbyContainer}>
@@ -54,17 +75,15 @@ export default function LobbyScreen({ navigation, route }) {
                 <Text style={styles.houseName}>{houseName}</Text>
                 <View style={styles.usersContainer}>
                     <Text style={styles.introText}>Users in your group:</Text>
-                    {houseUsers.map(houseUser => {
-                        console.log(houseUser)
+                    {houseUsers.map((houseUser, index) => {
                         return (
-                            <View>
-
+                            <View key={index}>
                                 <Text style={styles.user}>{"👤    " + houseUser}</Text>
                             </View>
                         )
                     })}
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { houseName, user }) }}>
+                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { groupName, user }) }}>
                     <Text style={styles.buttonText}>Ok</Text>
                 </TouchableOpacity>
             </View>

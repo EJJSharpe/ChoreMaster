@@ -9,6 +9,8 @@ export default function AddTasksScreen({ navigation }) {
     const [isModalVisible, setModalVisible] = useState(false)
     const { user, groupName } = route.params;
 
+    const { user, groupName } = route.params;
+
     const onAddTaskPress = (task) => {
         setTasksList(otherTasks => [...otherTasks, { task, points: 0 }])
         setTaskInput('')

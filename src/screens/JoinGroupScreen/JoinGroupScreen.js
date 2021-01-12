@@ -9,6 +9,7 @@ export default function JoinGroupScreen({ navigation, route }) {
 
     const onJoinGroupSubmit = () => {
         const { user } = route.params;
+        user.host = false;
 
         api.addUserToHouse(groupName, user.id, user.fullName)
             .then(userId => {
