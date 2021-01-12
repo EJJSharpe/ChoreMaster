@@ -1,15 +1,24 @@
-import { set } from 'react-native-reanimated';
-import * as api from '../firebase/firebaseAPI'
+import React, { useState } from 'react'
+import { View, Text, Button, TouchableOpacity, Image, ScrollView } from 'react-native'
+import Modal from 'react-native-modal';
+import * as api from '../firebase/firebaseAPI';
+import styles from './styles'
+
+const onWildCardPress = (name, used, index) => {
+    api.removeWildcardFromUser(wildCardName, user.id)
+
+
+
+}
 
 
 // TASKS DONT CURRENTLY REMOVE TASK FROM WILDCARDS ARRAY
-export const Shuffle = (props) => {
+export const Shuffle = ({ index, groupName, userId }) => {
     const [modal, setModal] = useState(false)
-    const { index } = props;
-
     const onPress = () => {
         setModal(!modal)
-        api.shuffleWildcard()
+        api.shuffleWildcard(groupName).catch((err) => console.log(err))
+        api.removeWildcardFromUser('shuffle', userId)
     }
 
 
@@ -21,7 +30,7 @@ export const Shuffle = (props) => {
                     <Button onPress={() => { setModal(!modal) }} title="OK" />
                 </View>
             </Modal>
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={() => { onPress() }}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
                     source={require('../images/shuffle.png')}
@@ -34,20 +43,21 @@ export const Shuffle = (props) => {
 export const Swap = (props) => {
     const [modal, setModal] = useState(false)
     const [tasksList, setTasksList] = useState([])
-    const [secondModal, setSecondModal] = useState('')
+    const [secondModal, setSecondModal] = useState(false)
 
-    const { index, houseName, userId } = props;
+    const { index, groupName, userId } = props;
 
     const onPress = () => {
-        api.getUserTasks(user.houseId, user.id)
+        api.getUserTasks(groupName, userId)
             .then(tasks => {
                 setTasksList(tasks)
-                setModal(!shuffleModal)
+                setModal(!modal)
             })
     }
 
     const onTaskSelect = (taskName) => {
-        api.swapWildcard(houseName, taskName, userId)
+        console.log(groupName, taskName, userId)
+        api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
         setModal(!modal)
     }
 
@@ -83,16 +93,15 @@ export const Swap = (props) => {
             <TouchableOpacity onPress={onPress}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
-                    source={require('../images/shuffle.png')}
+                    source={require('../images/swap.png')}
                 />
             </TouchableOpacity>
         </View >
     );
 }
 
-export const Skip = (props) => {
+export const Skip = ({ index }) => {
     const [modal, setModal] = useState(false)
-    const { index } = props;
 
     const onPress = () => {
 

@@ -103,9 +103,10 @@ export const addWildcardToUser = async (wildcardStr, userId) => {
 }
 
 export const removeWildcardFromUser = async (wildcardStr, userId) => {
+    console.log(wildcardStr, userId, 'check')
     // remove wildcard to "wildcards" collection on user doc
     const user = await getUserFields(userId);
-    const wildcardsArr = user.wildCards;
+    const wildcardsArr = user.wildcards;
     wildcardsArr.splice(wildcardsArr.indexOf(wildcardStr), 1);
     firebase.firestore().collection('users').doc(userId).update({ wildcards: wildcardsArr })
 
@@ -162,7 +163,6 @@ export const getUserWildcards = async (userId) => {
     const doc = await wildcardsRef.get();
     const wildcardsArr = doc.data().wildcards
     // doc.forEach(doc => wildcardsArr.push(doc.data()))
-
     return wildcardsArr;
 }
 
@@ -240,6 +240,7 @@ export const shuffleWildcard = async (house) => {
 export const swapWildcard = async (house, taskId, userId) => {
     //swap a task with another player
     const users = await getHouseUsers(house);
+    console.log(users)
     const otherUsers = users.filter(user => user.id !== userId);
 
     // selects victim at random, and one of their tasks randomly

@@ -10,15 +10,15 @@ import {
     ScrollView,
     Button,
 } from "react-native";
+import { Shuffle, Swap, Skip } from '../../components/inGameWildcards'
 
 export default function GameScreen({ route }) {
     console.log(route.params.user);
 
     const [userTasks, setUserTasks] = useState([]);
     const [wildCards, setWildCards] = useState([]);
-
+    const { user, groupName } = route.params;
     useEffect(() => {
-        const { user } = route.params;
         firebase
             .firestore()
             .collection("houses")
@@ -37,22 +37,7 @@ export default function GameScreen({ route }) {
                 // setWildCards(snapshot.docs.map((doc) => doc.data()))
             );
     }, []);
-    console.log(wildCards.wildcards, "wildCards");
     const [isUserTurn, setIsUserTurn] = useState(false);
-
-    const onWildCardPress = (name, used, index) => {
-        // call wildcard function
-        const newWildCards = [...wildCards]
-        newWildCards[index].used = !used;
-
-        //remove from state array and api
-        newWildCards.splice(index, 1);
-        api.removeWildcardFromUser(name, user.id)
-        setWildCards(newWildCards)
-
-        // end turn???
-
-    }
 
 
     const toggleTurn = () => {
@@ -62,31 +47,41 @@ export default function GameScreen({ route }) {
     const turnText = isUserTurn ? "your turn" : "wait your turn";
 
     return (
-        <ScrollView>
-            <Text style={styles.title}>
-                Game <Text style={{ fontWeight: "300", color: "#ff841f" }}>Zone </Text>
-            </Text>
-            <Text style={styles.heading}> Your allocated Tasks</Text>
-            {userTasks.map(({ name, points }, index) => {
-                return (
-                    <View key={index} style={styles.taskContainer}>
-                        <View style={styles.taskContainer}>
-                            <Text style={styles.task}>{name}</Text>
-                            <Text style={styles.points}>Points: {points}</Text>
-                        </View>
-                    </View>
-                );
-            })}
+        <View style={styles.pageContainer}>
+
+
+            <View style={styles.headingContainer}>
+                <Text style={styles.title}>
+                    GameZone
+                </Text>
+            </View>
+
+
+            <Text style={styles.heading}> Your Tasks</Text>
+            <View style={styles.taskSectionContainer}>
+
+                {
+                    userTasks.map(({ name, points }, index) => {
+                        return (
+                            <View style={styles.taskContainer}>
+                                <Text style={styles.task}>{name}</Text>
+                                <Text style={styles.points}>{points}</Text>
+                            </View>
+                        );
+                    })
+                }
+            </View>
+
             <Text style={styles.heading}>WildCards Available:</Text>
-            {wildCards.map((wildcard) => {
-                return (
-                    <View key={wildcard} style={styles.taskContainer}>
-                        <View style={styles.taskContainer}>
-                            <Text style={styles.task}>{wildcard}</Text>
-                        </View>
-                    </View>
-                );
-            })}
+            <ScrollView style={styles.outerCardsContainer}>
+                <View style={styles.cardsContainer}>
+                    {wildCards.map((wildcard, index) => {
+                        if (wildcard === 'shuffle') return <Shuffle index={index} groupName={groupName} userId={user.id} />
+                        if (wildcard === 'swap') return <Swap index={index} groupName={groupName} userId={user.id} />
+                        if (wildcard === 'skip') return <Skip index={index} />
+                    })}
+                </View>
+            </ScrollView>
 
             <TouchableOpacity style={styles.button}>
                 <Text>Pass</Text>
@@ -94,6 +89,6 @@ export default function GameScreen({ route }) {
             <TouchableOpacity onPress={toggleTurn}>
                 <Text style={styles.turnText}>{turnText}</Text>
             </TouchableOpacity>
-        </ScrollView>
+        </View >
     );
 }
