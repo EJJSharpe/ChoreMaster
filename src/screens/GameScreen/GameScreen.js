@@ -56,16 +56,9 @@ export default function GameScreen({ route }) {
         <View style={styles.pageContainer}>
 
 
-            <View style={styles.headingContainer}>
-                <Text style={styles.title}>
-                    GameZone
-                </Text>
-            </View>
-
 
             <Text style={styles.heading}> Your Tasks</Text>
             <ScrollView style={styles.taskSectionContainer}>
-
                 {
                     userTasks.map(({ name, points }, index) => {
                         console.log(index, '<tasks')
@@ -79,7 +72,8 @@ export default function GameScreen({ route }) {
                 }
             </ScrollView>
 
-            <Text style={styles.heading}>WildCards Available:</Text>
+
+            <Text style={styles.heading}>WildCards Available</Text>
             <ScrollView style={styles.outerCardsContainer}>
                 <View style={styles.cardsContainer}>
                     {wildCards.map((wildcard, index) => {
@@ -90,8 +84,8 @@ export default function GameScreen({ route }) {
                 </View>
             </ScrollView>
 
-            <TouchableOpacity onPress={toggleTurn}>
-                <Text style={styles.turnText}>Done</Text>
+            <TouchableOpacity style={styles.button} onPress={pressDone}>
+                <Text style={styles.buttonText}>Done</Text>
             </TouchableOpacity>
         </View >
     );

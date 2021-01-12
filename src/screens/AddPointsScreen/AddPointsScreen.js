@@ -3,6 +3,7 @@ import styles from './styles.js'
 import { Text, View, TouchableOpacity, TextInput, ScrollView, Button } from 'react-native'
 import Modal from 'react-native-modal';
 import * as API from '../../firebase/firebaseAPI'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function AddPointsScreen({ navigation, route }) {
 
@@ -49,7 +50,7 @@ export default function AddPointsScreen({ navigation, route }) {
     }
 
     return (
-        <ScrollView style={styles.container}>
+        <KeyboardAwareScrollView extraHeight={300} style={styles.container} keyboardShouldPersistTaps='handled'>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalView}>
                     <Text style={styles.instructionsText}>Instructions</Text>
@@ -72,6 +73,6 @@ export default function AddPointsScreen({ navigation, route }) {
                 )
             })}
             <TouchableOpacity style={styles.button} onPress={() => { onSubmit() }}><Text style={styles.buttonTitle}>Done</Text></TouchableOpacity>
-        </ScrollView >
+        </KeyboardAwareScrollView >
     )
 }

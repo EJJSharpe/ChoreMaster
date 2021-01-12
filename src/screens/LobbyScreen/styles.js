@@ -69,11 +69,13 @@ export default StyleSheet.create({
         width: 40,
         height: 40,
         alignSelf: 'center',
+        marginBottom: 20,
     },
     button: {
         marginLeft: 40,
         marginRight: 40,
         marginTop: 20,
+        marginBottom: 20,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 20,
