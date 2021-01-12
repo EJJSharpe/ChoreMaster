@@ -17,6 +17,7 @@ export default function LobbyScreen({ navigation, route }) {
     //LISTENER FOR USERS JOINING GROUP
     useEffect(() => {
 
+
         api.getHouseData(groupName)
             .then(houseData => {
                 console.log(houseData)
