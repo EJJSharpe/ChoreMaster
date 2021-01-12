@@ -7,12 +7,12 @@ export default function CreateJoinScreen({ navigation, route }) {
     const onCreateGroupPress = () => {
         const { user } = route.params;
         console.log(user)
-        navigation.navigate('CreateGroup', user)
+        navigation.navigate('CreateGroup', { user })
     }
 
     const onJoinGroupPress = () => {
         const { user } = route.params
-        navigation.navigate('JoinGroup', user)
+        navigation.navigate('JoinGroup', { user })
     }
 
 

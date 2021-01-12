@@ -58,10 +58,11 @@ export default function GameScreen({ route }) {
 
 
             <Text style={styles.heading}> Your Tasks</Text>
-            <View style={styles.taskSectionContainer}>
+            <ScrollView style={styles.taskSectionContainer}>
 
                 {
                     userTasks.map(({ name, points }, index) => {
+                        console.log(index, '<tasks')
                         return (
                             <View style={styles.taskContainer}>
                                 <Text style={styles.task}>{name}</Text>
@@ -70,7 +71,7 @@ export default function GameScreen({ route }) {
                         );
                     })
                 }
-            </View>
+            </ScrollView>
 
             <Text style={styles.heading}>WildCards Available:</Text>
             <ScrollView style={styles.outerCardsContainer}>
@@ -78,7 +79,7 @@ export default function GameScreen({ route }) {
                     {wildCards.map((wildcard, index) => {
                         if (wildcard === 'shuffle') return <Shuffle index={index} groupName={groupName} userId={user.id} />
                         if (wildcard === 'swap') return <Swap index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'skip') return <Skip index={index} />
+                        if (wildcard === 'skip') return <Skip index={index} userId={user.id} />
                     })}
                 </View>
             </ScrollView>

@@ -16,20 +16,13 @@ const onWildCardPress = (name, used, index) => {
 export const Shuffle = ({ index, groupName, userId }) => {
     const [modal, setModal] = useState(false)
     const onPress = () => {
-        setModal(!modal)
-        api.shuffleWildcard(groupName).catch((err) => console.log(err))
+        api.shuffleWildcard(groupName)
         api.removeWildcardFromUser('shuffle', userId)
     }
 
 
     return (
         <View>
-            <Modal isVisible={modal}>
-                <View style={styles.modalView}>
-                    <Text style={styles.instructionsText}>You used the Shuffle Wildcard!</Text>
-                    <Button onPress={() => { setModal(!modal) }} title="OK" />
-                </View>
-            </Modal>
             <TouchableOpacity onPress={() => { onPress() }}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
@@ -58,7 +51,7 @@ export const Swap = (props) => {
     const onTaskSelect = (taskName) => {
         console.log(groupName, taskName, userId)
         api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
-        setModal(!modal)
+        api.removeWildcardFromUser('skip', userId)
     }
 
     return (
@@ -100,13 +93,12 @@ export const Swap = (props) => {
     );
 }
 
-export const Skip = ({ index }) => {
+export const Skip = ({ index, userId }) => {
     const [modal, setModal] = useState(false)
 
     const onPress = () => {
-
+        api.removeWildcardFromUser('skip', userId)
         // NEED LOGIC HERE TO SKIP THEIR TURN AND REMOVE WILDCARD FROM THEIR WILDCARDS ARRAY
-        setModal(!modal)
     }
 
 
