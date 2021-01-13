@@ -59,7 +59,7 @@ export default function GameScreen({ navigation, route }) {
             );
 
         // watches current turn user
-        const turnUserSs = firebase
+        const usersTurn = firebase
             .firestore()
             .collection("houses")
             .doc(user.houseId)
@@ -79,15 +79,13 @@ export default function GameScreen({ navigation, route }) {
                 }
                 if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
                     setGameOver(true);
-
+                    tasksSs();
+                    wildcardsSs();
+                    usersTurn()
                     navigation.reset({
                         index: 0,
                         routes: [{ name: 'Home', params: { user, groupName, gameJustPlayed: true } }]
                     })
-
-                    tasksSs();
-                    wildcardsSs();
-                    return;
                 }
             });
 
@@ -131,7 +129,7 @@ export default function GameScreen({ navigation, route }) {
                     {wildCards.map((wildcard, index) => {
                         if (wildcard === 'shuffle') return <Shuffle key={index} index={index} groupName={groupName} userId={user.id} isUserTurn={isUserTurn} />
                         if (wildcard === 'swap') return <Swap key={index} index={index} groupName={groupName} userId={user.id} isUserTurn={isUserTurn} />
-                        if (wildcard === 'skip') return <Skip key={index} index={index} userId={user.id} isUserTurn={isUserTurn} />
+                        if (wildcard === 'skip') return <Skip key={index} index={index} groupName={groupName} userId={user.id} isUserTurn={isUserTurn} />
                     })}
                 </View>
             </ScrollView>

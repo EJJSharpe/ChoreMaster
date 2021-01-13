@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation, route }) {
     const { user, groupName, gameJustPlayed } = route.params;
 
     useEffect(() => {
-        if (true) {//gameJustPlayed) {
+        if (gameJustPlayed) {//gameJustPlayed) {
             api.setAssignTime(groupName);
             // TESTING - REMOVE
             api.getHouseFields(groupName)
