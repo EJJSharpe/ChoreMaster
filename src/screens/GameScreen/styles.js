@@ -110,4 +110,19 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20
     },
+    loaderContainer: {
+        flex: 0.4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+    },
+
+    loader: {
+        width: 50,
+        height: 50,
+        resizeMode: 'contain',
+    },
+    bottomIntroText: {
+        fontWeight: 'bold'
+    }
 })
