@@ -96,6 +96,11 @@ export default function HomeScreen({ navigation, route }) {
         navigation.navigate('UserWildcards', { user })
     }
 
+    const showLeaderboard = () => {
+        navigation.navigate('Leaderboard', { user })
+    }
+
+
     return (
 
         <View style={styles.container}>
@@ -128,7 +133,7 @@ export default function HomeScreen({ navigation, route }) {
                 <TouchableOpacity style={styles.button1} onPress={buyWildcard}><Text style={styles.buttonTitle}>Buy Random Wildcard</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.button2} onPress={showUsersWildcards}><Text style={styles.buttonTitle}>Your Wildcards</Text></TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.scoreboard}><Text style={styles.buttonTitle}>Scoreboard</Text></TouchableOpacity>
+            <TouchableOpacity onPress={showLeaderboard} style={styles.scoreboard}><Text style={styles.buttonTitle}>Scoreboard</Text></TouchableOpacity>
         </View >
     )
 }   

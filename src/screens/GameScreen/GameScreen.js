@@ -30,7 +30,7 @@ export default function GameScreen({ navigation, route }) {
         // on snapshot for the finished array
         // when finished.length === userArray.length + 1
         // set houseStage to be home
-
+        console.log(user.id)
 
         // watches user's tasks
         const tasksSs = firebase
