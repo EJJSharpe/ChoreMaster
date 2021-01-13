@@ -7,6 +7,7 @@ import { decode, encode } from "base-64";
 import { firebase } from "./src/firebase/config";
 import { AuthStackNavigator } from "./src/navigators/AuthStackNavigator";
 import { MainStackNavigator } from "./src/navigators/MainStackNavigator";
+import { LogBox } from 'react-native';
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -18,6 +19,8 @@ if (!global.atob) {
 const RootStack = createStackNavigator();
 
 export default function App({ navigation }) {
+  LogBox.ignoreLogs(['Setting a timer'])
+
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 

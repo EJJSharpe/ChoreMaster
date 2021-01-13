@@ -14,6 +14,7 @@ export default function CreateGroupScreen({ navigation, route }) {
         if (groupName != '') {
             api.createHouse(groupName, user.id, user.fullName)
             user.host = true;
+            user.houseId = groupName;
             navigation.navigate('Lobby', { user, groupName })
         } else {
             alert('Invalid group name')
