@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, TouchableOpacity, ScrollView, Button } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView, Button, Image } from 'react-native'
 import styles from './styles'
 import CheckBox from 'react-native-checkbox-lite';
 import * as api from '../../firebase/firebaseAPI'
@@ -17,9 +17,21 @@ export default function HomeScreen({ navigation, route }) {
     const [newCard, setNewCard] = useState('')
 
     // MAKE SURE ANY USER DATA COMES FROM ROUTE PARAMS
-    const { user, groupName } = route.params;
+    const { user, groupName, gameJustPlayed } = route.params;
 
     useEffect(() => {
+        if (true) {//gameJustPlayed) {
+            api.setAssignTime(groupName);
+            // TESTING - REMOVE
+            api.getHouseFields(groupName)
+                .then(data => {
+                    console.log(data.lastStart)
+                })
+
+
+            api.setHouseStage(groupName, 'home');
+        }
+
         api.getUserTasks(user.houseId, user.id).then((currentUsersTasks) => {
             setUserTasks(currentUsersTasks)
         })

@@ -9,10 +9,12 @@ import {
     TextInput,
     ScrollView,
     Button,
+    Image
 } from "react-native";
 import { Shuffle, Swap, Skip } from '../../components/inGameWildcards'
 
-export default function GameScreen({ route }) {
+
+export default function GameScreen({ navigation, route }) {
     console.log(route.params.user);
 
     const [gameOver, setGameOver] = useState(false)
@@ -31,32 +33,38 @@ export default function GameScreen({ route }) {
 
 
         // watches user's tasks
-        firebase
+        const tasksSs = firebase
             .firestore()
             .collection("houses")
             .doc(user.houseId)
             .collection("tasks")
             .where("userId", "==", user.id)
-            .onSnapshot((snapshot) =>
+            .onSnapshot((snapshot) => {
+                console.log("Tasks snapshot");
                 setUserTasks(snapshot.docs.map((doc) => doc.data()))
+            }
             );
 
         // watches user's wildcards
-        firebase
+        const wildcardsSs = firebase
             .firestore()
             .collection("users")
             .doc(user.id)
             .onSnapshot(
-                (snapshot) => setWildCards(snapshot.data().wildcards)
+                (snapshot) => {
+                    console.log("wildcards snapshot");
+                    setWildCards(snapshot.data().wildcards)
+                }
                 // setWildCards(snapshot.docs.map((doc) => doc.data()))
             );
 
         // watches current turn user
-        firebase
+        const turnUserSs = firebase
             .firestore()
             .collection("houses")
             .doc(user.houseId)
             .onSnapshot((snapshot) => {
+                console.log("TurnUser snapshot");
                 const houseFields = snapshot.data();
                 if (currUser !== houseFields.currentTurnUser) {
                     setCurrUser(houseFields.currentTurnUser)
@@ -71,11 +79,15 @@ export default function GameScreen({ route }) {
                 }
                 if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
                     setGameOver(true);
-                    api.setAssignTime(groupName);
+
                     navigation.reset({
                         index: 0,
-                        routes: [{ name: 'Home', params: { user, groupName } }]
+                        routes: [{ name: 'Home', params: { user, groupName, gameJustPlayed: true } }]
                     })
+
+                    tasksSs();
+                    wildcardsSs();
+                    return;
                 }
             });
 
