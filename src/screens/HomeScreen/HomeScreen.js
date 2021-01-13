@@ -55,6 +55,7 @@ export default function HomeScreen({ navigation, route }) {
     return (
 
         <View style={styles.container}>
+            <Text style={styles.heading}>Home</Text>
             <Text style={styles.title}>You've earned {calculatePoints()} points this week! </Text>
             <ScrollView style={styles.tasksSectionContainer}>
                 {

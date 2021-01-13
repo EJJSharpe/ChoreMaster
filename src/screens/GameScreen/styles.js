@@ -3,26 +3,32 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     pageContainer: {
         flex: 1,
-        backgroundColor: '#ff841f'
-    },
+        backgroundColor: '#ff841f',
 
-    headingContainer: {
-        backgroundColor: 'white'
     },
-
-    title: {
-        fontSize: 38,
-        fontWeight: "800",
-        alignSelf: "center",
+    heading: {
+        color: '#033B86',
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        backgroundColor: 'white',
+        marginRight: 80,
+        marginLeft: 80,
+        borderRadius: 10,
+        overflow: 'hidden',
+        borderColor: '#033B86',
+        borderWidth: 2,
+        marginBottom: 5,
+        marginTop: 5
     },
     taskSectionContainer: {
-        height: 200,
+        flex: 1,
         backgroundColor: '#033B86',
-        marginLeft: 10,
-        marginRight: 10,
-        borderRadius: 25,
         borderWidth: 2,
         borderColor: '#FFD006',
+        marginRight: 15,
+        marginLeft: 15,
+        borderRadius: 25,
     },
 
     taskContainer: {
@@ -38,7 +44,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         marginLeft: 15,
         marginRight: 10,
-        marginTop: 20,
+        marginTop: 8,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 20,
@@ -53,7 +59,7 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         marginRight: 10,
-        marginTop: 20,
+        marginTop: 8,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 4,
@@ -65,13 +71,8 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
 
-    buttonContainer: {
-        flex: 1,
-        flexDirection: "column",
-        alignContent: "center",
-    },
     button: {
-        backgroundColor: "#788eec",
+        backgroundColor: '#033B86',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
@@ -80,14 +81,15 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 25,
+        marginBottom: 50
     },
     outerCardsContainer: {
-        flex: 1,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 15,
+        marginRight: 15,
         borderWidth: 2,
         borderColor: '#FFD006',
-        borderRadius: 25
+        borderRadius: 25,
+        backgroundColor: '#033B86',
 
     },
     cardsContainer: {
@@ -95,16 +97,9 @@ export default StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
-    turnText: {
-        borderStyle: "solid",
-        borderWidth: 5,
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 20,
-        marginBottom: 20,
-        paddingLeft: 100,
-        paddingRight: 15,
-        paddingBottom: 20,
-        paddingTop: 20,
-    }
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 20
+    },
 })

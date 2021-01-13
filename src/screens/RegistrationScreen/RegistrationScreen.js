@@ -40,21 +40,6 @@ export default function RegistrationScreen({ navigation }) {
       });
     }
   };
-  const LogoTitle = () => {
-    return (
-      <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            resizeMode: "contain",
-          }}
-          source={require("../../images/ChoreMasterLogo.png")}
-        />
-      </View>
-    );
-  };
 
   return (
     <View style={styles.container}>
@@ -63,7 +48,6 @@ export default function RegistrationScreen({ navigation }) {
         keyboardShouldPersistTaps="always"
       >
         <View style={styles.logoContainer}>
-          <LogoTitle />
         </View>
         <Text style={styles.header}>Sign Up!</Text>
         <TextInput
