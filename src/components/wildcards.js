@@ -53,3 +53,27 @@ export const Skip = () => {
         </View>
     );
 }
+
+export const Swap = () => {
+    const [skipModal, setSkipModal] = useState(false)
+    const onSkipModalPress = () => {
+        setSkipModal(!skipModal)
+    }
+    return (
+        <View>
+            <Modal isVisible={skipModal}>
+                <View style={styles.modalView}>
+                    <Text style={styles.instructionsText}>Instructions</Text>
+                    <Text style={styles.modalText}>The Swap card allows you to choose one of your tasks and swap it with a task of another players chosen at random  </Text>
+                    <Button onPress={onSkipModalPress} title="OK" />
+                </View>
+            </Modal>
+            <TouchableOpacity onPress={onSkipModalPress} style={{}}>
+                <Image
+                    style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
+                    source={require('../images/swap.png')}
+                />
+            </TouchableOpacity>
+        </View>
+    );
+}

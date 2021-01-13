@@ -133,8 +133,9 @@ export const completeTask = async (house, taskId) => {
         .update({ completed: true });
     const task = await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
     const taskData = await task.get()
-    const { points, userId } = taskData.data();
-
+    let { points, userId } = taskData.data();
+    points = parseInt(points)
+    console.log(points)
     //update points
     const userData = await getUserFields(userId);
 
