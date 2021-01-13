@@ -13,7 +13,8 @@ export const createHouse = async (name, userId, usersFullName) => {
         tasksAssigned: false,
         name: name,
         users: [usersFullName],
-        houseStage: "lobby"
+        houseStage: "lobby",
+        currentTurnUser: usersFullName,
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
@@ -25,6 +26,18 @@ export const createHouse = async (name, userId, usersFullName) => {
     setHost(userId)
 
     return newHouse;
+}
+
+export const incrementTurnUser = async (house) => {
+    const houseData = await getHouseFields(house);
+    const { users, currentTurnUser } = houseData;
+    const currTurnUserIndex = users.indexOf(currentTurnUser);
+
+    // if current user is last of array, set to 0, if not, increment
+    const newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
+    const newTurnUser = users[newTurnUserIndex];
+
+    await firebase.firestore().collection('houses').doc(house).update({ currentTurnUser: newTurnUser })
 }
 
 export const createUser = async (userId) => {
@@ -47,13 +60,18 @@ export const setHouseStage = async (houseId, newState) => {
 }
 
 
-export const addUserToHouse = async (house, userId, fullName, host) => {
+export const addUserToHouse = async (house, userId, fullName, host = false) => {
     // find user by userId, edit houseId
-    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: false });
+    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: host });
     if (!host) {
         await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     }
     return userId
+}
+
+export const incrementUserPoints = async (userId, increment) => {
+    await firebase.firestore().collection('users').doc(userId).update({ points: firebase.firestore.FieldValue.increment(increment) });
+    return increment;
 }
 
 export const createTask = async (house, taskName, points) => {
@@ -118,14 +136,6 @@ export const removeWildcardFromUser = async (wildcardStr, userId) => {
 
     return wildcardsArr;
 }
-
-// export const getAllWildcards = async () => {
-//     const wildcardsRef = await firebase.firestore().collection('wildCards');
-//     const doc = await wildcardsRef.get();
-//     const wildCardArr = [];
-//     doc.forEach(doc => wildCardArr.push(doc.data()))
-//     return wildCardArr;
-// }
 
 export const setAssignTime = async (house) => {
     //set house lastStart date to now
