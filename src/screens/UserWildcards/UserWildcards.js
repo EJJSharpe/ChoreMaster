@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.js'
 import * as api from '../../firebase/firebaseAPI'
 import { Text, View, ScrollView, Button } from 'react-native'
-import { Shuffle, Skip } from '../../components/wildcards.js'
+import { Shuffle, Skip, Swap } from '../../components/wildcards.js'
 
 
 
@@ -26,6 +26,7 @@ export default function UserWildcardsScreen({ navigation, route }) {
                     console.log(wildcardText)
                     if (wildcardText === 'shuffle') return <Shuffle />
                     if (wildcardText === 'skip') return <Skip />
+                    if (wildcardText === 'swap') return <Swap />
                 })}
 
 
