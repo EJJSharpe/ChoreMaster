@@ -4,7 +4,8 @@ import { firebase } from './config'
 const wildcards = ["shuffle", "swap", "skip"];
 
 export const setHost = async (userId) => {
-    await firebase.firestore().collection('users').doc(userId).update({ host: true })
+    await firebase.firestore().collection('users').doc(userId)
+        .update({ host: true })
 }
 
 export const createHouse = async (name, userId, usersFullName) => {
@@ -12,12 +13,14 @@ export const createHouse = async (name, userId, usersFullName) => {
         lastStart: "",
         tasksAssigned: false,
         name: name,
+        finishedUsers: ["placeholder"],
         users: [usersFullName],
         houseStage: "lobby",
         currentTurnUser: usersFullName,
     }
     //todo add check for exist, prevent
-    await firebase.firestore().collection('houses').doc(name).set(newHouse)
+    await firebase.firestore().collection('houses').doc(name)
+        .set(newHouse)
 
     //add creator, as in logged in user
     addUserToHouse(name, userId, usersFullName, true);
@@ -28,16 +31,40 @@ export const createHouse = async (name, userId, usersFullName) => {
     return newHouse;
 }
 
+export const setUserFinished = async (house, userName) => {
+    console.log(house, " house, Setting finished ", userName);
+    await firebase.firestore().collection('houses').doc(house)
+        .update({ finishedUsers: firebase.firestore.FieldValue.arrayUnion(userName) })
+}
+
 export const incrementTurnUser = async (house) => {
     const houseData = await getHouseFields(house);
-    const { users, currentTurnUser } = houseData;
+    const { finishedUsers, users, currentTurnUser } = houseData;
+
     const currTurnUserIndex = users.indexOf(currentTurnUser);
 
     // if current user is last of array, set to 0, if not, increment
-    const newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
-    const newTurnUser = users[newTurnUserIndex];
+    let newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
+    let newTurnUser = users[newTurnUserIndex];
 
-    await firebase.firestore().collection('houses').doc(house).update({ currentTurnUser: newTurnUser })
+    if (finishedUsers.length - 1 === users.length) {
+        // if all users are in finished array, return
+        //  false, so it doesnt get stuck in loop
+        console.log("No users left unfinished")
+        return false;
+    }
+
+    // if user has already finished, moves to next
+    while (finishedUsers.includes(newTurnUser)) {
+        console.log("User already in finished, getting next user")
+        newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
+        newTurnUser = users[newTurnUserIndex];
+    }
+
+    await firebase.firestore().collection('houses').doc(house)
+        .update({ currentTurnUser: newTurnUser })
+
+    return true;
 }
 
 export const createUser = async (userId) => {
@@ -51,26 +78,31 @@ export const createUser = async (userId) => {
         host: false,
         wildcards: ["None"]
     }
-    await firebase.firestore().collection('users').doc(userId).set(newUser);
+    await firebase.firestore().collection('users').doc(userId)
+        .set(newUser);
     return newUser;
 }
 
 export const setHouseStage = async (houseId, newState) => {
-    await firebase.firestore().collection('houses').doc(houseId).update({ houseStage: newState })
+    await firebase.firestore().collection('houses').doc(houseId)
+        .update({ houseStage: newState })
 }
 
 
 export const addUserToHouse = async (house, userId, fullName, host = false) => {
     // find user by userId, edit houseId
-    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: host });
+    await firebase.firestore().collection('users').doc(userId)
+        .update({ houseId: house, host: host });
     if (!host) {
-        await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
+        await firebase.firestore().collection('houses').doc(house)
+            .update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     }
     return userId
 }
 
 export const incrementUserPoints = async (userId, increment) => {
-    await firebase.firestore().collection('users').doc(userId).update({ points: firebase.firestore.FieldValue.increment(increment) });
+    await firebase.firestore().collection('users').doc(userId)
+        .update({ points: firebase.firestore.FieldValue.increment(increment) });
     return increment;
 }
 
@@ -125,7 +157,8 @@ export const addWildcardToUser = async (wildcardStr, userId) => {
     const userData = await getUserFields(userId);
     const oldArr = userData.wildcards;
     oldArr.push(wildcardStr);
-    firebase.firestore().collection('users').doc(userId).update({ wildcards: oldArr })
+    firebase.firestore().collection('users').doc(userId)
+        .update({ wildcards: oldArr })
     return wildcardStr;
 }
 
@@ -135,7 +168,8 @@ export const removeWildcardFromUser = async (wildcardStr, userId) => {
     const user = await getUserFields(userId);
     const wildcardsArr = user.wildcards;
     wildcardsArr.splice(wildcardsArr.indexOf(wildcardStr), 1);
-    firebase.firestore().collection('users').doc(userId).update({ wildcards: wildcardsArr })
+    firebase.firestore().collection('users').doc(userId)
+        .update({ wildcards: wildcardsArr })
 
     return wildcardsArr;
 }
@@ -143,12 +177,14 @@ export const removeWildcardFromUser = async (wildcardStr, userId) => {
 export const setAssignTime = async (house) => {
     //set house lastStart date to now
     const currTime = new Date();
-    await firebase.firestore().collection('houses').doc(house).update({ lastStart: currTime })
+    await firebase.firestore().collection('houses').doc(house)
+        .update({ lastStart: currTime })
     return currTime;
 }
 
 export const setTasksAssignedBool = async (house, bool) => {
-    await firebase.firestore().collection('houses').doc(house).update({ tasksAssigned: bool })
+    await firebase.firestore().collection('houses').doc(house)
+        .update({ tasksAssigned: bool })
     return bool;
 }
 
