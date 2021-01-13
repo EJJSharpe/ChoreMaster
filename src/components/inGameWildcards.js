@@ -4,20 +4,16 @@ import Modal from 'react-native-modal';
 import * as api from '../firebase/firebaseAPI';
 import styles from './styles'
 
-const onWildCardPress = (name, used, index) => {
-    api.removeWildcardFromUser(wildCardName, user.id)
-
-
-
-}
-
 
 // TASKS DONT CURRENTLY REMOVE TASK FROM WILDCARDS ARRAY
-export const Shuffle = ({ index, groupName, userId }) => {
+export const Shuffle = ({ index, groupName, userId, isUserTurn }) => {
     const [modal, setModal] = useState(false)
     const onPress = () => {
-        api.shuffleWildcard(groupName)
-        api.removeWildcardFromUser('shuffle', userId)
+        if (isUserTurn) {
+            api.shuffleWildcard(groupName)
+            api.removeWildcardFromUser('shuffle', userId)
+            api.incrementTurnUser(groupName);
+        }
     }
 
 
@@ -38,20 +34,25 @@ export const Swap = (props) => {
     const [tasksList, setTasksList] = useState([])
     const [secondModal, setSecondModal] = useState(false)
 
-    const { index, groupName, userId } = props;
+    const { isUserTurn, index, groupName, userId } = props;
 
     const onPress = () => {
-        api.getUserTasks(groupName, userId)
-            .then(tasks => {
-                setTasksList(tasks)
-                setModal(!modal)
-            })
+        if (isUserTurn) {
+            api.getUserTasks(groupName, userId)
+                .then(tasks => {
+                    setTasksList(tasks)
+                    setModal(!modal)
+                })
+        }
+
+
     }
 
     const onTaskSelect = (taskName) => {
         console.log(groupName, taskName, userId)
         api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
         api.removeWildcardFromUser('skip', userId)
+        api.incrementTurnUser(groupName);
     }
 
     return (
@@ -93,12 +94,14 @@ export const Swap = (props) => {
     );
 }
 
-export const Skip = ({ index, userId }) => {
+export const Skip = ({ isUserTurn, index, userId }) => {
     const [modal, setModal] = useState(false)
 
     const onPress = () => {
-        api.removeWildcardFromUser('skip', userId)
-        // NEED LOGIC HERE TO SKIP THEIR TURN AND REMOVE WILDCARD FROM THEIR WILDCARDS ARRAY
+        if (isUserTurn) {
+            api.removeWildcardFromUser('skip', userId)
+            api.incrementTurnUser(groupName);
+        }
     }
 
 
