@@ -16,6 +16,8 @@ export default function LoadingScreen({ navigation, route }) {
             });
         } else {
             api.getHouseFields(user.houseId).then(houseData => {
+                const { lastStart } = houseData;
+                console.log(lastStart)
                 if (houseData.houseStage === 'game') {
                     navigation.reset({
                         index: 0,
