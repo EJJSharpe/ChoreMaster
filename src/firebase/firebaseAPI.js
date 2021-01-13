@@ -55,7 +55,7 @@ export const incrementTurnUser = async (house) => {
     }
 
     // if user has already finished, moves to next
-    while (finishedUsers.includes(newTurnUser)) {
+    if (finishedUsers.includes(newTurnUser)) {
         console.log("User already in finished, getting next user")
         newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
         newTurnUser = users[newTurnUserIndex];
