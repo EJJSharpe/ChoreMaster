@@ -34,7 +34,7 @@ export default function RegistrationScreen({ navigation }) {
         } else {
           navigation.reset({
             index: 0,
-            routes: [{ name: "CreateJoin", params: { user: response } }],
+            routes: [{ name: "CreateJoin", params: { user: response.user } }],
           });
         }
       });
