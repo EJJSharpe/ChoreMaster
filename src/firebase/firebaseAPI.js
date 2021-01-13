@@ -122,7 +122,10 @@ export const resetTask = async (house, taskId) => {
 
 export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
-    firebase.firestore().collection('users').doc(userId).update({ wildcards: firebase.firestore.FieldValue.arrayUnion(wildcardStr) })
+    const userData = await getUserFields(userId);
+    const oldArr = userData.wildcards;
+    oldArr.push(wildcardStr);
+    firebase.firestore().collection('users').doc(userId).update({ wildcards: oldArr })
     return wildcardStr;
 }
 
@@ -239,7 +242,7 @@ export const shareOutWildcards = async (house) => {
     const users = await getHouseUsers(house);
     shuffleArray(wildcards);
     for (let i = 0; i < users.length; i++) {
-        // iterates through wildCards, giving to users in a loop
+        // gives 3 wildcards to each user
         for (let j = 0; j < 3; j++) {
             const randWildCard = wildcards[Math.floor(Math.random() * wildcards.length)];
             addWildcardToUser(randWildCard, users[i].id);

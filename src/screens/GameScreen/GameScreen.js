@@ -34,6 +34,7 @@ export default function GameScreen({ route }) {
             .onSnapshot((snapshot) =>
                 setUserTasks(snapshot.docs.map((doc) => doc.data()))
             );
+
         firebase
             .firestore()
             .collection("users")
@@ -42,6 +43,16 @@ export default function GameScreen({ route }) {
                 (snapshot) => setWildCards(snapshot.data().wildcards)
                 // setWildCards(snapshot.docs.map((doc) => doc.data()))
             );
+
+        // watches current turn user
+        firebase
+            .firestore()
+            .collection("houses")
+            .doc(user.houseId)
+            .onSnapshot((snapshot) =>
+                console.log(snapshot.data().currentTurnUser)
+            );
+
     }, []);
     const [isUserTurn, setIsUserTurn] = useState(false);
 
@@ -63,7 +74,7 @@ export default function GameScreen({ route }) {
                     userTasks.map(({ name, points }, index) => {
                         console.log(index, '<tasks')
                         return (
-                            <View style={styles.taskContainer}>
+                            <View key={index} style={styles.taskContainer}>
                                 <Text style={styles.task}>{name}</Text>
                                 <Text style={styles.points}>{points}</Text>
                             </View>
@@ -79,7 +90,7 @@ export default function GameScreen({ route }) {
                     {wildCards.map((wildcard, index) => {
                         if (wildcard === 'shuffle') return <Shuffle key={index} index={index} groupName={groupName} userId={user.id} />
                         if (wildcard === 'swap') return <Swap key={index} index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'skip') return <Skip index={index} userId={user.id} />
+                        if (wildcard === 'skip') return <Skip key={index} index={index} userId={user.id} />
                     })}
                 </View>
             </ScrollView>
