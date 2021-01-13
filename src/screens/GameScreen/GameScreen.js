@@ -16,9 +16,10 @@ export default function GameScreen({ route }) {
     console.log(route.params.user);
 
     const [gameOver, setGameOver] = useState(false)
-    const [userTasks, setUserTasks] = useState([]);
-    const [wildCards, setWildCards] = useState([]);
+    const [userTasks, setUserTasks] = useState(["None"]);
+    const [wildCards, setWildCards] = useState(["None"]);
     const [isUserTurn, setIsUserTurn] = useState(false);
+    const [currUser, setCurrUser] = useState("")
 
     const { user, groupName } = route.params;
 
@@ -59,6 +60,9 @@ export default function GameScreen({ route }) {
             .doc(user.houseId)
             .onSnapshot((snapshot) => {
                 const houseFields = snapshot.data();
+                if (currUser !== houseFields.currentTurnUser) {
+                    setCurrUser(houseFields.currentTurnUser)
+                }
 
                 console.log("Current turn: ", houseFields.currentTurnUser)
                 if (houseFields.currentTurnUser === user.fullName && !isUserTurn) {
@@ -68,8 +72,12 @@ export default function GameScreen({ route }) {
                     setIsUserTurn(false);
                 }
                 if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
-                    // if all users are in finished array, return false
                     setGameOver(true);
+                    api.setAssignTime(groupName);
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Home', params: { user, groupName } }]
+                    })
                 }
             });
 
@@ -85,6 +93,10 @@ export default function GameScreen({ route }) {
     };
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
+    console.log(userTasks);
+    console.log(wildCards);
+
+
 
     return (
         <View style={styles.pageContainer}>
@@ -107,16 +119,25 @@ export default function GameScreen({ route }) {
             <ScrollView style={styles.outerCardsContainer}>
                 <View style={styles.cardsContainer}>
                     {wildCards.map((wildcard, index) => {
-                        if (wildcard === 'shuffle') return <Shuffle key={index} index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'swap') return <Swap key={index} index={index} groupName={groupName} userId={user.id} />
-                        if (wildcard === 'skip') return <Skip key={index} index={index} userId={user.id} />
+                        if (wildcard === 'shuffle') return <Shuffle key={index} index={index} groupName={groupName} userId={user.id} isUserTurn={isUserTurn} />
+                        if (wildcard === 'swap') return <Swap key={index} index={index} groupName={groupName} userId={user.id} isUserTurn={isUserTurn} />
+                        if (wildcard === 'skip') return <Skip key={index} index={index} userId={user.id} isUserTurn={isUserTurn} />
                     })}
                 </View>
             </ScrollView>
 
-            <TouchableOpacity style={styles.button} onPress={pressDone}>
-                <Text style={styles.buttonText}>Done</Text>
-            </TouchableOpacity>
+            {isUserTurn ?
+                <TouchableOpacity style={styles.button} onPress={pressDone}>
+                    <Text style={styles.buttonText}>Done</Text>
+                </TouchableOpacity> :
+                <View>
+                    <Image source={require('../../images/loader-orange.gif')}
+                        style={styles.loader}
+                    />
+                    <Text style={styles.bottomIntroText}>Waiting for {currUser}...</Text>
+                </View>
+
+            }
         </View >
     );
 }

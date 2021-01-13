@@ -15,11 +15,11 @@ export default function AddPointsScreen({ navigation, route }) {
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
     }
-    const onSubmit = () => {
+    const onSubmit = async () => {
         // uploads tasks to database, shares out tasks and wildcards
         API.createMultipleTasks(groupName, tasksList);
-        API.shareOutWildcards(groupName);
-        API.shareOutTasks(groupName);
+        await API.shareOutWildcards(groupName);
+        await API.shareOutTasks(groupName);
         API.setHouseStage(groupName, 'game')
 
         console.log(tasksList)

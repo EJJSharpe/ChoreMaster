@@ -5,7 +5,8 @@ import * as api from '../../firebase/firebaseAPI'
 
 export default function LoadingScreen({ navigation, route }) {
 
-    const { user } = route.params;
+    const user = route.params.user || { houseId: null };
+
     useEffect(() => {
 
         if (user.houseId === null) {
@@ -15,6 +16,8 @@ export default function LoadingScreen({ navigation, route }) {
             });
         } else {
             api.getHouseFields(user.houseId).then(houseData => {
+                const { lastStart } = houseData;
+                console.log(lastStart)
                 if (houseData.houseStage === 'game') {
                     navigation.reset({
                         index: 0,
