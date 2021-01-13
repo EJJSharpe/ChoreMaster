@@ -20,6 +20,7 @@ export const Shuffle = ({ index, groupName, userId, isUserTurn }) => {
 
     return (
         <View>
+            <Modal><Text>Wildcard Used!</Text></Modal>
             <TouchableOpacity onPress={() => { onPress() }}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}

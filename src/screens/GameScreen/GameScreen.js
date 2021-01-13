@@ -26,14 +26,6 @@ export default function GameScreen({ navigation, route }) {
     const { user, groupName } = route.params;
 
     useEffect(() => {
-        console.log(groupName)
-        // api request for house doc, users array, store as variable
-        // on snapshot for the finished array
-        // when finished.length === userArray.length + 1
-        // set houseStage to be home
-        console.log(user.id)
-        console.log(groupName)
-        console.log(user)
 
         // watches user's tasks
         const tasksSs = firebase
@@ -61,40 +53,38 @@ export default function GameScreen({ navigation, route }) {
                 // setWildCards(snapshot.docs.map((doc) => doc.data()))
             );
 
-        // watches current turn user
-        const usersTurn = firebase
+    }, []);
+
+    useEffect(() => {
+        usersTurn = firebase
             .firestore()
             .collection("houses")
             .doc(groupName)
-            .onSnapshot((snapshot) => {
-                console.log("TurnUser snapshot");
-                const houseFields = snapshot.data();
-                console.log(houseFields, 'housefields')
-                console.log(groupName, 'groupname')
-                console.log(user, 'user')
 
-                setCurrUser(houseFields.currentTurnUser)
+        const observer = usersTurn.onSnapshot((snapshot) => {
+            console.log("TurnUser snapshot");
+            const houseFields = snapshot.data();
 
-                console.log("Current turn: ", houseFields.currentTurnUser)
-                if (currUser == user.fullName) {
-                    setIsUserTurn(true);
-                } else {
-                    setIsUserTurn(false)
-                }
+            setCurrUser(houseFields.currentTurnUser)
+            if (currUser == user.fullName) {
+                setIsUserTurn(true);
+            } else {
+                setIsUserTurn(false)
+            }
 
-                if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
-                    setGameOver(true);
-                    tasksSs();
-                    wildcardsSs();
-                    usersTurn()
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Home', params: { user, groupName, gameJustPlayed: true } }]
-                    })
-                }
-            });
-
-    }, []);
+            if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
+                setGameOver(true);
+                // tasksSs();
+                // wildcardsSs();
+                // // usersTurn()
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home', params: { user, groupName, gameJustPlayed: true } }]
+                })
+            }
+        });
+        return observer;
+    })
 
     // TODO add an indicator of who's turn it is
 
