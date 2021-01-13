@@ -38,7 +38,7 @@ export const Swap = (props) => {
 
     const { isUserTurn, index, groupName, userId } = props;
 
-    const onPress = () => {
+    const onWildcardPress = () => {
         if (isUserTurn) {
             api.getUserTasks(groupName, userId)
                 .then(tasks => {
@@ -51,11 +51,10 @@ export const Swap = (props) => {
     }
 
     const onTaskSelect = (taskName) => {
-        console.log(groupName, taskName, userId)
+        setSecondModal(!secondModal)
         api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
         api.removeWildcardFromUser('skip', userId)
         api.incrementTurnUser(groupName);
-        setSecondModal(false)
     }
 
     return (
@@ -87,7 +86,7 @@ export const Swap = (props) => {
 
 
 
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={onWildcardPress}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
                     source={require('../images/swap.png')}
