@@ -13,7 +13,8 @@ export const createHouse = async (name, userId, usersFullName) => {
         tasksAssigned: false,
         name: name,
         users: [usersFullName],
-        houseStage: "lobby"
+        houseStage: "lobby",
+        currentTurnUser: usersFullName,
     }
     //todo add check for exist, prevent
     await firebase.firestore().collection('houses').doc(name).set(newHouse)
@@ -25,6 +26,18 @@ export const createHouse = async (name, userId, usersFullName) => {
     setHost(userId)
 
     return newHouse;
+}
+
+export const incrementTurnUser = async (house) => {
+    const houseData = await getHouseFields(house);
+    const { users, currentTurnUser } = houseData;
+    const currTurnUserIndex = users.indexOf(currentTurnUser);
+
+    // if current user is last of array, set to 0, if not, increment
+    const newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
+    const newTurnUser = users[newTurnUserIndex];
+
+    await firebase.firestore().collection('houses').doc(house).update({ currentTurnUser: newTurnUser })
 }
 
 export const createUser = async (userId) => {
@@ -47,17 +60,23 @@ export const setHouseStage = async (houseId, newState) => {
 }
 
 
-export const addUserToHouse = async (house, userId, fullName, host) => {
+export const addUserToHouse = async (house, userId, fullName, host = false) => {
     // find user by userId, edit houseId
-    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: false });
+    await firebase.firestore().collection('users').doc(userId).update({ houseId: house, host: host });
     if (!host) {
         await firebase.firestore().collection('houses').doc(house).update({ users: firebase.firestore.FieldValue.arrayUnion(fullName) })
     }
     return userId
 }
 
+export const incrementUserPoints = async (userId, increment) => {
+    await firebase.firestore().collection('users').doc(userId).update({ points: firebase.firestore.FieldValue.increment(increment) });
+    return increment;
+}
+
 export const createTask = async (house, taskName, points) => {
     // create new doc in collection "tasks" in house, with completed, name, points, userId
+    console.log(house, taskName, points)
     const newTask = {
         name: taskName,
         points: points,
@@ -82,8 +101,9 @@ export const completeTask = async (house, taskId) => {
         .update({ completed: true });
     const task = await firebase.firestore().collection('houses').doc(house).collection("tasks").doc(taskId)
     const taskData = await task.get()
-    const { points, userId } = taskData.data();
-
+    let { points, userId } = taskData.data();
+    points = parseInt(points)
+    console.log(points)
     //update points
     const userData = await getUserFields(userId);
 
@@ -103,7 +123,10 @@ export const resetTask = async (house, taskId) => {
 
 export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
-    firebase.firestore().collection('users').doc(userId).update({ wildcards: firebase.firestore.FieldValue.arrayUnion(wildcardStr) })
+    const userData = await getUserFields(userId);
+    const oldArr = userData.wildcards;
+    oldArr.push(wildcardStr);
+    firebase.firestore().collection('users').doc(userId).update({ wildcards: oldArr })
     return wildcardStr;
 }
 
@@ -117,14 +140,6 @@ export const removeWildcardFromUser = async (wildcardStr, userId) => {
 
     return wildcardsArr;
 }
-
-// export const getAllWildcards = async () => {
-//     const wildcardsRef = await firebase.firestore().collection('wildCards');
-//     const doc = await wildcardsRef.get();
-//     const wildCardArr = [];
-//     doc.forEach(doc => wildCardArr.push(doc.data()))
-//     return wildCardArr;
-// }
 
 export const setAssignTime = async (house) => {
     //set house lastStart date to now
@@ -228,7 +243,7 @@ export const shareOutWildcards = async (house) => {
     const users = await getHouseUsers(house);
     shuffleArray(wildcards);
     for (let i = 0; i < users.length; i++) {
-        // iterates through wildCards, giving to users in a loop
+        // gives 3 wildcards to each user
         for (let j = 0; j < 3; j++) {
             const randWildCard = wildcards[Math.floor(Math.random() * wildcards.length)];
             addWildcardToUser(randWildCard, users[i].id);

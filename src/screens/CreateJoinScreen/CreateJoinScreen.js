@@ -17,7 +17,7 @@ export default function CreateJoinScreen({ navigation, route }) {
 
 
     return (
-        <View>
+        <View style={styles.container}>
             <TouchableOpacity style={styles.buttonTop} onPress={() => { onCreateGroupPress() }}><Text style={styles.buttonTitle}>Create Group</Text></TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => { onJoinGroupPress() }}><Text style={styles.buttonTitle}>Join Group</Text></TouchableOpacity>
         </View>

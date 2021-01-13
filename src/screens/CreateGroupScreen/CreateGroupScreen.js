@@ -11,17 +11,20 @@ export default function CreateGroupScreen({ navigation, route }) {
     const onCreateGroupSubmit = () => {
 
 
-
-        api.createHouse(groupName, user.id, user.fullName)
-        user.host = true;
-        navigation.navigate('Lobby', { user, groupName })
-
+        if (groupName != '') {
+            api.createHouse(groupName, user.id, user.fullName)
+            user.host = true;
+            user.houseId = groupName;
+            navigation.navigate('Lobby', { user, groupName })
+        } else {
+            alert('Invalid group name')
+        }
     }
 
     return (
-        <View>
+        <View style={styles.container}>
             <TextInput style={styles.input}
-                placeholder='Enter group name'
+                placeholder='Enter house name'
                 onChangeText={(text) => setGroupName(text)}
                 value={groupName} />
             <TouchableOpacity style={styles.button} onPress={() => { onCreateGroupSubmit() }}><Text style={styles.buttonTitle}>Create</Text></TouchableOpacity>

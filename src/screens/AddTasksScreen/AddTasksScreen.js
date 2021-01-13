@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.js'
 import { Text, SafeAreaView, TouchableOpacity, TextInput, List, Button, View, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function AddTasksScreen({ navigation, route }) {
     const [taskInput, setTaskInput] = useState('')
@@ -27,7 +28,7 @@ export default function AddTasksScreen({ navigation, route }) {
 
 
     return (
-        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
+        <KeyboardAwareScrollView extraHeight={300} style={styles.container} keyboardShouldPersistTaps='handled'>
             <Modal isVisible={isModalVisible}>
                 <View style={styles.modalView}>
                     <Text style={styles.instructionsText}>Instructions</Text>
@@ -38,7 +39,7 @@ export default function AddTasksScreen({ navigation, route }) {
             <Text style={styles.header}>Add some chores!</Text>
             {tasksList.map(({ task }, index) => {
                 return (
-                    <View>
+                    <View key={"view" + index}>
                         <Text key={index} style={styles.task}>{task}</Text>
                     </View>
                 )
@@ -46,6 +47,6 @@ export default function AddTasksScreen({ navigation, route }) {
             <TextInput placeholder='Enter chore here..' style={styles.input} value={taskInput} onChangeText={(text) => { setTaskInput(text) }}></TextInput>
             <TouchableOpacity style={styles.button} onPress={() => { onAddTaskPress(taskInput) }}><Text style={styles.buttonTitle}>Add</Text></TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => { onSubmit() }}><Text style={styles.buttonTitle}>Done</Text></TouchableOpacity>
-        </ScrollView >
+        </KeyboardAwareScrollView >
     );
 };

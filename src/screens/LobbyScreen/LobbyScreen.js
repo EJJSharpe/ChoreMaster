@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, TouchableOpacity, Image } from 'react-native'
+import { Text, View, TouchableOpacity, Image, ScrollView } from 'react-native'
 import styles from './styles'
 import * as api from '../../firebase/firebaseAPI'
 import { firebase } from '../../firebase/config'
@@ -74,7 +74,7 @@ export default function LobbyScreen({ navigation, route }) {
             <View style={styles.lobbyContainer}>
                 <Text style={styles.topIntroText}>Your house name is...</Text>
                 <Text style={styles.houseName}>{houseName}</Text>
-                <View style={styles.usersContainer}>
+                <ScrollView style={styles.usersContainer}>
                     <Text style={styles.introText}>Users in your group:</Text>
                     {houseUsers.map((houseUser, index) => {
                         return (
@@ -83,7 +83,7 @@ export default function LobbyScreen({ navigation, route }) {
                             </View>
                         )
                     })}
-                </View>
+                </ScrollView>
                 <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate('AddTasks', { groupName, user }) }}>
                     <Text style={styles.buttonText}>Ok</Text>
                 </TouchableOpacity>
@@ -94,7 +94,7 @@ export default function LobbyScreen({ navigation, route }) {
             <View style={styles.lobbyContainer}>
                 <Text style={styles.topIntroText}>Your house name is...</Text>
                 <Text style={styles.houseName}>{houseName}</Text>
-                <View style={styles.usersContainer}>
+                <ScrollView style={styles.usersContainer}>
                     <Text style={styles.introText}>Users in your group:</Text>
                     {houseUsers.map(houseUser => {
                         console.log(houseUser)
@@ -105,7 +105,7 @@ export default function LobbyScreen({ navigation, route }) {
                             </View>
                         )
                     })}
-                </View>
+                </ScrollView>
                 <Image
                     source={require('../../images/ellipsis.gif')}
                     style={styles.loader}

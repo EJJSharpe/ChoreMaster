@@ -9,7 +9,7 @@ export default StyleSheet.create({
     },
     usersContainer: {
         backgroundColor: 'white',
-        height: 400,
+        flex: 1,
         marginLeft: 30,
         marginRight: 30,
         borderBottomWidth: 4,
@@ -38,14 +38,14 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#033B86',
         fontWeight: 'bold',
-        marginTop: 50,
+        marginTop: 30,
         fontSize: 20
     },
     introText: {
         textAlign: 'center',
         color: '#033B86',
         fontWeight: 'bold',
-        marginTop: 20,
+        marginTop: 10,
         fontSize: 16
     },
     bottomIntroText: {
@@ -58,7 +58,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 50,
         color: '#ff841f',
-        marginTop: 20,
+        marginTop: 10,
         marginBottom: 20,
         marginLeft: 30,
         marginRight: 30,
@@ -69,14 +69,17 @@ export default StyleSheet.create({
         width: 40,
         height: 40,
         alignSelf: 'center',
+        marginBottom: 20,
     },
     button: {
+        marginBottom: 40,
         marginLeft: 40,
         marginRight: 40,
         marginTop: 20,
         paddingTop: 10,
         paddingBottom: 10,
-        paddingLeft: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
         fontWeight: 'bold',
         justifyContent: 'center',
         alignItems: 'center',
