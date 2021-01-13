@@ -12,7 +12,8 @@ import {
   AddPointsScreen,
   GameScreen,
   LobbyScreen,
-  LoadingScreen
+  LoadingScreen,
+  LeaderBoardScreen
 } from "../screens";
 import { HeaderBackButton } from '@react-navigation/stack';
 
@@ -88,6 +89,7 @@ export function MainStackNavigator({ route }) {
       <MainStack.Screen name="AddPoints" component={AddPointsScreen} />
       <MainStack.Screen name="Game" component={GameScreen} />
       <MainStack.Screen name="Lobby" component={LobbyScreen} />
+      <MainStack.Screen name="Leaderboard" component={LeaderBoardScreen} />
     </MainStack.Navigator>
   );
 }

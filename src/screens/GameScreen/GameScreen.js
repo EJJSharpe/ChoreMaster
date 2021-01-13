@@ -27,7 +27,7 @@ export default function GameScreen({ route }) {
         // on snapshot for the finished array
         // when finished.length === userArray.length + 1
         // set houseStage to be home
-
+        console.log(user.id)
 
         // watches user's tasks
         firebase
@@ -46,8 +46,10 @@ export default function GameScreen({ route }) {
             .collection("users")
             .doc(user.id)
             .onSnapshot(
-                (snapshot) => setWildCards(snapshot.data().wildcards)
-                // setWildCards(snapshot.docs.map((doc) => doc.data()))
+                (snapshot) => {
+                    console.log(snapshot.data())
+                    setWildCards(snapshot.data().wildcards)
+                }
             );
 
         // watches current turn user
