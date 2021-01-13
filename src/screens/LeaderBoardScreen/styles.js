@@ -42,7 +42,6 @@ export default StyleSheet.create({
   listSectionContainer2: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "space-between",
 
     backgroundColor: "#ff721f",
     marginHorizontal: 10,
