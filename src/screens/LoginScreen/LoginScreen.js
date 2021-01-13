@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import { signIn, singInGoogle } from "../../firebase/API/auth_methods";
+import { signIn } from "../../firebase/API/auth_methods";
 import * as api from "../../firebase/firebaseAPI";
 
 export default function LoginScreen({ navigation }) {
@@ -23,35 +23,9 @@ export default function LoginScreen({ navigation }) {
       loggedInUser.then((user) => {
         if (user.error) {
           alert(user.error.message);
-        } else {
-          if (user) {
-            if (user.user.houseId !== null) {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "Lobby", params: { user } }],
-              });
-            } else {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "CreateJoin", params: { user } }],
-              });
-            }
-          } else {
-            alert("please verify your email");
-          }
         }
       });
     }
-  };
-
-  const onLoginGoogle = () => {
-    const loggedInUser = singInGoogle();
-
-    loggedInUser.then((user) => {
-      if (user) {
-        navigation.navigate("Home", user);
-      }
-    });
   };
   return (
     <KeyboardAwareScrollView
@@ -85,11 +59,6 @@ export default function LoginScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
         <Text style={styles.buttonTitle}>Log in</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonTitle} onPress={() => onLoginGoogle()}>
-                        Log in with google
-          </Text>
-                </TouchableOpacity> */}
       <View style={styles.footerView}>
         <Text style={styles.footerText}>
           Don't have an account?{" "}

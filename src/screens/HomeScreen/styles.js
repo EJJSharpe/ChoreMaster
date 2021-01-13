@@ -7,9 +7,23 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#ff841f',
     },
+    heading: {
+        textAlign: 'center',
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: 30,
+        backgroundColor: 'white',
+        marginLeft: 100,
+        marginRight: 100,
+        borderWidth: 2,
+        borderRadius: 15,
+        overflow: 'hidden',
+        marginBottom: 10,
+        marginTop: 10
+
+    },
 
     tasksSectionContainer: {
-        height: 350,
         backgroundColor: '#033B86',
         marginLeft: 10,
         marginRight: 10,
@@ -19,7 +33,7 @@ export default StyleSheet.create({
     },
 
     taskContainer: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -69,6 +83,7 @@ export default StyleSheet.create({
 
     },
     buttonsContainer: {
+        flex: 4,
         marginTop: 20,
         marginBottom: 20,
         flexDirection: 'row',
@@ -121,7 +136,7 @@ export default StyleSheet.create({
     title: {
         textAlign: 'center',
         fontWeight: 'bold',
-        marginTop: 30,
+        marginTop: 0,
         fontSize: 20,
         marginBottom: 20,
         color: '#033B86'

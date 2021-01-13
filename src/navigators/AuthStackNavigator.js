@@ -24,10 +24,17 @@ const LogoTitle = () => {
 export function AuthStackNavigator() {
   return (
     <AuthStack.Navigator
-      headerShown={false}
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#ff841f",
+          elevation: 0,
+          shadowColor: "transparent",
+        },
+
+        headerTitle: (props) => <LogoTitle {...props} />,
+      }}
     >
-      <AuthStack.Screen name={"Login"} component={LoginScreen} />
+      <AuthStack.Screen name={"Login"} options={{ headerTitle: '' }} component={LoginScreen} />
       <AuthStack.Screen name={"Registration"} component={RegistrationScreen} />
     </AuthStack.Navigator>
   );

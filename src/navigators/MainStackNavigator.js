@@ -14,7 +14,17 @@ import {
   LobbyScreen,
   LoadingScreen
 } from "../screens";
-import { IconButton } from "../shared/IconButton";
+import { HeaderBackButton } from '@react-navigation/stack';
+
+
+
+const LogoutButton = ({ onPress }) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>Log Out</Text>
+    </TouchableOpacity>
+  );
+}
 
 
 const LogoTitle = () => {
@@ -53,13 +63,16 @@ export function MainStackNavigator({ route }) {
           elevation: 0,
           shadowColor: "transparent",
         },
+        headerBackTitleStyle: { color: 'white', fontWeight: 'bold', fontSize: 16 },
+        headerBackTitle: "Back",
 
         headerTitle: (props) => <LogoTitle {...props} />,
         headerRight: () => (
           <View style={{ marginRight: 10, padding: 5 }}>
-            <IconButton name="logout" onPress={() => onLoginOut()} />
+            <LogoutButton name="logout" onPress={() => onLoginOut()} />
           </View>
         ),
+
       }}
     >
       <MainStack.Screen name="Loading" component={LoadingScreen} initialParams={{ user }} />
