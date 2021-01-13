@@ -32,7 +32,7 @@ export default function LobbyScreen({ navigation, route }) {
                 }
 
                 const houseDoc = firebase.firestore().collection('houses').doc(houseData.house);
-                console.log(houseName)
+                console.log(houseData)
                 const tasksObserver = houseDoc.onSnapshot(doc => {
                     const { users } = doc.data()
                     setHouseUsers(users);
@@ -73,7 +73,7 @@ export default function LobbyScreen({ navigation, route }) {
         return (
             <View style={styles.lobbyContainer}>
                 <Text style={styles.topIntroText}>Your house name is...</Text>
-                <Text style={styles.houseName}>{houseName}</Text>
+                <Text style={styles.houseName}>{groupName}</Text>
                 <ScrollView style={styles.usersContainer}>
                     <Text style={styles.introText}>Users in your group:</Text>
                     {houseUsers.map((houseUser, index) => {
