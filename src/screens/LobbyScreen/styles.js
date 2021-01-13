@@ -52,6 +52,7 @@ export default StyleSheet.create({
         textAlign: 'center',
         color: '#033B86',
         fontWeight: 'bold',
+        marginBottom: 30
     },
     houseName: {
         textAlign: 'center',

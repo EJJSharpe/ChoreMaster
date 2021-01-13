@@ -283,7 +283,7 @@ export const shareOutWildcards = async (house) => {
         // gives 3 wildcards to each user
         for (let j = 0; j < 3; j++) {
             const randWildCard = wildcards[Math.floor(Math.random() * wildcards.length)];
-            addWildcardToUser(randWildCard, users[i].id);
+            await addWildcardToUser(randWildCard, users[i].id);
         }
     }
 }

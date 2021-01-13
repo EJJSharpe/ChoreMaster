@@ -26,17 +26,20 @@ export default function GameScreen({ navigation, route }) {
     const { user, groupName } = route.params;
 
     useEffect(() => {
+        console.log(groupName)
         // api request for house doc, users array, store as variable
         // on snapshot for the finished array
         // when finished.length === userArray.length + 1
         // set houseStage to be home
         console.log(user.id)
+        console.log(groupName)
+        console.log(user)
 
         // watches user's tasks
         const tasksSs = firebase
             .firestore()
             .collection("houses")
-            .doc(user.houseId)
+            .doc(groupName)
             .collection("tasks")
             .where("userId", "==", user.id)
             .onSnapshot((snapshot) => {
@@ -62,21 +65,23 @@ export default function GameScreen({ navigation, route }) {
         const usersTurn = firebase
             .firestore()
             .collection("houses")
-            .doc(user.houseId)
+            .doc(groupName)
             .onSnapshot((snapshot) => {
                 console.log("TurnUser snapshot");
                 const houseFields = snapshot.data();
-                if (currUser !== houseFields.currentTurnUser) {
-                    setCurrUser(houseFields.currentTurnUser)
-                }
+                console.log(houseFields, 'housefields')
+                console.log(groupName, 'groupname')
+                console.log(user, 'user')
+
+                setCurrUser(houseFields.currentTurnUser)
 
                 console.log("Current turn: ", houseFields.currentTurnUser)
-                if (houseFields.currentTurnUser === user.fullName && !isUserTurn) {
+                if (currUser == user.fullName) {
                     setIsUserTurn(true);
+                } else {
+                    setIsUserTurn(false)
                 }
-                if (houseFields.currentTurnUser !== user.fullName && isUserTurn) {
-                    setIsUserTurn(false);
-                }
+
                 if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
                     setGameOver(true);
                     tasksSs();
@@ -138,7 +143,7 @@ export default function GameScreen({ navigation, route }) {
                 <TouchableOpacity style={styles.button} onPress={pressDone}>
                     <Text style={styles.buttonText}>Done</Text>
                 </TouchableOpacity> :
-                <View>
+                <View style={styles.loaderContainer}>
                     <Image source={require('../../images/loader-orange.gif')}
                         style={styles.loader}
                     />

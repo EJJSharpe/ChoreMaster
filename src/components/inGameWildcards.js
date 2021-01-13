@@ -13,6 +13,7 @@ export const Shuffle = ({ index, groupName, userId, isUserTurn }) => {
             api.shuffleWildcard(groupName)
             api.removeWildcardFromUser('shuffle', userId)
             api.incrementTurnUser(groupName);
+            setModal(!modal)
         }
     }
 
@@ -53,6 +54,7 @@ export const Swap = (props) => {
         api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
         api.removeWildcardFromUser('skip', userId)
         api.incrementTurnUser(groupName);
+        setSecondModal(false)
     }
 
     return (
@@ -94,7 +96,7 @@ export const Swap = (props) => {
     );
 }
 
-export const Skip = ({ isUserTurn, index, userId }) => {
+export const Skip = ({ isUserTurn, index, userId, groupName }) => {
     const [modal, setModal] = useState(false)
 
     const onPress = () => {

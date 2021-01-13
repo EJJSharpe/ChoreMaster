@@ -28,7 +28,7 @@ export default function LobbyScreen({ navigation, route }) {
                     });
                 } else {
                     console.log(houseData)
-                    setHouseName(houseData.house)
+                    setHouseName(houseData.name)
                 }
 
                 const houseDoc = firebase.firestore().collection('houses').doc(houseData.house);
