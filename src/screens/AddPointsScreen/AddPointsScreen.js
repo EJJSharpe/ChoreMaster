@@ -22,6 +22,7 @@ export default function AddPointsScreen({ navigation, route }) {
         await API.shareOutTasks(groupName);
         API.setHouseStage(groupName, 'game')
 
+
         console.log(tasksList)
         navigation.navigate('Game', { user, groupName })
     }
