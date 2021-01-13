@@ -39,7 +39,7 @@ export default function AddTasksScreen({ navigation, route }) {
             <Text style={styles.header}>Add some chores!</Text>
             {tasksList.map(({ task }, index) => {
                 return (
-                    <View>
+                    <View key={"view" + index}>
                         <Text key={index} style={styles.task}>{task}</Text>
                     </View>
                 )
