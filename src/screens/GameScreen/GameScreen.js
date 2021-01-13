@@ -15,9 +15,13 @@ import { Shuffle, Swap, Skip } from '../../components/inGameWildcards'
 export default function GameScreen({ route }) {
     console.log(route.params.user);
 
+    const [gameOver, setGameOver] = useState(false)
     const [userTasks, setUserTasks] = useState([]);
     const [wildCards, setWildCards] = useState([]);
+    const [isUserTurn, setIsUserTurn] = useState(false);
+
     const { user, groupName } = route.params;
+
     useEffect(() => {
         // api request for house doc, users array, store as variable
         // on snapshot for the finished array
@@ -25,6 +29,7 @@ export default function GameScreen({ route }) {
         // set houseStage to be home
 
 
+        // watches user's tasks
         firebase
             .firestore()
             .collection("houses")
@@ -35,6 +40,7 @@ export default function GameScreen({ route }) {
                 setUserTasks(snapshot.docs.map((doc) => doc.data()))
             );
 
+        // watches user's wildcards
         firebase
             .firestore()
             .collection("users")
@@ -49,25 +55,37 @@ export default function GameScreen({ route }) {
             .firestore()
             .collection("houses")
             .doc(user.houseId)
-            .onSnapshot((snapshot) =>
-                console.log(snapshot.data().currentTurnUser)
-            );
+            .onSnapshot((snapshot) => {
+                const houseFields = snapshot.data();
+
+                console.log("Current turn: ", houseFields.currentTurnUser)
+                if (houseFields.currentTurnUser === user.fullName && !isUserTurn) {
+                    setIsUserTurn(true);
+                }
+                if (houseFields.currentTurnUser !== user.fullName && isUserTurn) {
+                    setIsUserTurn(false);
+                }
+                if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
+                    // if all users are in finished array, return false
+                    setGameOver(true);
+                }
+            });
 
     }, []);
-    const [isUserTurn, setIsUserTurn] = useState(false);
 
+    // TODO add an indicator of who's turn it is
 
     const pressDone = () => {
         // add users name to finished array
+        // increment turn
+        api.incrementTurnUser(groupName);
+        api.setUserFinished(groupName, user.fullName)
     };
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
 
     return (
         <View style={styles.pageContainer}>
-
-
-
             <Text style={styles.heading}> Your Tasks</Text>
             <ScrollView style={styles.taskSectionContainer}>
                 {
@@ -82,7 +100,6 @@ export default function GameScreen({ route }) {
                     })
                 }
             </ScrollView>
-
 
             <Text style={styles.heading}>WildCards Available</Text>
             <ScrollView style={styles.outerCardsContainer}>
