@@ -18,16 +18,17 @@ export default StyleSheet.create({
         overflow: 'hidden',
         borderColor: '#033B86',
         borderWidth: 2,
-        marginBottom: 5,
-        marginTop: 5
+        marginBottom: 10,
+        marginTop: 10
     },
     taskSectionContainer: {
         flex: 1,
+        height: 200,
         backgroundColor: '#033B86',
         borderWidth: 2,
         borderColor: '#FFD006',
-        marginRight: 15,
-        marginLeft: 15,
+        marginRight: 10,
+        marginLeft: 10,
         borderRadius: 25,
     },
 
@@ -44,7 +45,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         marginLeft: 15,
         marginRight: 10,
-        marginTop: 8,
+        marginTop: 5,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 20,
@@ -59,7 +60,8 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         marginRight: 10,
-        marginTop: 8,
+        marginTop: 10,
+        marginBottom: 10,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 4,
@@ -71,6 +73,11 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
 
+    buttonContainer: {
+        flex: 1,
+        flexDirection: "column",
+        alignContent: "center",
+    },
     button: {
         backgroundColor: '#033B86',
         marginLeft: 30,
@@ -84,12 +91,13 @@ export default StyleSheet.create({
         marginBottom: 50
     },
     outerCardsContainer: {
-        marginLeft: 15,
-        marginRight: 15,
+        flex: 1,
+        marginLeft: 10,
+        marginRight: 10,
         borderWidth: 2,
         borderColor: '#FFD006',
         borderRadius: 25,
-        backgroundColor: '#033B86',
+        backgroundColor: '#033B86'
 
     },
     cardsContainer: {

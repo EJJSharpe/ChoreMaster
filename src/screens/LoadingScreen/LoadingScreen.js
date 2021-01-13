@@ -23,7 +23,7 @@ export default function LoadingScreen({ navigation, route }) {
                 } else if (houseData.houseStage === 'home') {
                     navigation.reset({
                         index: 0,
-                        routes: [{ name: "Home", params: { user } }],
+                        routes: [{ name: "Home", params: { user, groupName: user.houseId } }],
                     });
                 } else {
                     navigation.reset({

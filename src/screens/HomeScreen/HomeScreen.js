@@ -17,7 +17,7 @@ export default function HomeScreen({ navigation, route }) {
     const [newCard, setNewCard] = useState('')
 
     // MAKE SURE ANY USER DATA COMES FROM ROUTE PARAMS
-    const { user } = route.params;
+    const { user, groupName } = route.params;
 
     useEffect(() => {
         api.getUserTasks(user.houseId, user.id).then((currentUsersTasks) => {
@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation, route }) {
         const userTasksCopy = [...userTasks]
         if (!userTasksCopy[index].completed) {
             userTasksCopy[index].completed = true
-            console.log(userTasksCopy[index])
+            api.completeTask(groupName, userTasksCopy[index].name).catch(err => console.log(err))
             setUserTasks(userTasksCopy)
         }
 
@@ -51,7 +51,7 @@ export default function HomeScreen({ navigation, route }) {
     const calculatePoints = () => {
         let totalPoints = 0;
         userTasks.map(({ points, completed }) => {
-            if (completed) totalPoints += points
+            if (completed) totalPoints += parseInt(points)
         })
         return totalPoints;
     }
@@ -87,9 +87,7 @@ export default function HomeScreen({ navigation, route }) {
     return (
 
         <View style={styles.container}>
-            <Text style={styles.heading}>Home</Text>
-            <Text>Points {userPoints}</Text>
-            <Text style={styles.title}>You've earned {calculatePoints()} points this week! </Text>
+            <Text style={styles.heading}>You have {userPoints} total points!</Text>
             <Modal isVisible={modal} style={styles.modalView} >
                 <Text style={styles.modalText}>{modalText}</Text>
                 {
@@ -113,6 +111,7 @@ export default function HomeScreen({ navigation, route }) {
                     })
                 }
             </ScrollView>
+            <Text style={styles.title}>This week you've earned {calculatePoints()} points</Text>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button1} onPress={buyWildcard}><Text style={styles.buttonTitle}>Buy Random Wildcard</Text></TouchableOpacity>
                 <TouchableOpacity style={styles.button2} onPress={showUsersWildcards}><Text style={styles.buttonTitle}>Your Wildcards</Text></TouchableOpacity>
