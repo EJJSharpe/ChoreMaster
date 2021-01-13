@@ -80,6 +80,7 @@ export const createUser = async (userId) => {
     }
     await firebase.firestore().collection('users').doc(userId)
         .set(newUser);
+    console.log(newUser);
     return newUser;
 }
 
@@ -156,10 +157,10 @@ export const resetTask = async (house, taskId) => {
 export const addWildcardToUser = async (wildcardStr, userId) => {
     // add wildcard to "wildcards" collection on user doc
     const userData = await getUserFields(userId);
-    const oldArr = userData.wildcards;
-    oldArr.push(wildcardStr);
+    const arr = userData.wildcards || [];
+    arr.push(wildcardStr);
     firebase.firestore().collection('users').doc(userId)
-        .update({ wildcards: oldArr })
+        .update({ wildcards: arr })
     return wildcardStr;
 }
 

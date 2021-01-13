@@ -5,7 +5,8 @@ import * as api from '../../firebase/firebaseAPI'
 
 export default function LoadingScreen({ navigation, route }) {
 
-    const { user } = route.params;
+    const user = route.params.user || { houseId: null };
+
     useEffect(() => {
 
         if (user.houseId === null) {

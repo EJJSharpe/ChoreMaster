@@ -16,8 +16,8 @@ export default function GameScreen({ route }) {
     console.log(route.params.user);
 
     const [gameOver, setGameOver] = useState(false)
-    const [userTasks, setUserTasks] = useState([]);
-    const [wildCards, setWildCards] = useState([]);
+    const [userTasks, setUserTasks] = useState(["None"]);
+    const [wildCards, setWildCards] = useState(["None"]);
     const [isUserTurn, setIsUserTurn] = useState(false);
 
     const { user, groupName } = route.params;
@@ -83,7 +83,8 @@ export default function GameScreen({ route }) {
     };
 
     const turnText = isUserTurn ? "your turn" : "wait your turn";
-
+    console.log(userTasks);
+    console.log(wildCards);
     return (
         <View style={styles.pageContainer}>
             <Text style={styles.heading}> Your Tasks</Text>
