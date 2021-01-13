@@ -23,7 +23,7 @@ export default function CreateGroupScreen({ navigation, route }) {
     return (
         <View style={styles.container}>
             <TextInput style={styles.input}
-                placeholder='Enter group name'
+                placeholder='Enter house name'
                 onChangeText={(text) => setGroupName(text)}
                 value={groupName} />
             <TouchableOpacity style={styles.button} onPress={() => { onCreateGroupSubmit() }}><Text style={styles.buttonTitle}>Create</Text></TouchableOpacity>
