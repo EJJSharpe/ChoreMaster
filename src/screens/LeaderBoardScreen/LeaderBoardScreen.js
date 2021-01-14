@@ -67,11 +67,11 @@ export default function LeaderBoardScreen({ route }) {
             </Text>
 
             <Image
-              style={{ flex: 0.6, height: 150, width: 80 }}
+              style={{ flex: 0.6, height: 150, width: 80, resizeMode: 'contain' }}
               source={medals[userRank(user)].image}
             />
             <Text
-              style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40 }}
+              style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40, }}
             >
               {route.params.user.points} pts
             </Text>
@@ -113,7 +113,7 @@ export default function LeaderBoardScreen({ route }) {
               return (
                 <View key={index} style={styles.listSectionContainer2}>
                   <Image
-                    style={{ marginLeft: 20, flex: 0.1, height: 50, width: 10 }}
+                    style={{ marginLeft: 20, flex: 0.1, height: 50, width: 10, resizeMode: 'contain' }}
                     source={medals[userRank(user)].image}
                   />
                   <Text
@@ -139,7 +139,7 @@ export default function LeaderBoardScreen({ route }) {
               return (
                 <View key={index} style={styles.listSectionContainer1}>
                   <Image
-                    style={{ marginLeft: 20, flex: 0.1, height: 50, width: 10 }}
+                    style={{ marginLeft: 20, flex: 0.1, height: 50, width: 20 }}
                     source={medals[userRank(user)].image}
                   />
                   <Text
