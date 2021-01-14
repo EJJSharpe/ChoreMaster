@@ -8,29 +8,37 @@ import { Text, View, ScrollView, Image } from "react-native";
 
 export default function LeaderBoardScreen({ route }) {
   console.log(route.params.user);
-
+  const { user } = route.params;
   const [houseUsers, setHouseUsers] = useState([]);
   const [Loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    const { user } = route.params;
-
+  const [houseUser, setHouseUser] = useState(null);
+  const getData = () =>
     firebase
       .firestore()
       .collection("users")
       .where("houseId", "==", user.houseId)
-      .onSnapshot((snapshot) =>
-        setHouseUsers(
-          snapshot.docs
-            .map((doc) => doc.data())
-            .sort((a, b) => b.points - a.points)
-        )
-      );
+      .onSnapshot((snapshot) => {
+        let data = snapshot.docs
+          .map((doc) => doc.data())
+          .sort((a, b) => b.points - a.points);
+        setHouseUsers(data);
+        setLoaded(true);
+        setHouseUser(user);
+      });
+
+  useEffect(() => {
+    getData();
   }, []);
 
-  let userRank = (user) =>
-    houseUsers.findIndex((item) => {
-      return item.id === user.id;
-    });
+  let userRank = (user) => {
+    console.log(user);
+    if (user) {
+      const rank = houseUsers.findIndex((item) => {
+        return item.id === user.id;
+      });
+      return rank;
+    }
+  };
 
   function rankUser(user) {
     if (user) {
@@ -40,7 +48,7 @@ export default function LeaderBoardScreen({ route }) {
     }
   }
 
-  if (houseUsers.length > 0)
+  if (Loaded)
     return (
       <View style={styles.pageContainer}>
         <View colors={[, "#1da2c6", "#1695b7"]} style={styles.headingContainer}>
@@ -55,12 +63,12 @@ export default function LeaderBoardScreen({ route }) {
                 marginRight: 40,
               }}
             >
-              {/* {ordinal_suffix_of(userRank(route.params.user) + 1)} */}
+              {ordinal_suffix_of(userRank(user) + 1)}
             </Text>
 
             <Image
-              style={{ flex: 0.6, height: 80, width: 20 }}
-              source={medals[1].image}
+              style={{ flex: 0.6, height: 150, width: 80 }}
+              source={medals[userRank(user)].image}
             />
             <Text
               style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40 }}
@@ -104,16 +112,10 @@ export default function LeaderBoardScreen({ route }) {
             if (index % 2 === 0)
               return (
                 <View key={index} style={styles.listSectionContainer2}>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 20,
-                      marginLeft: 25,
-                    }}
-                  >
-                    {" "}
-                    {/* {ordinal_suffix_of(userRank(user) + 1)} */}
-                  </Text>
+                  <Image
+                    style={{ marginLeft: 20, flex: 0.1, height: 50, width: 10 }}
+                    source={medals[userRank(user)].image}
+                  />
                   <Text
                     style={{
                       color: "white",
@@ -136,16 +138,10 @@ export default function LeaderBoardScreen({ route }) {
             else
               return (
                 <View key={index} style={styles.listSectionContainer1}>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 20,
-                      marginLeft: 25,
-                    }}
-                  >
-                    {" "}
-                    {/* {ordinal_suffix_of(userRank(user) + 1)} */}
-                  </Text>
+                  <Image
+                    style={{ marginLeft: 20, flex: 0.1, height: 50, width: 10 }}
+                    source={medals[userRank(user)].image}
+                  />
                   <Text
                     style={{
                       color: "white",
