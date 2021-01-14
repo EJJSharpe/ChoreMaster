@@ -13,12 +13,14 @@ export const Shuffle = ({ index, groupName, userId, isUserTurn }) => {
             api.shuffleWildcard(groupName)
             api.removeWildcardFromUser('shuffle', userId)
             api.incrementTurnUser(groupName);
+            setModal(!modal)
         }
     }
 
 
     return (
         <View>
+            <Modal><Text>Wildcard Used!</Text></Modal>
             <TouchableOpacity onPress={() => { onPress() }}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
@@ -36,7 +38,7 @@ export const Swap = (props) => {
 
     const { isUserTurn, index, groupName, userId } = props;
 
-    const onPress = () => {
+    const onWildcardPress = () => {
         if (isUserTurn) {
             api.getUserTasks(groupName, userId)
                 .then(tasks => {
@@ -49,7 +51,7 @@ export const Swap = (props) => {
     }
 
     const onTaskSelect = (taskName) => {
-        console.log(groupName, taskName, userId)
+        setSecondModal(!secondModal)
         api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
         api.removeWildcardFromUser('skip', userId)
         api.incrementTurnUser(groupName);
@@ -84,7 +86,7 @@ export const Swap = (props) => {
 
 
 
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={onWildcardPress}>
                 <Image
                     style={{ height: 150, width: 100, resizeMode: 'contain', alignSelf: 'center', marginRight: 5, marginLeft: 5 }}
                     source={require('../images/swap.png')}
@@ -94,7 +96,7 @@ export const Swap = (props) => {
     );
 }
 
-export const Skip = ({ isUserTurn, index, userId }) => {
+export const Skip = ({ isUserTurn, index, userId, groupName }) => {
     const [modal, setModal] = useState(false)
 
     const onPress = () => {

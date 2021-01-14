@@ -55,7 +55,7 @@ export const incrementTurnUser = async (house) => {
     }
 
     // if user has already finished, moves to next
-    while (finishedUsers.includes(newTurnUser)) {
+    if (finishedUsers.includes(newTurnUser)) {
         console.log("User already in finished, getting next user")
         newTurnUserIndex = currTurnUserIndex === users.length - 1 ? 0 : currTurnUserIndex + 1;
         newTurnUser = users[newTurnUserIndex];
@@ -283,7 +283,7 @@ export const shareOutWildcards = async (house) => {
         // gives 3 wildcards to each user
         for (let j = 0; j < 3; j++) {
             const randWildCard = wildcards[Math.floor(Math.random() * wildcards.length)];
-            addWildcardToUser(randWildCard, users[i].id);
+            await addWildcardToUser(randWildCard, users[i].id);
         }
     }
 }

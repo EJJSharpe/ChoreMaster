@@ -26,17 +26,12 @@ export default function GameScreen({ navigation, route }) {
     const { user, groupName } = route.params;
 
     useEffect(() => {
-        // api request for house doc, users array, store as variable
-        // on snapshot for the finished array
-        // when finished.length === userArray.length + 1
-        // set houseStage to be home
-        console.log(user.id)
 
         // watches user's tasks
         const tasksSs = firebase
             .firestore()
             .collection("houses")
-            .doc(user.houseId)
+            .doc(groupName)
             .collection("tasks")
             .where("userId", "==", user.id)
             .onSnapshot((snapshot) => {
@@ -58,38 +53,38 @@ export default function GameScreen({ navigation, route }) {
                 // setWildCards(snapshot.docs.map((doc) => doc.data()))
             );
 
-        // watches current turn user
-        const usersTurn = firebase
+    }, []);
+
+    useEffect(() => {
+        usersTurn = firebase
             .firestore()
             .collection("houses")
-            .doc(user.houseId)
-            .onSnapshot((snapshot) => {
-                console.log("TurnUser snapshot");
-                const houseFields = snapshot.data();
-                if (currUser !== houseFields.currentTurnUser) {
-                    setCurrUser(houseFields.currentTurnUser)
-                }
+            .doc(groupName)
 
-                console.log("Current turn: ", houseFields.currentTurnUser)
-                if (houseFields.currentTurnUser === user.fullName && !isUserTurn) {
-                    setIsUserTurn(true);
-                }
-                if (houseFields.currentTurnUser !== user.fullName && isUserTurn) {
-                    setIsUserTurn(false);
-                }
-                if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
-                    setGameOver(true);
-                    tasksSs();
-                    wildcardsSs();
-                    usersTurn()
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Home', params: { user, groupName, gameJustPlayed: true } }]
-                    })
-                }
-            });
+        const observer = usersTurn.onSnapshot((snapshot) => {
+            console.log("TurnUser snapshot");
+            const houseFields = snapshot.data();
 
-    }, []);
+            setCurrUser(houseFields.currentTurnUser)
+            if (currUser == user.fullName) {
+                setIsUserTurn(true);
+            } else {
+                setIsUserTurn(false)
+            }
+
+            if (houseFields.finishedUsers.length - 1 === houseFields.users.length) {
+                setGameOver(true);
+                // tasksSs();
+                // wildcardsSs();
+                // // usersTurn()
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home', params: { user, groupName, gameJustPlayed: true } }]
+                })
+            }
+        });
+        return observer;
+    })
 
     // TODO add an indicator of who's turn it is
 
@@ -138,7 +133,7 @@ export default function GameScreen({ navigation, route }) {
                 <TouchableOpacity style={styles.button} onPress={pressDone}>
                     <Text style={styles.buttonText}>Done</Text>
                 </TouchableOpacity> :
-                <View>
+                <View style={styles.loaderContainer}>
                     <Image source={require('../../images/loader-orange.gif')}
                         style={styles.loader}
                     />

@@ -10,7 +10,7 @@ import { Shuffle, Skip, Swap } from '../../components/wildcards'
 
 
 export default function HomeScreen({ navigation, route }) {
-    const [userTasks, setUserTasks] = useState([{ name: 'wash dishes', points: 2, completed: false }, { task: 'have fun', points: 2, completed: false }, { task: 'wash dishes', points: 2, completed: false }])
+    const [userTasks, setUserTasks] = useState([])
     const [userPoints, setUserPoints] = useState(0)
     const [modal, setModal] = useState(false)
     const [modalText, setModalText] = useState('')
@@ -22,17 +22,16 @@ export default function HomeScreen({ navigation, route }) {
     useEffect(() => {
         if (gameJustPlayed) {//gameJustPlayed) {
             api.setAssignTime(groupName);
-            // TESTING - REMOVE
-            api.getHouseFields(groupName)
-                .then(data => {
-                    console.log(data.lastStart)
-                })
+            // api.getHouseFields(groupName)
+            //     .then(data => {
+            //         console.log(data.lastStart)
+            //     })
 
 
             api.setHouseStage(groupName, 'home');
         }
 
-        api.getUserTasks(user.houseId, user.id).then((currentUsersTasks) => {
+        api.getUserTasks(groupName, user.id).then((currentUsersTasks) => {
             setUserTasks(currentUsersTasks)
         })
         const doc = firebase.firestore().collection('users').doc(user.id);
