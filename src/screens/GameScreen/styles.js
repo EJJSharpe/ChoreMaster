@@ -124,5 +124,21 @@ export default StyleSheet.create({
     },
     bottomIntroText: {
         fontWeight: 'bold'
-    }
+    },
+    modalView: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#FFD006',
+        borderRadius: 25,
+        alignSelf: 'center',
+        width: 290
+    },
+    modalText: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        fontSize: 20,
+        textAlign: 'center'
+
+    },
 })

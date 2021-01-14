@@ -51,16 +51,19 @@ export const Swap = (props) => {
     }
 
     const onTaskSelect = (taskName) => {
-        setSecondModal(!secondModal)
-        api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
-        api.removeWildcardFromUser('skip', userId)
-        api.incrementTurnUser(groupName);
+        const apiRequests = () => {
+            api.swapWildcard(groupName, taskName, userId).catch(err => console.log(err))
+            api.removeWildcardFromUser('skip', userId)
+            api.incrementTurnUser(groupName);
+        }
+        setModal(!modal)
+        setTimeout(apiRequests, 200)
     }
 
     return (
         <View>
             <Modal isVisible={modal}>
-                <View style={styles.modalView}>
+                <View style={styles.modalViewSwap}>
                     <Text style={styles.instructionsText}>Select a task to swap</Text>
                     <ScrollView style={styles.tasksSectionContainer}>
                         {
@@ -74,13 +77,6 @@ export const Swap = (props) => {
                             })
                         }
                     </ScrollView>
-                </View>
-            </Modal>
-
-            <Modal isVisible={secondModal}>
-                <View style={styles.modalView}>
-                    <Text style={styles.instructionsText}>Wildcard used! Check your tasks!</Text>
-                    <Button onPress={() => { setSecondModal(!secondModal) }} title="OK" />
                 </View>
             </Modal>
 
