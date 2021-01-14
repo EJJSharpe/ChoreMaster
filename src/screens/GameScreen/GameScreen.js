@@ -9,7 +9,8 @@ import {
     TextInput,
     ScrollView,
     Button,
-    Image
+    Image,
+    Modal
 } from "react-native";
 import { Shuffle, Swap, Skip } from '../../components/inGameWildcards'
 
@@ -22,6 +23,7 @@ export default function GameScreen({ navigation, route }) {
     const [wildCards, setWildCards] = useState(["None"]);
     const [isUserTurn, setIsUserTurn] = useState(false);
     const [currUser, setCurrUser] = useState("")
+    const [modal, setModal] = useState(false)
 
     const { user, groupName } = route.params;
 
@@ -49,6 +51,7 @@ export default function GameScreen({ navigation, route }) {
                 (snapshot) => {
                     console.log("wildcards snapshot");
                     setWildCards(snapshot.data().wildcards)
+                    setModal(true)
                 }
                 // setWildCards(snapshot.docs.map((doc) => doc.data()))
             );

@@ -28,6 +28,8 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold"
     },
+    tasksSectionContainer: {
+    },
     taskContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -41,7 +43,6 @@ export default StyleSheet.create({
         marginLeft: 30,
         marginRight: 15,
         paddingLeft: 16,
-        marginTop: 12,
         paddingTop: 13,
         paddingBottom: 13,
         fontWeight: 'bold',
@@ -50,23 +51,38 @@ export default StyleSheet.create({
         borderColor: '#FFD006',
         borderWidth: 2,
     },
-    numInput: {
+    pointsValue: {
+        borderWidth: 2,
+        borderColor: '#FFD006',
         flex: 1,
         backgroundColor: 'white',
-        marginRight: 30,
-        marginTop: 20,
+        marginRight: 10,
+        marginTop: 10,
         marginBottom: 10,
-        height: 48,
-        borderRadius: 25,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 4,
+        paddingRight: 4,
+        borderRadius: 20,
         fontWeight: 'bold',
         justifyContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        overflow: 'hidden',
     },
+
     modalView: {
         backgroundColor: '#FFD006',
         borderRadius: 25,
         alignSelf: 'center',
         width: 290
+    },
+
+    modalViewSwap: {
+        backgroundColor: '#FFD006',
+        borderRadius: 25,
+        alignSelf: 'center',
+        width: 320,
+        paddingBottom: 20,
     },
     modalText: {
         marginLeft: 20,
@@ -81,5 +97,6 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center',
         marginTop: 20
-    }
+    },
+
 })
